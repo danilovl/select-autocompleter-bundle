@@ -63,7 +63,7 @@ class Configuration implements ConfigurationInterface
                                         ->thenInvalid('Available search types: ' . implode(',', SelectOptionConstant::DIRS))
                                     ->end()
                                 ->end()
-                                ->scalarNode('delay')->defaultValue(0)->end()
+                                ->scalarNode('delay')->defaultValue($defaultOption->selectOption->delay)->end()
                                 ->scalarNode('minimum_input_length')->defaultValue(0)->end()
                                 ->scalarNode('maximum_input_length')->defaultValue(0)->end()
                                 ->scalarNode('minimum_results_for_search')->defaultValue(0)->end()
