@@ -874,6 +874,8 @@ You can create your own custom autocompleter .
 ```php
 <?php declare(strict_types=1);
 
+namespace App\Autocompleter;
+
 // ...
 use Danilovl\SelectAutocompleterBundle\Constant\{
     OrderByConstant,
@@ -928,6 +930,8 @@ If the standard functionality is not enough, or you want to reuse you existing c
    
 ```php
 <?php declare(strict_types=1);
+
+namespace App\Autocompleter;
 
 // ...
 use Danilovl\SelectAutocompleterBundle\Model\Autocompleter\AutocompleterQuery;
@@ -1005,8 +1009,10 @@ If you need additional parameters in request you can defined `extra` parameter w
 ```php
 <?php declare(strict_types=1);
 
+namespace App\Form;
+
 // ...
-use Danilovl\SelectAutocompleterBundle\Form\Type\CustomAutocompleter;
+use App\Autocompleter\CustomAutocompleter;
 
 class CityType extends AbstractType
 {
@@ -1035,7 +1041,7 @@ Then you must defined new autocompleter service in you `services.yml` with `dani
 
 ```yaml
 app.autocompleter.custom:
-  class: App\Services\Autocompleter\CustomAutocompleter
+  class: App\Autocompleter\CustomAutocompleter
   arguments:
     - '@doctrine'
     - '@danilovl_select_autocompleter.resolver.config'
