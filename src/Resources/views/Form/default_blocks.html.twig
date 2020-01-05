@@ -1,0 +1,101 @@
+{% block cdn %}
+{#    {% if static_container_has('autocompleterCdnAdded') == false %}#}
+        {% if autocompleter.cdn.link is not empty %}
+            <link href="{{ asset(autocompleter.cdn.link) }}" rel="stylesheet"/>
+        {% endif %}
+        {% if autocompleter.cdn.script is not empty %}
+            <script src="{{ asset(autocompleter.cdn.script) }} "></script>
+        {% endif %}
+
+{#        {{ static_container_create('autocompleterCdnAdded') }}#}
+{#    {% endif %}#}
+{% endblock %}
+
+ {% block select_tag %}
+     <select {{ block('widget_attributes') }}
+             {% if autocompleter.multiple %} multiple="multiple"{% endif %}
+     >
+         {% for item in autocompleter.values %}
+             <option selected="selected" value="{{ item.id }}">
+                 {{ item.text }}
+             </option>
+         {% endfor %}
+     </select>
+ {% endblock %}
+
+ {% block script %}
+     <script type="text/javascript">
+         (function ($) {
+             {% block input %}
+                var selectElement = $('#{{ id }}');
+             {% endblock %}
+
+             {% block options %}
+                var options = {
+                    dir: '{{ autocompleter.select_option.dir }}',
+                    minimumInputLength: {{ autocompleter.select_option.minimum_input_length }},
+                    maximumInputLength: {{ autocompleter.select_option.maximum_input_length }},
+                    minimumResultsForSearch:{{ autocompleter.select_option.minimum_results_for_search }},
+                    maximumSelectionLength: {{ autocompleter.select_option.maximum_selection_length }},
+                    minimumSelectionLength: {{ autocompleter.select_option.minimum_selection_length }},
+                    width: '{{ autocompleter.select_option.width }}',
+                    scrollAfterSelect: {{ autocompleter.select_option.scroll_after_select ? 'true' : 'false' }},
+                    language: '{{ autocompleter.select_option.language }}',
+                    disabled: selectElement.prop('desable'),
+                    allowClear: !selectElement.prop('required'),
+                    placeholder: '{{ autocompleter.select_option.placeholder | trans }}',
+                    multiple: {{ autocompleter.multiple ? 'true' : 'false' }},
+                    closeOnSelect: {{ autocompleter.multiple ? 'false' : 'true' }},
+                    selectOnClose: {{ autocompleter.select_option.select_on_close ? 'true' : 'false' }},
+                    theme: '{{ autocompleter.select_option.theme }}',
+                    amdBase: '{{ autocompleter.select_option.amd_base }}',
+                    amdLanguageBase: '{{ autocompleter.select_option.amd_language_base }}'
+                };
+             {% endblock %}
+
+             {% block options_data %}
+                options.data = {{ autocompleter.values | json_encode | raw }};
+             {% endblock %}
+
+             {% block options_ajax %}
+                options.ajax = {
+                    url: '{{ path('danilovl_select_autocomplete', {name: autocompleter.name}) }}',
+                    dataType: 'json',
+                    delay: {{ autocompleter.select_option.delay }},
+                    cache: {{ autocompleter.select_option.cache ? 'true' : 'false' }},
+                };
+             {% endblock %}
+
+             {% block options_ajax_data %}
+                var dependentName = undefined;
+                var dependentId = undefined;
+
+                {% if autocompleter.dependent_select.name is defined %}
+                    dependentName = '{{ autocompleter.dependent_select.name }}';
+                {% endif %}
+
+                {% if autocompleter.dependent_select.parent_field is defined %}
+                    jQuery("select#{{ form.parent.offsetGet(autocompleter.dependent_select.parent_field).vars.id }}").change( function() {
+                        dependentId = jQuery(this).val();
+                    });
+                {% endif %}
+
+                options.ajax.data = function (params) {
+                    return {
+                        search: params.term,
+                        page: params.page,
+                        dependentName: dependentName,
+                        dependentId: dependentId,
+                        extra: {{ autocompleter.extra | default({}) | json_encode | raw }}
+                    }
+                };
+             {% endblock %}
+
+             {% block initialize %}
+                $(document).ready(function () {
+                    selectElement.select2(options);
+                });
+             {% endblock %}
+         }(jQuery));
+     </script>
+ {% endblock %}

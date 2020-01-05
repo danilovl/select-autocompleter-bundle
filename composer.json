@@ -1,0 +1,28 @@
+{
+    "name": "danilovl/select-autocompleter-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony select ajax autocomleter bundle",
+    "keywords": ["php","symfony","bundle","symfony"],
+    "authors": [
+        {
+            "name": "Vladimir Danilov"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Danilovl\\SelectAutocompleterBundle\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Danilovl\\SelectAutocompleterBundle\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^7.3.0",
+        "symfony/framework-bundle": ">=4.4",
+        "symfony/form": ">=4.4",
+        "danilovl/static-container-twig-extension-bundle": "^1.0.2"
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": ">=4.4"
+    }
+}

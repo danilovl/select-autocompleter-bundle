@@ -1,0 +1,86 @@
+danilovl_select_autocompleter:
+  default_option:
+    widget: 'select2_v4'
+    manager: null
+    id_property: 'id'
+    property: 'name'
+    limit: 10
+    base_template: '@SelectAutocompleter/Form/versions.html.twig'
+    cdn:
+      auto: false
+      link: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css'
+      script: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js'
+    select_option:
+      placeholder: "food_app.search"
+      delay: 1000
+      theme: 'classic'
+      minimum_input_length: 1
+      maximum_input_length: 2
+      minimum_results_for_search: 100
+      maximum_selection_length: 0
+      minimum_selection_length: 0
+      multiple: true
+      width: false
+      scroll_after_select: false
+      security:
+        voter: 'danilovl_select_autocompleter.voter.default'
+        role: []
+      to_string:
+        format: "ID %%d: %%s"
+        properties:
+          - 'id'
+          - 'name'
+      where:
+        - 'e.active = true'
+      order_by:
+        created_at: 'ASC'
+        uptadet_at: 'DESC'
+  orm:
+    - name: 'shop'
+      class: 'App:Shop'
+      search_simple:
+        name: 'any'
+      to_string:
+        auto: true
+        format: "ID %%d: %%s(%%s)"
+        properties:
+          - 'id'
+          - 'name'
+          - 'address'
+      select_option:
+        placeholder: "food_app.search222"
+        minimum_input_length: 102
+      security:
+        role: ['ROLE_USER']
+
+    - name: 'product'
+      class: 'App:Product'
+      id_property: 'id'
+      property: 'name'
+      widget: 'custom_widget'
+      to_string:
+        format: "ID %%d: %%s %%d"
+        properties:
+          - 'id'
+          - 'name'
+          - 'price'
+      search_pattern:
+        name: '%%$search%%'
+        price: 'EUR%%'
+      select_option:
+        placeholder: "app.search_placeholder_product"
+        delay: 1500
+        minimum_input_length: 1
+        maximum_input_length: 4
+      dependent_selects:
+        - name: 'firm'
+          parent_property: 'id'
+          many_to_many:
+            firmWork: 'e.firms'
+            firm: 'firmWork.firm'
+
+        - name: 'firms'
+          parent_property: 'id'
+          many_to_many:
+            firmWork: 'e.firms'
+            firm: 'firmWork.firm'

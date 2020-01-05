@@ -1,0 +1,21 @@
+default:
+  id_property: 'id'
+  property: 'name'
+  widget: 'select2_v4'
+  root_aliase: 'e'
+  limit: 10
+  base_template: '@SelectAutocompleter/Form/versions.html.twig'
+  role_prefix: 'ROLE_'
+  select_option:
+    delay: 1000
+    theme: 'default'
+    language: 'en'
+    width: 'resolve'
+    amd_base: './'
+    amd_language_base: './i18n/'
+    cache: false
+  cdn:
+    script: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js'
+    link: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css'
+  security:
+    voter: 'danilovl_select_autocompleter.voter.default'

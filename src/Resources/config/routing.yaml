@@ -1,0 +1,3 @@
+danilovl_select_autocomplete:
+  path:  /{name}/autocomplete
+  defaults: { _controller: 'Danilovl\SelectAutocompleterBundle\Controller\AutocompleterController::autocomplete' }

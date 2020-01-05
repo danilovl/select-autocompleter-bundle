@@ -1,0 +1,6 @@
+{% extends autocompleter_base_template|default('@SelectAutocompleter/Form/versions.html.twig') %}
+
+{% block select_autocompleter_widget %}
+    {{ block('cdn') }}
+    {{ block('widget_' ~ autocompleter.widget) }}
+{% endblock %}

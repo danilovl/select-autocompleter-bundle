@@ -1,0 +1,14 @@
+services:
+  danilovl_select_autocompleter.container:
+    class: Danilovl\SelectAutocompleterBundle\Services\AutocompleterContainer
+    arguments:
+      - '@service_container'
+    public: false
+
+  danilovl_select_autocompleter.autocompleter:
+    class: Danilovl\SelectAutocompleterBundle\Services\AutocompleterService
+    arguments:
+      - '@service_container'
+      - '@danilovl_select_autocompleter.container'
+      - '@security.token_storage'
+    public: true
