@@ -47,8 +47,6 @@ class AutocompleterExtension extends Extension
         YamlFileLoader $loader,
         array $config
     ): void {
-        $defaultConfig = $config['default_option'];
-
         foreach ($config as $key => $parameters) {
             $parentService = null;
             switch ($key) {
@@ -64,7 +62,7 @@ class AutocompleterExtension extends Extension
                 $loader->load("{$key}.yaml");
                 $this->createAutocompleterService(
                     $container,
-                    $defaultConfig,
+                    $config['default_option'],
                     $parameters,
                     $parentService,
                     $key
