@@ -1,5 +1,5 @@
 {% block cdn %}
-{#    {% if static_container_has('autocompleterCdnAdded') == false %}#}
+    {% if static_container_has('autocompleterCdnAdded') == false %}
         {% if autocompleter.cdn.link is not empty %}
             <link href="{{ asset(autocompleter.cdn.link) }}" rel="stylesheet"/>
         {% endif %}
@@ -7,8 +7,8 @@
             <script src="{{ asset(autocompleter.cdn.script) }} "></script>
         {% endif %}
 
-{#        {{ static_container_create('autocompleterCdnAdded') }}#}
-{#    {% endif %}#}
+        {{ static_container_create('autocompleterCdnAdded') }}
+    {% endif %}
 {% endblock %}
 
  {% block select_tag %}
