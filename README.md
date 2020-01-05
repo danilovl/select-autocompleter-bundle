@@ -115,8 +115,8 @@ danilovl_select_autocompleter:
     to_string:
       format: "ID %%d: %%s"
       properties:
-          - 'id'
-          - 'name'
+        - 'id'
+        - 'name'
     where:
       - 'e.active = true'
     order_by:
@@ -211,8 +211,8 @@ danilovl_select_autocompleter:
     to_string:
       format: "ID %%d: %%s"
       properties:
-          - 'id'
-          - 'name'
+        - 'id'
+        - 'name'
 ```
 
 If `to_string` option is `auto` then  `__toString()` method was called by Class.
