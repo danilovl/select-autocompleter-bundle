@@ -31,6 +31,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('default_option')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('id_property')->defaultValue($defaultOption->idProperty)->end()
                         ->scalarNode('property')->defaultValue($defaultOption->property)->end()
