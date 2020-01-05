@@ -1035,7 +1035,7 @@ Then you must defined new autocompleter service in you `services.yml` with `dani
 
 ```yaml
 app.autocompleter.custom:
-  class: App\Services\Suggest\CustomAutocompleter
+  class: App\Services\Autocompleter\CustomAutocompleter
   arguments:
     - '@doctrine'
     - '@danilovl_select_autocompleter.resolver.config'
