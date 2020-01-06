@@ -1040,9 +1040,6 @@ Then you must defined new autocompleter service in you `services.yaml` with `dan
 ```yaml
 app.autocompleter.custom:
   class: App\Autocompleter\CustomAutocompleter
-  arguments:
-    - '@doctrine'
-    - '@danilovl_select_autocompleter.resolver.config'
   tags:
     - {name: 'danilovl_select_autocompleter.autocompleter', alias: 'custom'}
 ```

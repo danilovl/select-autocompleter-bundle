@@ -10,6 +10,8 @@ services:
       - '@danilovl_select_autocompleter.resolver.config.dependent_selects'
     public: true
 
+  Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolver: '@danilovl_select_autocompleter.resolver.config'
+
   danilovl_select_autocompleter.resolver.config.attr:
     class: Danilovl\SelectAutocompleterBundle\Resolver\Config\SelectOptionResolver
     public: true
