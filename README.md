@@ -51,7 +51,7 @@ default:
   id_property: 'id'
   property: 'name'
   widget: 'select2_v4'
-  root_aliase: 'e'
+  root_alias: 'e'
   limit: 10
   base_template: '@SelectAutocompleter/Form/versions.html.twig'
   role_prefix: 'ROLE_'
