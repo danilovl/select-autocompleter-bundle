@@ -83,7 +83,7 @@ danilovl_select_autocompleter:
     widget: 'select2_v4'
     manager: null
     id_property: 'id'
-    root_aliase: 'e'
+    root_alias: 'e'
     property: 'name'
     limit: 10
     base_template: '@SelectAutocompleter/Form/versions.html.twig'  
