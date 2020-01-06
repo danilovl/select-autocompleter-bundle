@@ -25,16 +25,16 @@ danilovl_select_autocompleter:
       security:
         voter: 'danilovl_select_autocompleter.voter.default'
         role: []
-      to_string:
-        format: "ID %%d: %%s"
-        properties:
-          - 'id'
-          - 'name'
-      where:
-        - 'e.active = true'
-      order_by:
-        created_at: 'ASC'
-        uptadet_at: 'DESC'
+    to_string:
+      format: "ID %%d: %%s"
+      properties:
+        - 'id'
+        - 'name'
+    where:
+      - 'e.active = true'
+    order_by:
+      created_at: 'ASC'
+      uptadet_at: 'DESC'
   orm:
     - name: 'shop'
       class: 'App:Shop'

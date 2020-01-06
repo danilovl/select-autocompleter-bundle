@@ -25,7 +25,7 @@ class ConfigurationTest extends KernelTestCase
     {
         $configuration = new Configuration;
         $node = $configuration->getConfigTreeBuilder()->buildTree();
-        $normalizedConfig = $node->normalize($this->getYamlConfigData());
+        $normalizedConfig = $node->normalize($this->getYamlConfigData()['danilovl_select_autocompleter']);
         $node->finalize($normalizedConfig);
 
         $this->expectNotToPerformAssertions();
