@@ -120,7 +120,7 @@ class Config
         $self = new self();
         $self->name = $parameters['name'] ?? null;
         $self->class = $parameters['class'] ?? null;
-        $self->rootAliase = $parameters['root_aliase'] ?? null;
+        $self->rootAliase = $parameters['root_alias'] ?? null;
         $self->multiple = $parameters['multiple'] ?? false;
         $self->idProperty = $parameters['id_property'] ?? null;
         $self->manager = $parameters['manager'] ?? null;

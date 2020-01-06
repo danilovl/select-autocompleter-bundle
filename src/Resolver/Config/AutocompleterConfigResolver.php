@@ -99,7 +99,7 @@ class AutocompleterConfigResolver
             'name' => null,
             'id_property' => null,
             'property' => null,
-            'root_aliase' => null,
+            'root_alias' => null,
             'where' => [],
             'order_by' => [],
             'excluded_entity_id' => [],
@@ -138,7 +138,7 @@ class AutocompleterConfigResolver
             ->setAllowedTypes('name', 'string')
             ->setAllowedTypes('id_property', 'string')
             ->setAllowedTypes('property', 'string')
-            ->setAllowedTypes('root_aliase', 'string')
+            ->setAllowedTypes('root_alias', 'string')
             ->setAllowedTypes('where', 'array')
             ->setAllowedTypes('order_by', 'array')
             ->setAllowedTypes('excluded_entity_id', 'array')

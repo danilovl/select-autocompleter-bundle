@@ -22,7 +22,7 @@ class DefaultOption
     /**
      * @var string|null
      */
-    public $rootAliase;
+    public $rootAlias;
 
     /**
      * @var int|null
@@ -78,7 +78,7 @@ class DefaultOption
         $self = new self();
         $self->idProperty = $parameters['id_property'] ?? null;
         $self->property = $parameters['property'] ?? null;
-        $self->rootAliase = $parameters['root_aliase'] ?? null;
+        $self->rootAlias = $parameters['root_alias'] ?? null;
         $self->limit = $parameters['limit'] ?? null;
         $self->baseTemplate = $parameters['base_template'] ?? null;
         $self->widget = $parameters['widget'] ?? null;
