@@ -34,7 +34,7 @@ return [
 After installing the bundle, add this route to your routing:
 
 ``` yaml
-# app/config/routing.yaml
+# config/routing.yaml
 
 _danilovl_select_autocomopleter:
   resource: "@SelectAutocompleterBundle/Resources/config/routing.yaml"
@@ -75,7 +75,7 @@ List of available options which you can change in you project.
 This options will be applied for all autocompleters. For example: 
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -130,7 +130,7 @@ danilovl_select_autocompleter:
 By default only one widget `select2_v4` is available.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -144,7 +144,7 @@ If you want to add default `select2.min.js` and `select2.min.css` files on page.
 Links are defined in `default.yaml`.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -156,7 +156,7 @@ danilovl_select_autocompleter:
 Or you can defined you own path for script and css files.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -173,7 +173,7 @@ For customization select is available following settings.
 Text defined in `placeholder` will be translated by twig function `truns`.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -202,7 +202,7 @@ danilovl_select_autocompleter:
 Simple `__toString` format.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -217,7 +217,7 @@ danilovl_select_autocompleter:
 If `to_string` option is `auto` then  `__toString()` method was called by Class.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -231,7 +231,7 @@ danilovl_select_autocompleter:
 Simple `where` condition. 
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -259,7 +259,7 @@ where (e.active = true AND e.id > 100) AND
 Order result by.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -289,7 +289,7 @@ Simple configuration.
 Identifier `name` will be duplicated with prefix type `orm.` or `odm.`, which can be used for identification autocompleters in forms.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -312,7 +312,7 @@ danilovl_select_autocompleter:
 `end` is `LIKE 'search%'`
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -333,7 +333,7 @@ You can defined custom search pattern. Symbol `%` in yaml must be duplicate - `%
 You must use key word `$search` to insert search text into a pattern.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -357,7 +357,7 @@ danilovl_select_autocompleter:
 If `to_string` option `auto` is `true`, then `__toString()` method will be called by Class.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -375,7 +375,7 @@ For each variables in `properties`, function `(string)` will be called.
 Symbol `%` in yaml must be duplicate - `%%`.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -396,7 +396,7 @@ danilovl_select_autocompleter:
 You can add ordering.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -416,7 +416,7 @@ If you want to use a existing repository method from you project. Other paramete
 Repository method should have `public` access and return `QueryBuilder` or `Builder`.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 danilovl_select_autocompleter:
   orm:
@@ -436,7 +436,7 @@ This means that all the search logic will be processing by the method which you 
 You can override `default_option` for specific autocompleter.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -475,7 +475,7 @@ You could restrict access to autcompleter by user roles.
 Restrict access for all autocompleters.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -489,7 +489,7 @@ danilovl_select_autocompleter:
 Restrict access for some specific autocompleter.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -507,7 +507,7 @@ danilovl_select_autocompleter:
 You could restrict access to autocompleters by securing URL patterns
 
 ```yaml
-# app/config/security.yaml
+# config/security.yaml
 
 security:
    access_control:
@@ -585,7 +585,7 @@ class CustomAutocompleterVoter extends Voter
 Register new voter as a service.
 
 ```yaml
-# app/config/security.yaml
+# config/security.yaml
 
 ...
 services:
@@ -599,7 +599,7 @@ services:
 Set voter for all autocompleters.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -611,7 +611,7 @@ danilovl_select_autocompleter:
 Set voter for some specific autocompleter.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -631,7 +631,7 @@ Sometimes you need options of a select will be loaded/refreshed by ajax based on
 For example entity - `City` dependent on `Country` and `Region`.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -760,7 +760,7 @@ class CityType extends AbstractType
 For example entity - `Tag` has many `Cheque` 
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -783,7 +783,7 @@ danilovl_select_autocompleter:
 For example entity - `Work` dependent on `Firm` through custom entity `FirmWork`
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -1096,7 +1096,7 @@ Then you need to add path for new custom template to config.
 For all autocompleters.  
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
@@ -1107,7 +1107,7 @@ danilovl_select_autocompleter:
 Or for some specific autocompleter.
 
 ```yaml
-# app/config/config.yaml
+# config/config.yaml
 
 ...
 danilovl_select_autocompleter:
