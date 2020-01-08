@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class AutocompleterExtension extends Extension
 {
-    public const ALIAS = 'danilovl_select_autocompleter';
+    public const ALIAS = 'danilovl.select_autocompleter';
     private const DIR_CONFIG = '/../Resources/config';
 
     /**
@@ -101,7 +101,7 @@ class AutocompleterExtension extends Extension
         string $parentService,
         string $type
     ): void {
-        $autocompleterContainer = $containerBuilder->getDefinition('danilovl_select_autocompleter.container');
+        $autocompleterContainer = $containerBuilder->getDefinition('danilovl.select_autocompleter.container');
         foreach ($autocompleters as $autocompleterConfig) {
             $autocompleterConfig = array_replace_recursive($defaultConfig, $autocompleterConfig);
             $id = $autocompleterConfig['name'];

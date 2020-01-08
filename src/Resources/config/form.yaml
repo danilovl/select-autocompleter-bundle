@@ -1,9 +1,11 @@
 services:
-  danilovl_select_autocompleter.form_type:
+  danilovl.select_autocompleter.form_type:
     class: Danilovl\SelectAutocompleterBundle\Form\Type\AutocompleterType
     arguments:
-      - '@danilovl_select_autocompleter.container'
-      - '@danilovl_select_autocompleter.resolver.form.autocompleter_type'
+      - '@danilovl.select_autocompleter.container'
+      - '@danilovl.select_autocompleter.resolver.form.autocompleter_type'
       - '@twig'
     tags:
       - { name: 'form.type', alias: 'autocompleter' }
+
+  Danilovl\SelectAutocompleterBundle\Form\Type\AutocompleterType: '@danilovl.select_autocompleter.form_type'

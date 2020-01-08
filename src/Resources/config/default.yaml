@@ -18,4 +18,4 @@ default:
     script: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js'
     link: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css'
   security:
-    voter: 'danilovl_select_autocompleter.voter.default'
+    voter: 'danilovl.select_autocompleter.voter.default'

@@ -23,7 +23,7 @@ danilovl_select_autocompleter:
       width: false
       scroll_after_select: false
       security:
-        voter: 'danilovl_select_autocompleter.voter.default'
+        voter: 'danilovl.select_autocompleter.voter.default'
         role: []
     to_string:
       format: "ID %%d: %%s"

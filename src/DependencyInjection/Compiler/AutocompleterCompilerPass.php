@@ -12,8 +12,8 @@ class AutocompleterCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $containerBuilder): void
     {
-        $autocompleterContainer = $containerBuilder->getDefinition('danilovl_select_autocompleter.container');
-        $taggedServices = $containerBuilder->findTaggedServiceIds('danilovl_select_autocompleter.autocompleter');
+        $autocompleterContainer = $containerBuilder->getDefinition('danilovl.select_autocompleter.container');
+        $taggedServices = $containerBuilder->findTaggedServiceIds('danilovl.select_autocompleter.autocompleter');
 
         foreach ($taggedServices as $id => $tags) {
             $autocompleterContainer->addMethodCall('addAutocompleter', [$containerBuilder->getDefinition($id)->getClass(), $id]);

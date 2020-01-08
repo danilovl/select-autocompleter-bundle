@@ -109,7 +109,7 @@ danilovl_select_autocompleter:
       amd_language_base: './i18n/'
       cache: true
     security:
-      voter: 'danilovl_select_autocompleter.voter.default'
+      voter: 'danilovl.select_autocompleter.voter.default'
       role: []
     to_string:
       format: "ID %%d: %%s"

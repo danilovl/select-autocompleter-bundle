@@ -79,9 +79,9 @@ class ConfigurationTest extends KernelTestCase
      */
     public function dataProviderHasDefinition(): Generator
     {
-        yield ['danilovl_select_autocompleter.orm.shop', true];
-        yield ['danilovl_select_autocompleter.orm.product', true];
-        yield ['danilovl_select_autocompleter.orm.not_exist', false];
+        yield ['danilovl.select_autocompleter.orm.shop', true];
+        yield ['danilovl.select_autocompleter.orm.product', true];
+        yield ['danilovl.select_autocompleter.orm.not_exist', false];
     }
 
     /**

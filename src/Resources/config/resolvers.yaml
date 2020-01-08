@@ -1,50 +1,50 @@
 services:
-  danilovl_select_autocompleter.resolver.config:
+  danilovl.select_autocompleter.resolver.config:
     class: Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolver
     arguments:
-      - '@danilovl_select_autocompleter.resolver.config.attr'
-      - '@danilovl_select_autocompleter.resolver.config.cdn'
-      - '@danilovl_select_autocompleter.resolver.config.to_string'
-      - '@danilovl_select_autocompleter.resolver.config.security'
-      - '@danilovl_select_autocompleter.resolver.config.repository'
-      - '@danilovl_select_autocompleter.resolver.config.dependent_selects'
+      - '@danilovl.select_autocompleter.resolver.config.attr'
+      - '@danilovl.select_autocompleter.resolver.config.cdn'
+      - '@danilovl.select_autocompleter.resolver.config.to_string'
+      - '@danilovl.select_autocompleter.resolver.config.security'
+      - '@danilovl.select_autocompleter.resolver.config.repository'
+      - '@danilovl.select_autocompleter.resolver.config.dependent_selects'
     public: true
 
-  Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolver: '@danilovl_select_autocompleter.resolver.config'
+  Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolver: '@danilovl.select_autocompleter.resolver.config'
 
-  danilovl_select_autocompleter.resolver.config.attr:
+  danilovl.select_autocompleter.resolver.config.attr:
     class: Danilovl\SelectAutocompleterBundle\Resolver\Config\SelectOptionResolver
     public: true
 
-  danilovl_select_autocompleter.resolver.config.cdn:
+  danilovl.select_autocompleter.resolver.config.cdn:
     class: Danilovl\SelectAutocompleterBundle\Resolver\Config\CdnResolver
     public: true
 
-  danilovl_select_autocompleter.resolver.config.security:
+  danilovl.select_autocompleter.resolver.config.security:
     class: Danilovl\SelectAutocompleterBundle\Resolver\Config\SecurityResolver
     public: true
 
-  danilovl_select_autocompleter.resolver.config.to_string:
+  danilovl.select_autocompleter.resolver.config.to_string:
     class: Danilovl\SelectAutocompleterBundle\Resolver\Config\ToStringResolver
     public: true
 
-  danilovl_select_autocompleter.resolver.config.repository:
+  danilovl.select_autocompleter.resolver.config.repository:
     class: Danilovl\SelectAutocompleterBundle\Resolver\Config\RepositoryResolver
     public: true
 
-  danilovl_select_autocompleter.resolver.config.dependent_selects:
+  danilovl.select_autocompleter.resolver.config.dependent_selects:
     class: Danilovl\SelectAutocompleterBundle\Resolver\Config\DependentSelectsResolver
     public: true
 
-  danilovl_select_autocompleter.resolver.form.dependent_select:
+  danilovl.select_autocompleter.resolver.form.dependent_select:
     class: Danilovl\SelectAutocompleterBundle\Resolver\Form\DependentSelectResolver
     public: true
 
-  danilovl_select_autocompleter.resolver.form.autocompleter_type:
+  danilovl.select_autocompleter.resolver.form.autocompleter_type:
     class: Danilovl\SelectAutocompleterBundle\Resolver\Form\AutocompleterTypeResolver
     arguments:
-      - '@danilovl_select_autocompleter.resolver.config.attr'
-      - '@danilovl_select_autocompleter.resolver.config.cdn'
-      - '@danilovl_select_autocompleter.resolver.config.to_string'
-      - '@danilovl_select_autocompleter.resolver.form.dependent_select'
+      - '@danilovl.select_autocompleter.resolver.config.attr'
+      - '@danilovl.select_autocompleter.resolver.config.cdn'
+      - '@danilovl.select_autocompleter.resolver.config.to_string'
+      - '@danilovl.select_autocompleter.resolver.form.dependent_select'
     public: true

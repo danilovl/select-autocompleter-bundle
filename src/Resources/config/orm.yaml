@@ -1,7 +1,7 @@
 services:
-  danilovl_select_autocompleter.orm:
+  danilovl.select_autocompleter.orm:
     class: Danilovl\SelectAutocompleterBundle\Services\OrmAutocompleter
     arguments:
       - '@doctrine'
-      - '@danilovl_select_autocompleter.resolver.config'
+      - '@danilovl.select_autocompleter.resolver.config'
     abstract: true

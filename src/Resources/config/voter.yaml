@@ -1,5 +1,5 @@
 services:
-  danilovl_select_autocompleter.voter.default:
+  danilovl.select_autocompleter.voter.default:
     class: Danilovl\SelectAutocompleterBundle\Security\Voter\DefaultVoter
     public: true
     arguments:

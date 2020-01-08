@@ -18,7 +18,7 @@ class AutocompleterController extends AbstractController
      */
     public function autocomplete(Request $request, string $name): JsonResponse
     {
-        $result = $this->get('danilovl_select_autocompleter.autocompleter')
+        $result = $this->get('danilovl.select_autocompleter.autocompleter')
             ->autocompeteFromRequest($request, $name)
             ->toArray();
 
