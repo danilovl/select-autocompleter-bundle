@@ -45,7 +45,7 @@ class Item
         $propertyAccess = PropertyAccess::createPropertyAccessor();
         $toString = $config->toString;
 
-        $text = $propertyAccess->getValue($object, $config->property);
+        $text = null;
         if ($toString->auto === true) {
             $text = (string)$object;
         } elseif (!empty($toString->properties)) {
@@ -61,6 +61,6 @@ class Item
             }
         }
 
-        return $text;
+        return $text ?? $propertyAccess->getValue($object, $config->property);
     }
 }
