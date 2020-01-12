@@ -1042,7 +1042,7 @@ Then you must defined new autocompleter service in you `services.yaml` with `dan
 app.autocompleter.custom:
   class: App\Autocompleter\CustomAutocompleter
   tags:
-    - {name: 'danilovl_select_autocompleter.autocompleter', alias: 'custom'}
+    - {name: 'danilovl.select_autocompleter.autocompleter', alias: 'custom'}
 ```
 
 #### 8. Custom autocompleter widget template
