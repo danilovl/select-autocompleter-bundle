@@ -19,7 +19,7 @@ use Danilovl\SelectAutocompleterBundle\Services\Interfaces\AutocompleterInterfac
 use Doctrine\Common\Persistence\ObjectManager;
 use RuntimeException;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityLoaderInterface;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\OptionsResolver\{
     Options,
     OptionsResolver

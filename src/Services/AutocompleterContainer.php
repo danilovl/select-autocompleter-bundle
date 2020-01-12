@@ -44,6 +44,19 @@ class AutocompleterContainer implements AutocompleterContainerInterface
 
     /**
      * @param string $name
+     * @param string $serviceName
+     */
+    public function replaceAutocompleter(string $name, string $serviceName): void
+    {
+        if (!isset($this->autocompleters[$name])) {
+            throw new InvalidArgumentException(sprintf('Autocompleter "%s" is not yet registered', $name));
+        }
+
+        $this->autocompleters[$name] = $serviceName;
+    }
+
+    /**
+     * @param string $name
      * @return bool
      */
     public function has(string $name): bool

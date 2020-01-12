@@ -104,18 +104,16 @@ class AutocompleterExtension extends Extension
         $autocompleterContainer = $containerBuilder->getDefinition('danilovl.select_autocompleter.container');
         foreach ($autocompleters as $autocompleterConfig) {
             $autocompleterConfig = array_replace_recursive($defaultConfig, $autocompleterConfig);
-            $id = $autocompleterConfig['name'];
 
             $definition = new ChildDefinition($parentService);
             $definition->setPublic(true);
             $definition->addMethodCall('addConfig', [$autocompleterConfig]);
 
-            $serviceId = sprintf(ServiceConstant::SERVICE_FORMAT, $type, $id);
-            $autocompleterContainer->addMethodCall('addAutocompleter', [$id, $serviceId]);
+            $name = $autocompleterConfig['name'];
+            $serviceId = sprintf(ServiceConstant::SERVICE_FORMAT, $type, $name);
+            $autocompleterId = sprintf('%s.%s', $type, $autocompleterConfig['name']);
 
-            $alternativeId = sprintf('%s.%s', $type, $id);
-            $autocompleterContainer->addMethodCall('addAutocompleter', [$alternativeId, $serviceId]);
-
+            $autocompleterContainer->addMethodCall('addAutocompleter', [$autocompleterId, $serviceId]);
             $containerBuilder->setDefinition($serviceId, $definition);
         }
     }

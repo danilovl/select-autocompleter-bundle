@@ -9,6 +9,12 @@ interface AutocompleterContainerInterface
      * @param string $serviceName
      */
     public function addAutocompleter(string $name, string $serviceName): void;
+    
+    /**
+     * @param string $name
+     * @param string $serviceName
+     */
+    public function replaceAutocompleter(string $name, string $serviceName): void;
 
     /**
      * @param string $name

@@ -804,7 +804,7 @@ danilovl_select_autocompleter:
 
 Simple configuration in form.
 
-You can use `'name' => 'shop'` or `'name' => 'orm.shop'` for identification autocompleter.
+You should use `'name' => 'orm.shop'` for identification autocompleter.
 
 ```php
 <?php declare(strict_types=1);
@@ -821,7 +821,7 @@ class CityType extends AbstractType
     {
         $builder->add('shop', AutocompleterType::class, [
             'autocompleter' => [
-                'name' => 'shop'
+                'name' => 'orm.shop'
             ],
             'required' => true,
             'constraints' => [
@@ -849,7 +849,7 @@ class CityType extends AbstractType
     {
         $builder->add('shop', AutocompleterType::class, [
             'autocompleter' => [
-                'name' => 'shop',
+                'name' => 'orm.shop',
                 'multiple' => true,
                 'select_option' => [
                     'placeholder' => 'app.form_type_placeholder',
@@ -885,42 +885,6 @@ use Danilovl\SelectAutocompleterBundle\Services\OrmAutocompleter;
 
 class CustomAutocompleter extends OrmAutocompleter
 {
-    /**
-     * @param ManagerRegistry $registry
-     * @param AutocompleterConfigResolver $resolver
-     */
-    public function __construct(
-        ManagerRegistry $registry,
-        AutocompleterConfigResolver $resolver
-    ) {
-        parent::__construct($registry, $resolver);
-
-        $this->addConfig([
-            'class' => Shop::class,
-            'name' => 'custom',
-            'id_property' => 'id',
-            'to_string' => [
-                'format' => '%d %s',
-                'properties' => ['id', 'name']
-            ],
-            'order_by' => [
-                'id' => OrderByConstant::ASC
-            ],
-            'search_simple' => [
-                'name' => SearchConstant::START,
-                'description' => SearchConstant::ANY
-            ],
-            'select_option' => [
-               'placeholder' => 'app.form_type_placeholder'
-            ],
-            'security' => [
-               'role' => [
-                    'ROLE_USER',
-                    'ROLE_ADMIN'
-                ]
-            ]
-        ]);
-    }
 }
 
 ```
@@ -956,11 +920,6 @@ class CustomAutocompleter extends OrmAutocompleter
         ShopRepository $shopRepository
     ) {
         parent::__construct($registry, $resolver);
-
-        $this->addConfig([
-            'class' => Shop::class,
-            'name' => 'custom'
-        ]);
 
         $this->shopRepository = $shopRepository;
     }
@@ -1022,7 +981,7 @@ class CityType extends AbstractType
     {
        $builder->add('shop', CustomAutocompleter::class, [
            'autocompleter' => [
-               'name' => 'shop',
+               'name' => 'orm.shop',
                'extra' => [
                    'language' => 'en'
                ]
@@ -1042,7 +1001,7 @@ Then you must defined new autocompleter service in you `services.yaml` with `dan
 app.autocompleter.custom:
   class: App\Autocompleter\CustomAutocompleter
   tags:
-    - {name: 'danilovl.select_autocompleter.autocompleter', alias: 'custom'}
+    - {name: 'danilovl.select_autocompleter.autocompleter', alias: 'orm.shop'}
 ```
 
 #### 8. Custom autocompleter widget template
