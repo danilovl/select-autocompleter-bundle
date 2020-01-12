@@ -868,7 +868,17 @@ class CityType extends AbstractType
 
 ### 7.  Custom Autocompleter
 
-You can create your own custom autocompleter .
+You can create your own custom autocompleter.
+ 
+```yaml
+# config/config.yaml
+
+...
+danilovl_select_autocompleter:
+  orm:
+    - name: 'customShop'
+      class: 'App:Shop'
+``` 
  
 ```php
 <?php declare(strict_types=1);
@@ -883,7 +893,7 @@ use Danilovl\SelectAutocompleterBundle\Constant\{
 use Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolver;
 use Danilovl\SelectAutocompleterBundle\Services\OrmAutocompleter;
 
-class CustomAutocompleter extends OrmAutocompleter
+class CustomShopAutocompleter extends OrmAutocompleter
 {
 }
 
@@ -902,7 +912,7 @@ use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\Item;
 use Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolver;
 use Danilovl\SelectAutocompleterBundle\Services\OrmAutocompleter;
 
-class CustomAutocompleter extends OrmAutocompleter
+class CustomShopAutocompleter extends OrmAutocompleter
 {
     /**
      * @var ShopRepository
@@ -981,7 +991,7 @@ class CityType extends AbstractType
     {
        $builder->add('shop', CustomAutocompleter::class, [
            'autocompleter' => [
-               'name' => 'orm.shop',
+               'name' => 'orm.customShop',
                'extra' => [
                    'language' => 'en'
                ]
@@ -999,9 +1009,9 @@ Then you must defined new autocompleter service in you `services.yaml` with `dan
 
 ```yaml
 app.autocompleter.custom:
-  class: App\Autocompleter\CustomAutocompleter
+  class: App\Autocompleter\CustomShopAutocompleter
   tags:
-    - {name: 'danilovl.select_autocompleter.autocompleter', alias: 'orm.shop'}
+    - {name: 'danilovl.select_autocompleter.autocompleter', alias: 'orm.customShop'}
 ```
 
 #### 8. Custom autocompleter widget template
