@@ -725,12 +725,12 @@ class CityType extends AbstractType
         $builder
             ->add('country', AutocompleterType::class, [
                 'autocompleter' => [
-                    'name' => 'country'
+                    'name' => 'orm.country'
                 ]
             ]) 
             ->add('cityByCountry', AutocompleterType::class, [
                 'autocompleter' => [
-                    'name' => 'city',
+                    'name' => 'orm.city',
                     'dependent_select' => [
                         'name' => 'dependent_on_country',
                         'parent_field' => 'cityByCountry'
@@ -739,12 +739,12 @@ class CityType extends AbstractType
             ]) 
             ->add('region', AutocompleterType::class, [
                 'autocompleter' => [
-                    'name' => 'region'
+                    'name' => 'orm.region'
                 ]
              ])   
             ->add('cityByRegion', AutocompleterType::class, [
                 'autocompleter' => [
-                    'name' => 'city',
+                    'name' => 'orm.city',
                     'dependent_select' => [
                         'name' => 'dependent_on_region',
                         'parent_field' => 'cityByRegion'
