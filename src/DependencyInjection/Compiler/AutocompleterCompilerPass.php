@@ -31,14 +31,15 @@ class AutocompleterCompilerPass implements CompilerPassInterface
                 $alias = $attributes['alias'];
                 $aliasType = explode('.', $alias);
 
+                $defaultAutocompleterConfig = $config['default_option'];
                 foreach ($config[$aliasType[0]] as $autocompleterConfig) {
                     if ($autocompleterConfig['name'] === $aliasType[1]) {
-                        $autocompleterConfig = array_replace_recursive($config['default_option'], $autocompleterConfig);
+                        $defaultAutocompleterConfig = array_replace_recursive($defaultAutocompleterConfig, $autocompleterConfig);
                     }
                 }
 
                 $customAutocompleter = $containerBuilder->getDefinition($id);
-                $customAutocompleter->addMethodCall('addConfig', [$autocompleterConfig]);
+                $customAutocompleter->addMethodCall('addConfig', [$defaultAutocompleterConfig]);
 
                 $autocompleterContainer->addMethodCall('replaceAutocompleter', [$attributes['alias'], $id]);
             }
