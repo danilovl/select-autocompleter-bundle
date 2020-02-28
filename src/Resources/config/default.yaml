@@ -7,6 +7,7 @@ default:
   base_template: '@SelectAutocompleter/Form/versions.html.twig'
   role_prefix: 'ROLE_'
   select_option:
+    placeholder: 'search'
     delay: 1000
     theme: 'default'
     language: 'en'

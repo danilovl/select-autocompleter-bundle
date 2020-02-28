@@ -64,7 +64,7 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->ignoreExtraKeys()
                             ->children()
-                                ->scalarNode('placeholder')->defaultNull()->end()
+                                ->scalarNode('placeholder')->defaultValue($defaultOption->selectOption->placeholder)->end()
                                 ->scalarNode('dir')
                                     ->defaultValue(SelectOptionConstant::LTR)
                                     ->validate()
