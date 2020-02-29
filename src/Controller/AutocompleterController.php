@@ -2,6 +2,7 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Controller;
 
+use Danilovl\SelectAutocompleterBundle\Services\AutocompleterService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{
     Request,
@@ -9,8 +10,21 @@ use Symfony\Component\HttpFoundation\{
 };
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class AutocompleterController extends AbstractController
+class AutocompleterController
 {
+    /**
+     * @var AutocompleterService
+     */
+    private $autocompleterService;
+
+    /**
+     * @param AutocompleterService $autocompleterService
+     */
+    public function __construct(AutocompleterService $autocompleterService)
+    {
+        $this->autocompleterService = $autocompleterService;
+    }
+
     /**
      * @param Request $request
      * @param string $name
@@ -18,7 +32,7 @@ class AutocompleterController extends AbstractController
      */
     public function autocomplete(Request $request, string $name): JsonResponse
     {
-        $result = $this->get('danilovl.select_autocompleter.autocompleter')
+        $result = $this->autocompleterService
             ->autocompeteFromRequest($request, $name)
             ->toArray();
 

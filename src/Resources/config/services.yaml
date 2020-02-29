@@ -12,3 +12,9 @@ services:
       - '@danilovl.select_autocompleter.container'
       - '@security.token_storage'
     public: true
+
+  danilovl.select_autocompleter.controller:
+    class: Danilovl\SelectAutocompleterBundle\Controller\AutocompleterController
+    arguments:
+      - "@danilovl.select_autocompleter.autocompleter"
+    public: true
