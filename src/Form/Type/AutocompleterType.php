@@ -109,7 +109,7 @@ class AutocompleterType extends AbstractType
      */
     private function configurateOptionsByLevels(FormInterface $form): array
     {
-        $passedOptions = $form->getConfig()->getAttribute('data_collector/passed_options')['autocompleter'];
+        $passedOptions = $form->getConfig()->getAttribute('autocompleter/passed_options')['autocompleter'];
 
         $autocompleter = $this->autocompleterContainer->get($passedOptions['name']);
         $autocompleterConfig = ArrayHelper::modelToArray($autocompleter->getConfig());
