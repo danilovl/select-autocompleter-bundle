@@ -6,35 +6,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AutocompleterQuery
 {
-    /**
-     * @var string|null
-     */
-    public $search;
+	public ?string $search = null;
+	public ?int $page = null;
+	public array $dependentName = [];
+	public array $dependentId = [];
+	public array $extra = [];
 
-    /**
-     * @var int|null
-     */
-    public $page;
-
-    /**
-     * @var array
-     */
-    public $dependentName = [];
-
-    /**
-     * @var array
-     */
-    public $dependentId = [];
-    
-    /**
-     * @var array
-     */
-    public $extra = [];
-
-    /**
-     * @param Request $request
-     * @return self
-     */
     public static function fromRequest(Request $request): self
     {
         $query = new self;

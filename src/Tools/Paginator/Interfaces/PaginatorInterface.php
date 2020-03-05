@@ -4,13 +4,7 @@ namespace Danilovl\SelectAutocompleterBundle\Tools\Paginator\Interfaces;
 
 interface PaginatorInterface
 {
-    /**
-     * @return int
-     */
     public function getTotalCount(): int;
 
-    /**
-     * @return array
-     */
     public function getResult(): array;
 }

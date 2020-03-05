@@ -8,22 +8,13 @@ use Doctrine\ODM\MongoDB\Query\Builder;
 
 class OdmAdapter implements PaginatorAdapterInterface
 {
-    /**
-     * @var PaginatorBuilderObject
-     */
-    private $paginatorBuilderObject;
+    private PaginatorBuilderObject $paginatorBuilderObject;
 
-    /**
-     * @param PaginatorBuilderObject $paginatorBuilderObject
-     */
     public function __construct(PaginatorBuilderObject $paginatorBuilderObject)
     {
         $this->paginatorBuilderObject = $paginatorBuilderObject;
      }
 
-    /**
-     * @return int
-     */
     public function getTotalCount(): int
     {
         return $this->paginatorBuilderObject
@@ -33,9 +24,6 @@ class OdmAdapter implements PaginatorAdapterInterface
             ->count();
     }
 
-    /**
-     * @return array
-     */
     public function getResult(): array
     {
         return $this->paginatorBuilderObject

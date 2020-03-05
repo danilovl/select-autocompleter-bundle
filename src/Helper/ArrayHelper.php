@@ -6,10 +6,6 @@ use Danilovl\SelectAutocompleterBundle\Model\Interfaces\ChildItemInterface;
 
 class ArrayHelper
 {
-    /**
-     * @param $object
-     * @return array
-     */
     public static function modelToArray($object): array
     {
         $result = [];
@@ -26,10 +22,6 @@ class ArrayHelper
         return $result;
     }
 
-    /**
-     * @param array $options
-     * @return array
-     */
     public static function removeEmptyValues(array $options): array
     {
         $result = [];

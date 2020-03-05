@@ -25,26 +25,10 @@ class AutocompleterType extends AbstractType
 {
     public const NAME = 'select_autocompleter';
 
-    /**
-     * @var AutocompleterContainerInterface
-     */
-    private $autocompleterContainer;
+	private AutocompleterContainerInterface $autocompleterContainer;
+	private AutocompleterTypeResolver $autocompleterTypeResolver;
+	private Environment $environment;
 
-    /**
-     * @var AutocompleterTypeResolver
-     */
-    private $autocompleterTypeResolver;
-
-    /**
-     * @var Environment
-     */
-    private $environment;
-
-    /**
-     * @param AutocompleterContainerInterface $autocompleterContainer
-     * @param AutocompleterTypeResolver $autocompleterTypeResolver
-     * @param Environment $environment
-     */
     public function __construct(
         AutocompleterContainerInterface $autocompleterContainer,
         AutocompleterTypeResolver $autocompleterTypeResolver,
@@ -55,10 +39,6 @@ class AutocompleterType extends AbstractType
         $this->environment = $environment;
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $autocompleter = $this->autocompleterContainer->get($options['autocompleter']['name']);
@@ -66,11 +46,6 @@ class AutocompleterType extends AbstractType
         $builder->addViewTransformer(new AutocompleterTransformer($autocompleter, $options['autocompleter']['multiple']));
     }
 
-    /**
-     * @param FormView $view
-     * @param FormInterface $form
-     * @param array $options
-     */
     public function buildView(
         FormView $view,
         FormInterface $form,
@@ -95,18 +70,11 @@ class AutocompleterType extends AbstractType
         $this->environment->addGlobal('autocompleter_base_template', $view->vars['autocompleter']['base_template']);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $this->autocompleterTypeResolver->configureOptions($resolver);
     }
 
-    /**
-     * @param FormInterface $form
-     * @return array
-     */
     private function configurateOptionsByLevels(FormInterface $form): array
     {
         $passedOptions = $form->getConfig()->getAttribute('autocompleter/passed_options')['autocompleter'];
@@ -117,9 +85,6 @@ class AutocompleterType extends AbstractType
         return array_replace_recursive($autocompleterConfig, $passedOptions);
     }
 
-    /**
-     * @param FormView $view
-     */
     private function addNameBlockPrefixes(FormView $view): void
     {
         array_splice(
@@ -129,9 +94,6 @@ class AutocompleterType extends AbstractType
         );
     }
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return self::NAME;

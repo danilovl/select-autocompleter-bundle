@@ -7,25 +7,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DependentSelect implements ChildItemInterface
 {
-    /**
-     * @var string|null
-     */
-    public $parentProperty;  
-    
-    /**
-     * @var string|null
-     */
-    public $parentField; 
-    
-    /**
-     * @var string|null
-     */
-    public $manyToMany;
+    public ?string $parentProperty = null;
+    public ?string $parentField = null;
+    public ?string $manyToMany = null;
 
-    /**
-     * @param array $parameters
-     * @return self
-     */
     public static function fromConfig(array $parameters): self
     {
         $self = new self();

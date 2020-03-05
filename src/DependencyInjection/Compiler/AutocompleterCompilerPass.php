@@ -10,9 +10,6 @@ use Symfony\Component\Config\Definition\Processor;
 
 class AutocompleterCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $containerBuilder
-     */
     public function process(ContainerBuilder $containerBuilder): void
     {
         $configs = $containerBuilder->getExtensionConfig('danilovl_select_autocompleter');
@@ -46,11 +43,6 @@ class AutocompleterCompilerPass implements CompilerPassInterface
         }
     }
 
-    /**
-     * @param ConfigurationInterface $configuration
-     * @param array $configs
-     * @return array
-     */
     private function processConfiguration(ConfigurationInterface $configuration, array $configs): array
     {
         return (new Processor)->processConfiguration($configuration, $configs);

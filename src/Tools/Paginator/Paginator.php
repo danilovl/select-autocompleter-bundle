@@ -10,30 +10,18 @@ use Danilovl\SelectAutocompleterBundle\Tools\Paginator\Interfaces\{
 
 class Paginator implements PaginatorInterface
 {
-    /**
-     * @var PaginatorAdapterInterface
-     */
-    private $adapter;
+    private PaginatorAdapterInterface $adapter;
 
-    /**
-     * @param PaginatorBuilderObject $paginatorBuilderObject
-     */
     public function __construct(PaginatorBuilderObject $paginatorBuilderObject)
     {
         $this->adapter = (new PaginatorAdapterStrategy($paginatorBuilderObject))->chooseAdapter();
     }
 
-    /**
-     * @return int
-     */
     public function getTotalCount(): int
     {
         return $this->adapter->getTotalCount();
     }
 
-    /**
-     * @return array
-     */
     public function getResult(): array
     {
         return $this->adapter->getResult();

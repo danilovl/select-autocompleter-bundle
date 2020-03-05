@@ -7,15 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Repository implements ChildItemInterface
 {
-    /**
-     * @var string|null
-     */
-    public $method;
+    public ?string $method = null;
 
-    /**
-     * @param array $parameters
-     * @return self
-     */
     public static function fromConfig(array $parameters): self
     {
         $self = new self();

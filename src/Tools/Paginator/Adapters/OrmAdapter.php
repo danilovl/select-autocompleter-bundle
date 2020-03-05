@@ -12,30 +12,18 @@ use Doctrine\ORM\{
 
 class OrmAdapter implements PaginatorAdapterInterface
 {
-    /**
-     * @var DoctrineORMPaginator
-     */
-    private $ormPaginator;
+    private DoctrineORMPaginator $ormPaginator;
 
-    /**
-     * @param PaginatorBuilderObject $paginatorBuilderObject
-     */
     public function __construct(PaginatorBuilderObject $paginatorBuilderObject)
     {
         $this->ormPaginator = new DoctrineORMPaginator($paginatorBuilderObject->autocompleterQueryBuilder);
     }
 
-    /**
-     * @return int
-     */
     public function getTotalCount(): int
     {
         return $this->ormPaginator->count();
     }
 
-    /**
-     * @return array
-     */
     public function getResult(): array
     {
         return iterator_to_array($this->ormPaginator->getIterator());

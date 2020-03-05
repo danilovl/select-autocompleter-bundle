@@ -11,28 +11,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class AutocompleterContainer implements AutocompleterContainerInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
+	private ContainerInterface $container;
+	private array $autocompleters = [];
 
-    /**
-     * @var array
-     */
-    private $autocompleters = [];
-
-    /**
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
-    /**
-     * @param string $name
-     * @param string $serviceName
-     */
     public function addAutocompleter(string $name, string $serviceName): void
     {
         if (isset($this->autocompleters[$name])) {
@@ -42,10 +28,6 @@ class AutocompleterContainer implements AutocompleterContainerInterface
         $this->autocompleters[$name] = $serviceName;
     }
 
-    /**
-     * @param string $name
-     * @param string $serviceName
-     */
     public function replaceAutocompleter(string $name, string $serviceName): void
     {
         if (!isset($this->autocompleters[$name])) {
@@ -55,19 +37,11 @@ class AutocompleterContainer implements AutocompleterContainerInterface
         $this->autocompleters[$name] = $serviceName;
     }
 
-    /**
-     * @param string $name
-     * @return bool
-     */
     public function has(string $name): bool
     {
         return isset($this->autocompleters[$name]);
     }
 
-    /**
-     * @param string $name
-     * @return AutocompleterInterface
-     */
     public function get(string $name): AutocompleterInterface
     {
         $serviceId = $this->autocompleters[$name] ?? null;

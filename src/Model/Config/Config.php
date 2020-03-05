@@ -6,115 +6,28 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Config
 {
-    /**
-     * @var string|null
-     */
-    public $name;
+    public ?string $name = null;
+    public ?string $class = null;
+    public ?string $rootAliase = null;
+    public bool $multiple = false;
+    public ?string $idProperty = null;
+    public array $property = [];
+    public array $excludedEntityId = [];
+    public array $searchSimple = [];
+    public array $searchPattern = [];
+    public array $orderBy = [];
+    public array $where = [];
+    public ?string $manager = null;
+    public ?int $limit = null;
+    public ?string $widget = null;
+    public ?string $baseTemplate = null;
+    public ?ToString $toString = null;
+    public ?Cdn $cdn = null;
+    public ?SelectOption $selectOption = null;
+    public ?Security $security = null;
+    public ?Repository $repository = null;
+    public ?array $dependentSelects = [];
 
-    /**
-     * @var string|null
-     */
-    public $class;
-
-    /**
-     * @var string|null
-     */
-    public $rootAliase;
-
-    /**
-     * @var bool
-     */
-    public $multiple = false;
-
-    /**
-     * @var string|null
-     */
-    public $idProperty;
-
-    /**
-     * @var array
-     */
-    public $property;
-
-    /**
-     * @var array
-     */
-    public $excludedEntityId = [];
-
-    /**
-     * @var array
-     */
-    public $searchSimple = [];
-
-    /**
-     * @var array
-     */
-    public $searchPattern = [];
-
-    /**
-     * @var array
-     */
-    public $orderBy = [];
-
-    /**
-     * @var array
-     */
-    public $where = [];
-
-    /**
-     * @var string|null
-     */
-    public $manager;
-
-    /**
-     * @var int|null
-     */
-    public $limit;
-
-    /**
-     * @var string|null
-     */
-    public $widget;
-
-    /**
-     * @var string|null
-     */
-    public $baseTemplate;
-
-    /**
-     * @var ToString|null
-     */
-    public $toString;
-
-    /**
-     * @var Cdn|null
-     */
-    public $cdn;
-
-    /**
-     * @var SelectOption|null
-     */
-    public $selectOption;
-
-    /**
-     * @var Security|null
-     */
-    public $security;
-
-    /**
-     * @var Repository|null
-     */
-    public $repository;
-
-    /**
-     * @var DependentSelects[]|null
-     */
-    public $dependentSelects = [];
-
-    /**
-     * @param array $parameters
-     * @return self
-     */
     public static function fromConfig(array $parameters): self
     {
         $self = new self();

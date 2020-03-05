@@ -6,25 +6,10 @@ use Danilovl\SelectAutocompleterBundle\Model\Interfaces\ChildItemInterface;
 
 class ToString implements ChildItemInterface
 {
-    /**
-     * @var bool
-     */
-    public $auto = false;
-    
-    /**
-     * @var string|null
-     */
-    public $format;
+    public bool $auto = false;
+    public ?string $format = null;
+    public ?array $properties = [];
 
-    /**
-     * @var array|null
-     */
-    public $properties;
-
-    /**
-     * @param array $parameters
-     * @return self
-     */
     public static function fromConfig(array $parameters): self
     {
         $self = new self();

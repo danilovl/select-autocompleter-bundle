@@ -9,59 +9,17 @@ class DefaultOption
 {
     private const DIR_DEFAULT_CONFIG = '/../../Resources/config/default.yaml';
 
-    /**
-     * @var string|null
-     */
-    public $idProperty;
+    public ?string $idProperty = null;
+    public ?string $property = null;
+    public ?string $rootAlias = null;
+    public ?int $limit = null;
+    public ?string $baseTemplate = null;
+    public ?string $widget = null;
+    public ?SelectOption $selectOption = null;
+    public ?Cdn $cdn = null;
+    public ?Security $security = null;
+    public ?Security $rolePrefix = null;
 
-    /**
-     * @var string|null
-     */
-    public $property;
-    
-    /**
-     * @var string|null
-     */
-    public $rootAlias;
-
-    /**
-     * @var int|null
-     */
-    public $limit;
-
-    /**
-     * @var string|null
-     */
-    public $baseTemplate;
-
-    /**
-     * @var string|null
-     */
-    public $widget;
-
-    /**
-     * @var SelectOption|null
-     */
-    public $selectOption;
-
-    /**
-     * @var Cdn|null
-     */
-    public $cdn;
-
-    /**
-     * @var Security|null
-     */
-    public $security;
-    
-    /**
-     * @var Security|null
-     */
-    public $rolePrefix;
-
-    /**
-     * @return self
-     */
     public static function fromDefaultYaml(): self
     {
         $yaml = Yaml::parseFile(__DIR__ . self::DIR_DEFAULT_CONFIG);
@@ -69,10 +27,6 @@ class DefaultOption
         return self::fromConfig($yaml['default']);
     }
 
-    /**
-     * @param array $parameters
-     * @return self
-     */
     public static function fromConfig(array $parameters): self
     {
         $self = new self();

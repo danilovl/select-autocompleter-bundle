@@ -20,9 +20,6 @@ use RuntimeException;
 
 class OrmAutocompleter extends BaseAutocompleter
 {
-    /**
-     * @return QueryBuilder
-     */
     protected function createQueryBuilder(): QueryBuilder
     {
         if ($this->queryBuilder !== null) {
@@ -39,10 +36,6 @@ class OrmAutocompleter extends BaseAutocompleter
         return $builder;
     }
 
-    /**
-     * @param AutocompleterQuery $query
-     * @return QueryBuilder
-     */
     protected function createAutocompleterQueryBuilder(AutocompleterQuery $query): QueryBuilder
     {
         $builder = $this->createQueryBuilderByRepository($query);
@@ -61,9 +54,6 @@ class OrmAutocompleter extends BaseAutocompleter
         return $builder;
     }
 
-    /**
-     * @param QueryBuilder $builder
-     */
     private function addingWhere(QueryBuilder $builder): void
     {
         foreach ($this->config->where as $where) {
@@ -71,10 +61,6 @@ class OrmAutocompleter extends BaseAutocompleter
         }
     }
 
-    /**
-     * @param QueryBuilder $builder
-     * @param AutocompleterQuery $query
-     */
     private function addingSearchCondition(QueryBuilder $builder, AutocompleterQuery $query): void
     {
         if (empty($query->search)) {
@@ -102,9 +88,6 @@ class OrmAutocompleter extends BaseAutocompleter
         $builder->andWhere($or);
     }
 
-    /**
-     * @param QueryBuilder $builder
-     */
     private function addingOrderBy(QueryBuilder $builder): void
     {
         $alias = $this->config->rootAliase;
@@ -120,9 +103,6 @@ class OrmAutocompleter extends BaseAutocompleter
         }
     }
 
-    /**
-     * @param QueryBuilder $builder
-     */
     private function excludedEntityId(QueryBuilder $builder): void
     {
         $excludedEntityId = $this->config->excludedEntityId;
@@ -133,10 +113,6 @@ class OrmAutocompleter extends BaseAutocompleter
         }
     }
 
-    /**
-     * @param QueryBuilder $builder
-     * @param AutocompleterQuery $query
-     */
     private function addingDependentSelectCondition(
         QueryBuilder $builder,
         AutocompleterQuery $query
@@ -175,17 +151,11 @@ class OrmAutocompleter extends BaseAutocompleter
         }
     }
 
-    /**
-     * @return PaginatorInterface
-     */
     protected function createPaginator(): PaginatorInterface
     {
         return new Paginator($this->getPaginatorBuilder());
     }
 
-    /**
-     * @return PaginatorBuilderObject
-     */
     private function getPaginatorBuilder(): PaginatorBuilderObject
     {
         $paginatorBuilder = new PaginatorBuilderObject;
@@ -195,9 +165,6 @@ class OrmAutocompleter extends BaseAutocompleter
         return $paginatorBuilder;
     }
 
-    /**
-     * @return EntityLoaderInterface
-     */
     protected function getLoader(): EntityLoaderInterface
     {
         return new ORMQueryBuilderLoader($this->createQueryBuilder());

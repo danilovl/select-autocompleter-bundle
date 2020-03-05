@@ -10,55 +10,16 @@ use Danilovl\SelectAutocompleterBundle\Model\Config\{
 
 class AutocompleterTypeOption
 {
-    /**
-     * @var string|null
-     */
-    public $name;
+    public ?string $name = null;
+    public ?string $widget = null;
+    public ?string $baseTemplate = null;
+    public bool $compound = false;
+    public bool $multiple = false;
+    public array $extra = [];
+    public ?SelectOption $selectOption = null;
+    public ?Cdn $cdn = null;
+    public ?DependentSelect $dependentSelect = null;
 
-    /**
-     * @var string|null
-     */
-    public $widget;
-
-    /**
-     * @var string|null
-     */
-    public $baseTemplate;
-
-    /**
-     * @var bool
-     */
-    public $compound;
-
-    /**
-     * @var bool
-     */
-    public $multiple;
-
-    /**
-     * @var array
-     */
-    public $extra;
-
-    /**
-     * @var SelectOption
-     */
-    public $selectOption;
-
-    /**
-     * @var Cdn
-     */
-    public $cdn;
-
-    /**
-     * @var DependentSelect
-     */
-    public $dependentSelect;
-
-    /**
-     * @param array $parameters
-     * @return self
-     */
     public static function fromConfig(array $parameters): self
     {
         $self = new self();

@@ -7,20 +7,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DependentSelect implements ChildItemInterface
 {
-    /**
-     * @var string|null
-     */
-    public $name;
+    public ?string $name = null;
+    public ?string $parentField = null;
 
-    /**
-     * @var string|null
-     */
-    public $parentField;
-
-    /**
-     * @param array $parameters
-     * @return self
-     */
     public static function fromConfig(array $parameters): self
     {
         $self = new self();

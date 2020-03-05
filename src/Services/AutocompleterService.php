@@ -19,26 +19,10 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 class AutocompleterService
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
+    private ContainerInterface $container;
+    private AutocompleterContainerInterface $autocompleterContainer;
+    private TokenStorageInterface $tokenStorage;
 
-    /**
-     * @var AutocompleterContainerInterface
-     */
-    private $autocompleterContainer;
-
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
-
-    /**
-     * @param ContainerInterface $container
-     * @param AutocompleterContainerInterface $autocompleterContainer
-     * @param TokenStorageInterface $tokenStorage
-     */
     public function __construct(
         ContainerInterface $container,
         AutocompleterContainerInterface $autocompleterContainer,
@@ -49,11 +33,6 @@ class AutocompleterService
         $this->container = $container;
     }
 
-    /**
-     * @param Request $request
-     * @param string $name
-     * @return Result
-     */
     public function autocompeteFromRequest(Request $request, string $name): Result
     {
         $autocompleter = $this->getByName($name);
@@ -63,10 +42,6 @@ class AutocompleterService
         return $autocompleter->autocomplete(AutocompleterQuery::fromRequest($request));
     }
 
-    /**
-     * @param string $name
-     * @return AutocompleterInterface
-     */
     public function getByName(string $name): AutocompleterInterface
     {
         if (!$this->autocompleterContainer->has($name)) {
@@ -76,10 +51,6 @@ class AutocompleterService
         return $this->autocompleterContainer->get($name);
     }
 
-    /**
-     * @param AutocompleterInterface $autocompleter
-     * @return int
-     */
     public function isGranted(AutocompleterInterface $autocompleter): int
     {
         $voterName = $autocompleter->getConfig()->security->voter;
@@ -92,9 +63,6 @@ class AutocompleterService
         );
     }
 
-    /**
-     * @param AutocompleterInterface $autocompleter
-     */
     private function denyAccessUnlessGranted(AutocompleterInterface $autocompleter): void
     {
         if ($this->isGranted($autocompleter) === VoterInterface::ACCESS_DENIED) {
@@ -102,11 +70,6 @@ class AutocompleterService
         }
     }
 
-    /**
-     * @param string $message
-     * @param Exception|null $previous
-     * @return AccessDeniedException
-     */
     private function createAccessDeniedException(
         string $message = 'Access Denied.',
         Exception $previous = null

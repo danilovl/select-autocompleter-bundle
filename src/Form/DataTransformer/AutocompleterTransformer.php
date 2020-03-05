@@ -10,15 +10,8 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class AutocompleterTransformer implements DataTransformerInterface
 {
-    /**
-     * @var AutocompleteInterface
-     */
-    private $autocompleter;
-
-    /**
-     * @var bool
-     */
-    private $isMultiple;
+    private AutocompleterInterface $autocompleter;
+    private bool $isMultiple;
 
     /**
      * @param AutocompleterInterface $autocompleter
@@ -32,10 +25,6 @@ class AutocompleterTransformer implements DataTransformerInterface
         $this->isMultiple = $multiple;
     }
 
-    /**
-     * @param mixed $value
-     * @return array|mixed|null
-     */
     public function transform($value)
     {
         if ($value === null) {
@@ -59,10 +48,6 @@ class AutocompleterTransformer implements DataTransformerInterface
         return $result[0] ?? null;
     }
 
-    /**
-     * @param mixed $id
-     * @return array|mixed|null
-     */
     public function reverseTransform($id)
     {
         if ($id === null) {
@@ -83,10 +68,6 @@ class AutocompleterTransformer implements DataTransformerInterface
         return $result[0] ?? null;
     }
 
-    /**
-     * @param Item $item
-     * @return array
-     */
     protected function transformItemToArray(Item $item): array
     {
         return ArrayHelper::modelToArray($item);

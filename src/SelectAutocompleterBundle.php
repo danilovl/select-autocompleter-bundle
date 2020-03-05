@@ -9,9 +9,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class SelectAutocompleterBundle extends Bundle
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);
@@ -19,9 +16,6 @@ class SelectAutocompleterBundle extends Bundle
         $container->addCompilerPass(new AutocompleterCompilerPass);
     }
 
-    /**
-     * @return AutocompleterExtension
-     */
     public function getContainerExtension(): AutocompleterExtension
     {
         return new AutocompleterExtension;

@@ -18,9 +18,6 @@ class Configuration implements ConfigurationInterface
 {
     public const TREE_KEY_NAME = 'danilovl_select_autocompleter';
 
-    /**
-     * @return TreeBuilder
-     */
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $defaultOption = DefaultOption::fromDefaultYaml();
@@ -134,11 +131,6 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    /**
-     * @param ArrayNodeDefinition $rootNode
-     * @param string $name
-     * @param DefaultOption $defaultOption
-     */
     public function addConfiguration(
         ArrayNodeDefinition $rootNode,
         string $name,

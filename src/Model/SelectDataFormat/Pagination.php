@@ -4,15 +4,8 @@ namespace Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat;
 
 class Pagination
 {
-    /**
-     * @var bool
-     */
-    public $more = false;
+    public bool $more = false;
 
-    /**
-     * @param array $parameters
-     * @return static
-     */
     public static function fromConfig(array $parameters): self
     {
         $item = new self;
@@ -21,9 +14,6 @@ class Pagination
         return $item;
     }
 
-    /**
-     * @return array
-     */
     public function toArray(): array
     {
         return [

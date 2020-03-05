@@ -27,40 +27,17 @@ use Symfony\Component\OptionsResolver\{
 
 abstract class BaseAutocompleter implements AutocompleterInterface
 {
-    /**
-     * @var Config
-     */
-    protected $config;
-
-    /**
-     * @var Options
-     */
-    protected $options;
-
-    /**
-     * @var ManagerRegistry
-     */
-    protected $registry;
-
-    /**
-     * @var AutocompleterConfigResolver
-     */
-    protected $resolver;
-
-    /**
-     * @var AutocompleterQuery|null
-     */
-    protected $autocompleterQuery;
+    protected ?Config $config = null;
+    protected ?Options $options = null;
+    protected ManagerRegistry $registry;
+    protected AutocompleterConfigResolver $resolver;
+    protected ?AutocompleterQuery $autocompleterQuery = null;
 
     /**
      * @var QueryBuilder|Builder|null
      */
     protected $queryBuilder;
 
-    /**
-     * @param ManagerRegistry $registry
-     * @param AutocompleterConfigResolver $resolver
-     */
     public function __construct(
         ManagerRegistry $registry,
         AutocompleterConfigResolver $resolver
@@ -69,36 +46,22 @@ abstract class BaseAutocompleter implements AutocompleterInterface
         $this->resolver = $resolver;
     }
 
-    /**
-     * @param array $options
-     */
     public function addConfig(array $options): void
     {
         $this->config = $this->resolver->resolveConfig($options);
     }
 
-    /**
-     * @return Config
-     */
     public function getConfig(): Config
     {
         return $this->config;
     }
 
-    /**
-     * @param array $ids
-     * @return array
-     */
     public function reverseTransform(array $ids): array
     {
         return $this->getLoader()
             ->getEntitiesByIds($this->config->idProperty, $ids);
     }
 
-    /**
-     * @param array $objects
-     * @return Item[]
-     */
     public function transformObjectsToItem(array $objects): array
     {
         return array_map(function ($object) {
@@ -106,20 +69,11 @@ abstract class BaseAutocompleter implements AutocompleterInterface
         }, $objects);
     }
 
-    /**
-     * @param $object
-     * @return Item
-     */
     public function transformObjectToItem($object): Item
     {
         return Item::formObject($object, $this->config);
     }
 
-    /**
-     * @param AutocompleterQuery $query
-     * @return Result
-     * @throws Exception
-     */
     public function autocomplete(AutocompleterQuery $query): Result
     {
         $this->autocompleterQuery = $query;
@@ -135,9 +89,6 @@ abstract class BaseAutocompleter implements AutocompleterInterface
         return $result;
     }
 
-    /**
-     * @return ObjectManager
-     */
     protected function getManager(): ObjectManager
     {
         $manager = $this->config->manager;
@@ -157,7 +108,6 @@ abstract class BaseAutocompleter implements AutocompleterInterface
     }
 
     /**
-     * @param AutocompleterQuery $query
      * @return QueryBuilder|Builder|null
      */
     protected function createQueryBuilderByRepository(AutocompleterQuery $query)
@@ -178,22 +128,12 @@ abstract class BaseAutocompleter implements AutocompleterInterface
         return null;
     }
 
-    /**
-     * @param AutocompleterQuery $query
-     * @return int
-     */
     protected function getOffset(AutocompleterQuery $query): int
     {
         return ($query->page - 1) * $this->config->limit;
     }
 
-    /**
-     * @return EntityLoaderInterface
-     */
     abstract protected function getLoader(): EntityLoaderInterface;
 
-    /**
-     * @return PaginatorInterface
-     */
     abstract protected function createPaginator(): PaginatorInterface;
 }

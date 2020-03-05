@@ -7,15 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Attr implements ChildItemInterface
 {
-    /**
-     * @var string|null
-     */
-    public $placeholder;
+    public ?string $placeholder = null;
 
-    /**
-     * @param array $parameters
-     * @return self
-     */
     public static function fromConfig(array $parameters): self
     {
         $self = new self();

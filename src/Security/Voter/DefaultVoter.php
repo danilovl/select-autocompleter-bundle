@@ -15,24 +15,13 @@ class DefaultVoter extends Voter
         VoterSupportConstant::GET_DATA
     ];
 
-    /**
-     * @var Security
-     */
-    private $security;
+	private Security $security;
 
-    /**
-     * @param Security $security
-     */
     public function __construct(Security $security)
     {
         $this->security = $security;
     }
 
-    /**
-     * @param string $attribute
-     * @param mixed $subject
-     * @return bool
-     */
     protected function supports($attribute, $subject): bool
     {
         if (!in_array($attribute, self::SUPPORTS, true)) {
@@ -46,12 +35,6 @@ class DefaultVoter extends Voter
         return $this->checkHasRole($subject);
     }
 
-    /**
-     * @param string $attribute
-     * @param BaseAutocompleter $subject
-     * @param TokenInterface $token
-     * @return bool
-     */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
         if ($attribute === VoterSupportConstant::GET_DATA) {
@@ -61,10 +44,6 @@ class DefaultVoter extends Voter
         throw new LogicException('This code should not be reached!');
     }
 
-    /**
-     * @param AutocompleterInterface $subject
-     * @return bool
-     */
     private function checkHasRole(AutocompleterInterface $subject): bool
     {
         return !empty($subject->getConfig()->security->role);

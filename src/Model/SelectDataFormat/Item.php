@@ -7,21 +7,9 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class Item
 {
-    /**
-     * @var int|null
-     */
-    public $id;
+    public ?int $id = null;
+    public ?string $text = null;
 
-    /**
-     * @var string|null
-     */
-    public $text;
-
-    /**
-     * @param $object
-     * @param Config $config
-     * @return self
-     */
     public static function formObject(
         $object,
         Config $config
@@ -33,11 +21,6 @@ class Item
         return $item;
     }
 
-    /**
-     * @param $object
-     * @param Config $config
-     * @return string
-     */
     private static function getText(
         $object,
         Config $config

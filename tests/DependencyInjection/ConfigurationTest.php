@@ -18,9 +18,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class ConfigurationTest extends KernelTestCase
 {
-    /**
-     * @return void
-     */
     public function testConfiguration(): void
     {
         $configuration = new Configuration;
@@ -31,9 +28,6 @@ class ConfigurationTest extends KernelTestCase
         $this->expectNotToPerformAssertions();
     }
 
-    /**
-     * @return ContainerBuilder
-     */
     public function testLoad(): ContainerBuilder
     {
         $container = $this->prepareBuilder();
@@ -51,9 +45,6 @@ class ConfigurationTest extends KernelTestCase
     /**
      * @dataProvider dataProviderHasDefinition
      * @depends testLoad
-     * @param string $service
-     * @param bool $expected
-     * @param ContainerBuilder $container
      */
     public function testCreateDefinitionService(
         string $service,
@@ -63,9 +54,6 @@ class ConfigurationTest extends KernelTestCase
         $this->assertEquals($expected, $container->hasDefinition($service));
     }
 
-    /**
-     * @return ContainerBuilder
-     */
     private function prepareBuilder(): ContainerBuilder
     {
         $container = new ContainerBuilder;
@@ -74,9 +62,6 @@ class ConfigurationTest extends KernelTestCase
         return $container;
     }
 
-    /**
-     * @return Generator
-     */
     public function dataProviderHasDefinition(): Generator
     {
         yield ['danilovl.select_autocompleter.orm.shop', true];
@@ -84,9 +69,6 @@ class ConfigurationTest extends KernelTestCase
         yield ['danilovl.select_autocompleter.orm.not_exist', false];
     }
 
-    /**
-     * @return array
-     */
     private function getYamlConfigData(): array
     {
         return Yaml::parseFile(__DIR__ . DIRECTORY_SEPARATOR . 'test.yaml');

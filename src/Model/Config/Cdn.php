@@ -7,29 +7,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Cdn implements ChildItemInterface
 {
-    /**
-     * @var bool
-     */
-    public $auto = false;
+    public bool $auto = false;
+    public ?string $link = null;
+    public ?string $script = null;
 
-    /**
-     * @var string|null
-     */
-    public $link;
-
-    /**
-     * @var string|null
-     */
-    public $script;
-
-    /**
-     * @param array $parameters
-     * @return self
-     */
     public static function fromConfig(array $parameters): self
     {
         $self = new self();
-        $self->auto = $parameters['auto'] ?? null;
+        $self->auto = $parameters['auto'] ?? false;
         $self->link = $parameters['link'] ?? null;
         $self->script = $parameters['script'] ?? null;
 

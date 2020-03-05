@@ -7,30 +7,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DependentSelects implements ChildItemInterface
 {
-    /**
-     * @var string|null
-     */
-    public $name;
+    public ?string $name = null;
+    public ?string $parentProperty = null;
+    public ?string $parentField = null;
+    public ?string $manyToMany = null;
 
-    /**
-     * @var string|null
-     */
-    public $parentProperty;
-
-    /**
-     * @var string|null
-     */
-    public $parentField;
-
-    /**
-     * @var string|null
-     */
-    public $manyToMany;
-
-    /**
-     * @param array $parameters
-     * @return self
-     */
     public static function fromConfig(array $parameters): self
     {
         $self = new self();
@@ -42,10 +23,6 @@ class DependentSelects implements ChildItemInterface
         return $self;
     }
 
-    /**
-     * @param array $parameters
-     * @return DependentSelects[]
-     */
     public static function fromArrayConfig(array $parameters): array
     {
         return array_map(static function (array $parameter): self {

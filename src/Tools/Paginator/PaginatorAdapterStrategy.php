@@ -12,27 +12,14 @@ use RuntimeException;
 
 class PaginatorAdapterStrategy
 {
-    /**
-     * @var PaginatorAdapterInterface
-     */
-    private $adapter;
+    private ?PaginatorAdapterInterface $adapter = null;
+    private PaginatorBuilderObject $paginatorBuilderObject;
 
-    /**
-     * @var PaginatorBuilderObject
-     */
-    private $paginatorBuilderObject;
-
-    /**
-     * @param PaginatorBuilderObject $paginatorBuilderObject
-     */
     public function __construct(PaginatorBuilderObject $paginatorBuilderObject)
     {
         $this->paginatorBuilderObject = $paginatorBuilderObject;
     }
 
-    /**
-     * @return PaginatorAdapterInterface
-     */
     public function chooseAdapter(): PaginatorAdapterInterface
     {
         $class = get_class($this->paginatorBuilderObject->autocompleterQueryBuilder);
@@ -50,9 +37,6 @@ class PaginatorAdapterStrategy
         return $this->adapter;
     }
 
-    /**
-     * @return PaginatorAdapterInterface
-     */
     public function getAdapter(): PaginatorAdapterInterface
     {
         return $this->adapter;

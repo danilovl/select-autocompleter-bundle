@@ -7,20 +7,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Security implements ChildItemInterface
 {
-    /**
-     * @var string|null
-     */
-    public $voter;
+    public ?string $voter = null;
+    public ?array $role = null;
 
-    /**
-     * @var array|null
-     */
-    public $role;
-
-    /**
-     * @param array $parameters
-     * @return self
-     */
     public static function fromConfig(array $parameters): self
     {
         $self = new self();

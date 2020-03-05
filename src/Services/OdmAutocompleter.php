@@ -17,9 +17,6 @@ use MongoDB\BSON\Regex;
 
 class OdmAutocompleter extends BaseAutocompleter
 {
-    /**
-     * @return Builder
-     */
     protected function createBuilder(): Builder
     {
         if ($this->queryBuilder !== null) {
@@ -36,10 +33,6 @@ class OdmAutocompleter extends BaseAutocompleter
         return $builder;
     }
 
-    /**
-     * @param AutocompleterQuery $query
-     * @return Builder
-     */
     protected function createAutocompleterBuilder(AutocompleterQuery $query): Builder
     {
         $builder = $this->createQueryBuilderByRepository($query);
@@ -57,10 +50,6 @@ class OdmAutocompleter extends BaseAutocompleter
         return $builder;
     }
 
-    /**
-     * @param Builder $builder
-     * @param AutocompleterQuery $query
-     */
     private function addingSearchCondition(Builder $builder, AutocompleterQuery $query): void
     {
         $or = $builder->expr()->orX();
@@ -92,9 +81,6 @@ class OdmAutocompleter extends BaseAutocompleter
         $builder->addAnd($or);
     }
 
-    /**
-     * @param Builder $builder
-     */
     private function addingSort(Builder $builder): void
     {
         if (empty($this->config->orderBy)) {
@@ -108,9 +94,6 @@ class OdmAutocompleter extends BaseAutocompleter
         }
     }
 
-    /**
-     * @param Builder $builder
-     */
     private function addingWhere(Builder $builder): void
     {
         foreach ($this->config->where as $where) {
@@ -118,9 +101,6 @@ class OdmAutocompleter extends BaseAutocompleter
         }
     }
 
-    /**
-     * @param Builder $builder
-     */
     private function excludedEntityId(Builder $builder): void
     {
         $excludedEntityId = $this->config->excludedEntityId;
@@ -129,17 +109,11 @@ class OdmAutocompleter extends BaseAutocompleter
         }
     }
 
-    /**
-     * @return PaginatorInterface
-     */
     protected function createPaginator(): PaginatorInterface
     {
         return new Paginator($this->getPaginatorBuilder());
     }
 
-    /**
-     * @return PaginatorBuilderObject
-     */
     private function getPaginatorBuilder(): PaginatorBuilderObject
     {
         $paginatorBuilder = new PaginatorBuilderObject;
@@ -149,9 +123,6 @@ class OdmAutocompleter extends BaseAutocompleter
         return $paginatorBuilder;
     }
 
-    /**
-     * @return EntityLoaderInterface
-     */
     protected function getLoader(): EntityLoaderInterface
     {
         return new MongoDBQueryBuilderLoader($this->createBuilder());

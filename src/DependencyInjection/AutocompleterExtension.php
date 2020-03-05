@@ -19,9 +19,6 @@ class AutocompleterExtension extends Extension
     public const ALIAS = 'danilovl_select_autocompleter';
     private const DIR_CONFIG = '/../Resources/config';
 
-    /**
-     * {@inheritDoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration;
@@ -37,11 +34,6 @@ class AutocompleterExtension extends Extension
         $this->addingFormResources($container);
     }
 
-    /**
-     * @param ContainerBuilder $container
-     * @param YamlFileLoader $loader
-     * @param array $config
-     */
     private function processConfigurationAutocompleters(
         ContainerBuilder $container,
         YamlFileLoader $loader,
@@ -73,9 +65,6 @@ class AutocompleterExtension extends Extension
         }
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
     private function addingFormResources(ContainerBuilder $container): void
     {
         $container->setParameter(
@@ -87,13 +76,6 @@ class AutocompleterExtension extends Extension
         );
     }
 
-    /**
-     * @param ContainerBuilder $containerBuilder
-     * @param array $defaultConfig
-     * @param array $autocompleters
-     * @param string $parentService
-     * @param string $type
-     */
     private function createAutocompleterService(
         ContainerBuilder $containerBuilder,
         array $defaultConfig,
@@ -118,9 +100,6 @@ class AutocompleterExtension extends Extension
         }
     }
 
-    /**
-     * @return string
-     */
     public function getAlias(): string
     {
         return self::ALIAS;
