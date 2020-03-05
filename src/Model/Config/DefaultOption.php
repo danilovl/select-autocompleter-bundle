@@ -18,7 +18,7 @@ class DefaultOption
     public ?SelectOption $selectOption = null;
     public ?Cdn $cdn = null;
     public ?Security $security = null;
-    public ?Security $rolePrefix = null;
+    public ?string $rolePrefix = null;
 
     public static function fromDefaultYaml(): self
     {
