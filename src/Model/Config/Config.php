@@ -11,7 +11,7 @@ class Config
     public ?string $rootAliase = null;
     public bool $multiple = false;
     public ?string $idProperty = null;
-    public array $property = [];
+    public ?string $property = null;
     public array $excludedEntityId = [];
     public array $searchSimple = [];
     public array $searchPattern = [];
