@@ -16,7 +16,7 @@ class SelectOption implements ChildItemInterface
     public ?int $minimumSelectionLength = null;
     public bool $multiple = false;
     public ?string $placeholder = null;
-    public ?bool $width = null;
+    public ?string $width = null;
     public bool $scrollAfterSelect = false;
     public bool $selectOnClose = false;
     public ?string $language = null;
