@@ -537,24 +537,13 @@ class CustomAutocompleterVoter extends Voter
         VoterSupportConstant::GET_RESULT
     ];
 
-    /**
-     * @var Security
-     */
-    private $security;
+    private Security $security;
 
-    /**
-     * @param Security $security
-     */
     public function __construct(Security $security)
     {
         $this->security = $security;
     }
 
-    /**
-     * @param string $attribute
-     * @param mixed $subject
-     * @return bool
-     */
     protected function supports($attribute, $subject): bool
     {
         if (!in_array($attribute, self::SUPPORTS, true)) {
@@ -566,12 +555,6 @@ class CustomAutocompleterVoter extends Voter
         }
     }
 
-    /**
-     * @param string $attribute
-     * @param AutocompleterInterface $subject
-     * @param TokenInterface $token
-     * @return bool
-     */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
         if ($attribute === VoterSupportConstant::GET_RESULT) {
@@ -674,31 +657,25 @@ class City
     use LocationTrait;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="name", type="string", nullable=false)
      */
-    protected $name;
+    protected ?string $name = null;
 
     /**
-     * @var Country|null
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Country", inversedBy="cities")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_country", nullable=false, referencedColumnName="id")
      * })
      */
-    protected $country;
+    protected ?Country $country = null;
 
     /**
-     * @var Region|null
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Region", inversedBy="regions")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_region", nullable=false, referencedColumnName="id")
      * })
      */
-    protected $region;
+    protected ?Region $region = null;
 
     //other code
 }
@@ -718,9 +695,6 @@ use Danilovl\SelectAutocompleterBundle\Form\Type\AutocompleterType;
 
 class CityType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -815,9 +789,6 @@ use Danilovl\SelectAutocompleterBundle\Form\Type\AutocompleterType;
 
 class CityType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('shop', AutocompleterType::class, [
@@ -843,9 +814,6 @@ use Danilovl\SelectAutocompleterBundle\Form\Type\AutocompleterType;
 
 class CityType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('shop', AutocompleterType::class, [
@@ -915,16 +883,8 @@ use Danilovl\SelectAutocompleterBundle\Services\OrmAutocompleter;
 
 class CustomShopAutocompleter extends OrmAutocompleter
 {
-    /**
-     * @var ShopRepository
-     */
-    private $shopRepository;
+    private ShopRepository $shopRepository;
 
-    /**
-     * @param ManagerRegistry $registry
-     * @param AutocompleterConfigResolver $resolver
-     * @param ShopRepository $shopRepository
-     */
     public function __construct(
         ManagerRegistry $registry,
         AutocompleterConfigResolver $resolver,
@@ -935,18 +895,11 @@ class CustomShopAutocompleter extends OrmAutocompleter
         $this->shopRepository = $shopRepository;
     }
 
-    /**
-     * @return QueryBuilder
-     */
     public function createQueryBuilder(): QueryBuilder
     {
         return $this->shopRepository->baseQueryBuilder();
     }
 
-    /**
-     * @param AutocompleterQuery $query
-     * @return QueryBuilder
-     */
     protected function createAutocompleterQueryBuilder(AutocompleterQuery $query): QueryBuilder
     {
        return $this->shopRepository->queryBuilderFindNearestShopByName(
@@ -957,10 +910,6 @@ class CustomShopAutocompleter extends OrmAutocompleter
        );
     }
 
-    /**
-     * @param Shop $object
-     * @return Item
-     */
     public function transformObjectToItem($object): Item
     {
         $item = new Item;
@@ -985,9 +934,6 @@ use App\Autocompleter\CustomAutocompleter;
 
 class CityType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
        $builder->add('shop', CustomAutocompleter::class, [
