@@ -16,7 +16,7 @@ class AutocompleterQuery
     {
         $query = new self;
         $query->search = $request->get('search');
-        $query->page = $request->get('page', 1);
+        $query->page = $request->query->getInt('page', 1);
         $query->dependentName = $request->get('dependentName');
         $query->dependentId = $request->get('dependentId') ?? [];
         $query->extra = $request->get('extra') ?? [];
