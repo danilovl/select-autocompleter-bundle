@@ -12,6 +12,9 @@ class Config
     public bool $multiple = false;
     public ?string $idProperty = null;
     public ?string $property = null;
+    public ?string $image = null;
+    public ?string $imageResultWidth = null;
+    public ?string $imageSelectionWidth = null;
     public array $excludedEntityId = [];
     public array $searchSimple = [];
     public array $searchPattern = [];
@@ -38,6 +41,9 @@ class Config
         $self->idProperty = $parameters['id_property'] ?? null;
         $self->manager = $parameters['manager'] ?? null;
         $self->property = $parameters['property'] ?? null;
+        $self->image = $parameters['image'] ?? null;
+        $self->imageResultWidth = $parameters['image_result_width'] ?? null;
+        $self->imageSelectionWidth = $parameters['image_selection_width'] ?? null;
         $self->excludedEntityId = $parameters['excluded_entity_id'] ?? [];
         $self->searchSimple = $parameters['search_simple'] ?? [];
         $self->searchPattern = $parameters['search_pattern'] ?? [];

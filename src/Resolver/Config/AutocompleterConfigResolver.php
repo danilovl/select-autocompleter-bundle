@@ -15,44 +15,13 @@ use Symfony\Component\OptionsResolver\{
 
 class AutocompleterConfigResolver
 {
-    /**
-     * @var SelectOptionResolver
-     */
-    private $selectOptionResolver;
+    private SelectOptionResolver $selectOptionResolver;
+    private CdnResolver $cdnResolver;
+    private ToStringResolver $toStringResolver;
+    private SecurityResolver $securityResolver;
+    private RepositoryResolver $repositoryResolver;
+    private DependentSelectsResolver $dependentSelectResolver;
 
-    /**
-     * @var CdnResolver
-     */
-    private $cdnResolver;
-
-    /**
-     * @var ToStringResolver
-     */
-    private $toStringResolver;
-
-    /**
-     * @var SecurityResolver
-     */
-    private $securityResolver;
-
-    /**
-     * @var RepositoryResolver
-     */
-    private $repositoryResolver;
-
-    /**
-     * @var DependentSelectsResolvers
-     */
-    private $dependentSelectResolver;
-
-    /**
-     * @param SelectOptionResolver $selectOptionResolver
-     * @param CdnResolver $cdnResolver
-     * @param ToStringResolver $toStringResolver
-     * @param SecurityResolver $securityResolver
-     * @param RepositoryResolver $repositoryResolver
-     * @param DependentSelectsResolver $dependentSelectResolver
-     */
     public function __construct(
         SelectOptionResolver $selectOptionResolver,
         CdnResolver $cdnResolver,
@@ -69,19 +38,11 @@ class AutocompleterConfigResolver
         $this->dependentSelectResolver = $dependentSelectResolver;
     }
 
-    /**
-     * @param array $options
-     * @return Config
-     */
     public function resolveConfig(array $options): Config
     {
         return Config::fromConfig($this->resolve($options));
     }
 
-    /**
-     * @param array $options
-     * @return array
-     */
     public function resolve(array $options): array
     {
         $resolver = new OptionsResolver;
@@ -90,15 +51,15 @@ class AutocompleterConfigResolver
         return $resolver->resolve($options);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     private function configureOptions(OptionsResolver $resolver): void
     {
         $defaults = [
             'name' => null,
             'id_property' => null,
             'property' => null,
+            'image' => null,
+            'image_result_width' => null,
+            'image_selection_width' => null,
             'root_alias' => null,
             'where' => [],
             'order_by' => [],
@@ -138,6 +99,9 @@ class AutocompleterConfigResolver
             ->setAllowedTypes('name', 'string')
             ->setAllowedTypes('id_property', 'string')
             ->setAllowedTypes('property', 'string')
+            ->setAllowedTypes('image', ['string', 'null'])
+            ->setAllowedTypes('image_result_width', ['string', 'null'])
+            ->setAllowedTypes('image_selection_width', ['string', 'null'])
             ->setAllowedTypes('root_alias', 'string')
             ->setAllowedTypes('where', 'array')
             ->setAllowedTypes('order_by', 'array')

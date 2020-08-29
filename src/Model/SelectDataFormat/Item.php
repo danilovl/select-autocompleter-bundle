@@ -9,6 +9,7 @@ class Item
 {
     public ?int $id = null;
     public ?string $text = null;
+    public ?string $image = null;
 
     public static function formObject(
         $object,
@@ -17,6 +18,7 @@ class Item
         $item = new self;
         $item->id = (PropertyAccess::createPropertyAccessor())->getValue($object, $config->idProperty);
         $item->text = self::getText($object, $config);
+        $item->image = $config->image !== null ? (PropertyAccess::createPropertyAccessor())->getValue($object, $config->image) : null;
 
         return $item;
     }
@@ -30,11 +32,11 @@ class Item
 
         $text = null;
         if ($toString->auto === true) {
-            $text = (string)$object;
+            $text = (string) $object;
         } elseif (!empty($toString->properties)) {
             $properties = [];
             foreach ($toString->properties as $property) {
-                $properties[] = (string)$propertyAccess->getValue($object, $property);
+                $properties[] = (string) $propertyAccess->getValue($object, $property);
             }
 
             $text = implode(' ', $properties);

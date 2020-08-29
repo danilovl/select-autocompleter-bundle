@@ -11,6 +11,9 @@ class DefaultOption
 
     public ?string $idProperty = null;
     public ?string $property = null;
+    public ?string $image = null;
+    public ?string $imageResultWidth = null;
+    public ?string $imageSelectionWidth = null;
     public ?string $rootAlias = null;
     public ?int $limit = null;
     public ?string $baseTemplate = null;
@@ -32,6 +35,9 @@ class DefaultOption
         $self = new self();
         $self->idProperty = $parameters['id_property'] ?? null;
         $self->property = $parameters['property'] ?? null;
+        $self->image = $parameters['image'] ?? null;
+        $self->imageResultWidth = $parameters['image_result_width'] ?? null;
+        $self->imageSelectionWidth = $parameters['image_selection_width'] ?? null;
         $self->rootAlias = $parameters['root_alias'] ?? null;
         $self->limit = $parameters['limit'] ?? null;
         $self->baseTemplate = $parameters['base_template'] ?? null;

@@ -49,7 +49,7 @@
                     selectOnClose: {{ autocompleter.select_option.select_on_close ? 'true' : 'false' }},
                     theme: '{{ autocompleter.select_option.theme }}',
                     amdBase: '{{ autocompleter.select_option.amd_base }}',
-                    amdLanguageBase: '{{ autocompleter.select_option.amd_language_base }}'
+                    amdLanguageBase: '{{ autocompleter.select_option.amd_language_base }}',
                 };
              {% endblock %}
 
@@ -89,6 +89,25 @@
                         extra: {{ autocompleter.extra | default({}) | json_encode | raw }}
                     }
                 };
+             {% endblock %}
+
+             {% block options_image %}
+                {% if autocompleter.image is not empty %}
+                    options.templateResult = function (item) {
+                        if (item.image && item.image.length !== 0) {
+                            return $("<span><img width='{{ autocompleter.image_result_width }}' src='" + item.image + "'/> " + item.text + "</span>");
+                        } else {
+                            return $("<span>" + item.text + "</span>");
+                        }
+                    };
+                    options.templateSelection = function (item) {
+                        if (item.image && item.image.length !== 0) {
+                            return $("<span><img width='{{ autocompleter.image_selection_width }}' src='" + item.image + "'/> " + item.text + "</span>");
+                        } else {
+                            return $("<span>" + item.text + "</span>");
+                        }
+                    }
+                {% endif %}
              {% endblock %}
 
              {% block initialize %}
