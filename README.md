@@ -51,6 +51,8 @@ System default options for all autocompleters, which will be used if necessary.
 default:
   id_property: 'id'
   property: 'name'
+  image_result_width: '100px'
+  image_selection_width: '18px'
   widget: 'select2_v4'
   root_alias: 'e'
   limit: 10
@@ -86,6 +88,9 @@ danilovl_select_autocompleter:
     id_property: 'id'
     root_alias: 'e'
     property: 'name'
+    image: 'image'
+    image_result_width: '100px'
+    image_selection_width: '18px'
     limit: 10
     base_template: '@SelectAutocompleter/Form/versions.html.twig'  
     cdn:
