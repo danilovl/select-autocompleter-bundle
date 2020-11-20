@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AutocompleterController
 {
-	private AutocompleterService $autocompleterService;
+    private AutocompleterService $autocompleterService;
 
     public function __construct(AutocompleterService $autocompleterService)
     {

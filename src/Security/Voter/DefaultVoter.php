@@ -15,7 +15,7 @@ class DefaultVoter extends Voter
         VoterSupportConstant::GET_DATA
     ];
 
-	private Security $security;
+    private Security $security;
 
     public function __construct(Security $security)
     {

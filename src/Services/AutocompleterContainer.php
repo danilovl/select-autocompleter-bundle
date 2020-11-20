@@ -11,8 +11,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class AutocompleterContainer implements AutocompleterContainerInterface
 {
-	private ContainerInterface $container;
-	private array $autocompleters = [];
+    private ContainerInterface $container;
+    private array $autocompleters = [];
 
     public function __construct(ContainerInterface $container)
     {
