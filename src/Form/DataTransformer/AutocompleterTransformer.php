@@ -32,7 +32,7 @@ class AutocompleterTransformer implements DataTransformerInterface
         }
 
         if ($this->isMultiple && !($value instanceof iterable)) {
-            throw new TransformationFailedException();
+            throw new TransformationFailedException;
         }
 
         $value = !$this->isMultiple ? [$value] : $value;

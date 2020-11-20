@@ -33,7 +33,7 @@ class Config
 
     public static function fromConfig(array $parameters): self
     {
-        $self = new self();
+        $self = new self;
         $self->name = $parameters['name'] ?? null;
         $self->class = $parameters['class'] ?? null;
         $self->rootAliase = $parameters['root_alias'] ?? null;

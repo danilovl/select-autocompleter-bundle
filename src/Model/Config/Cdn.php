@@ -13,7 +13,7 @@ class Cdn implements ChildItemInterface
 
     public static function fromConfig(array $parameters): self
     {
-        $self = new self();
+        $self = new self;
         $self->auto = $parameters['auto'] ?? false;
         $self->link = $parameters['link'] ?? null;
         $self->script = $parameters['script'] ?? null;

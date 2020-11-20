@@ -12,7 +12,7 @@ class Security implements ChildItemInterface
 
     public static function fromConfig(array $parameters): self
     {
-        $self = new self();
+        $self = new self;
         $self->voter = $parameters['voter'] ?? null;
         $self->role = $parameters['role'] ?? null;
 

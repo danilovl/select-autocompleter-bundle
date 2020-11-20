@@ -22,7 +22,7 @@ class AutocompleterTypeOption
 
     public static function fromConfig(array $parameters): self
     {
-        $self = new self();
+        $self = new self;
         $self->name = $parameters['name'] ?? null;
         $self->widget = $parameters['widget'] ?? null;
         $self->baseTemplate = $parameters['base_template'] ?? null;

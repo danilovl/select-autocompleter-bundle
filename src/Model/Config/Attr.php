@@ -11,7 +11,7 @@ class Attr implements ChildItemInterface
 
     public static function fromConfig(array $parameters): self
     {
-        $self = new self();
+        $self = new self;
         $self->placeholder = $parameters['placeholder'] ?? null;
 
         return $self;

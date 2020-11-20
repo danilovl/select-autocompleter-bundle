@@ -13,7 +13,7 @@ class DependentSelect implements ChildItemInterface
 
     public static function fromConfig(array $parameters): self
     {
-        $self = new self();
+        $self = new self;
         $self->parentProperty = $parameters['parent_property'] ?? null;
         $self->parentField = $parameters['parent_field'] ?? null;
         $self->manyToMany = $parameters['many_to_many'] ?? null;

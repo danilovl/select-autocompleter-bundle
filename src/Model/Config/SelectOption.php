@@ -27,7 +27,7 @@ class SelectOption implements ChildItemInterface
 
     public static function fromConfig(array $parameters): self
     {
-        $self = new self();
+        $self = new self;
         $self->placeholder = $parameters['placeholder'] ?? null;
         $self->delay = $parameters['delay'] ?? null;
         $self->dir = $parameters['dir'] ?? null;

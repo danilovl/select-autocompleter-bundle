@@ -12,7 +12,7 @@ class DependentSelect implements ChildItemInterface
 
     public static function fromConfig(array $parameters): self
     {
-        $self = new self();
+        $self = new self;
         $self->name = $parameters['name'] ?? null;
         $self->parentField = $parameters['parent_field'] ?? null;
 

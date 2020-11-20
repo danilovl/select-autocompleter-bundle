@@ -12,7 +12,7 @@ class ToString implements ChildItemInterface
 
     public static function fromConfig(array $parameters): self
     {
-        $self = new self();
+        $self = new self;
         $self->auto = $parameters['auto'] ?? false;
         $self->format = $parameters['format'] ?? null;
         $self->properties = $parameters['properties'] ?? [];

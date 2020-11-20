@@ -32,7 +32,7 @@ class DefaultOption
 
     public static function fromConfig(array $parameters): self
     {
-        $self = new self();
+        $self = new self;
         $self->idProperty = $parameters['id_property'] ?? null;
         $self->property = $parameters['property'] ?? null;
         $self->image = $parameters['image'] ?? null;
