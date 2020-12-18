@@ -3,10 +3,11 @@
 namespace Danilovl\SelectAutocompleterBundle\Proxy;
 
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\ResolvedFormType;
 
-class AutocompeleterResolvedFormType extends \Symfony\Component\Form\ResolvedFormType
+class AutocompeleterResolvedFormType extends ResolvedFormType
 {
-    public function createBuilder(FormFactoryInterface $factory, string $name, array $options = [])
+    public function createBuilder(FormFactoryInterface $factory, string $name, array $options = []): mixed
     {
         $builder = parent::createBuilder($factory, $name, $options);
 

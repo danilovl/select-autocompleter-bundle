@@ -13,11 +13,9 @@ use RuntimeException;
 class PaginatorAdapterStrategy
 {
     private ?PaginatorAdapterInterface $adapter = null;
-    private PaginatorBuilderObject $paginatorBuilderObject;
 
-    public function __construct(PaginatorBuilderObject $paginatorBuilderObject)
+    public function __construct(private PaginatorBuilderObject $paginatorBuilderObject)
     {
-        $this->paginatorBuilderObject = $paginatorBuilderObject;
     }
 
     public function chooseAdapter(): PaginatorAdapterInterface

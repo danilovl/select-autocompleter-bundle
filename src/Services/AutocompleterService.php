@@ -19,18 +19,11 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 class AutocompleterService
 {
-    private ContainerInterface $container;
-    private AutocompleterContainerInterface $autocompleterContainer;
-    private TokenStorageInterface $tokenStorage;
-
     public function __construct(
-        ContainerInterface $container,
-        AutocompleterContainerInterface $autocompleterContainer,
-        TokenStorageInterface $tokenStorage
+        private ContainerInterface $container,
+        private AutocompleterContainerInterface $autocompleterContainer,
+        private TokenStorageInterface $tokenStorage
     ) {
-        $this->autocompleterContainer = $autocompleterContainer;
-        $this->tokenStorage = $tokenStorage;
-        $this->container = $container;
     }
 
     public function autocompeteFromRequest(Request $request, string $name): Result

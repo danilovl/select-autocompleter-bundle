@@ -17,10 +17,10 @@
         }
     },
     "require": {
-        "php": "^7.4.0",
+        "php": "^8.0.0",
         "symfony/framework-bundle": "^5.0",
         "symfony/form": "^5.0",
-        "danilovl/static-container-twig-extension-bundle": "^2.0.0"
+        "danilovl/static-container-twig-extension-bundle": "^3.0.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.0"

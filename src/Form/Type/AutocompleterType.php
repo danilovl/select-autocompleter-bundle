@@ -25,18 +25,11 @@ class AutocompleterType extends AbstractType
 {
     public const NAME = 'select_autocompleter';
 
-    private AutocompleterContainerInterface $autocompleterContainer;
-    private AutocompleterTypeResolver $autocompleterTypeResolver;
-    private Environment $environment;
-
     public function __construct(
-        AutocompleterContainerInterface $autocompleterContainer,
-        AutocompleterTypeResolver $autocompleterTypeResolver,
-        Environment $environment
+        private AutocompleterContainerInterface $autocompleterContainer,
+        private AutocompleterTypeResolver $autocompleterTypeResolver,
+        private Environment $environment
     ) {
-        $this->autocompleterContainer = $autocompleterContainer;
-        $this->autocompleterTypeResolver = $autocompleterTypeResolver;
-        $this->environment = $environment;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

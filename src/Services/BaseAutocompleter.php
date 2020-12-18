@@ -29,8 +29,6 @@ abstract class BaseAutocompleter implements AutocompleterInterface
 {
     protected ?Config $config = null;
     protected ?Options $options = null;
-    protected ManagerRegistry $registry;
-    protected AutocompleterConfigResolver $resolver;
     protected ?AutocompleterQuery $autocompleterQuery = null;
 
     /**
@@ -39,11 +37,9 @@ abstract class BaseAutocompleter implements AutocompleterInterface
     protected $queryBuilder;
 
     public function __construct(
-        ManagerRegistry $registry,
-        AutocompleterConfigResolver $resolver
+        protected ManagerRegistry $registry,
+        protected AutocompleterConfigResolver $resolver
     ) {
-        $this->registry = $registry;
-        $this->resolver = $resolver;
     }
 
     public function addConfig(array $options): void

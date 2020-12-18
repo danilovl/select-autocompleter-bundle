@@ -10,10 +10,6 @@ use Symfony\Component\OptionsResolver\{
 
 class SecurityResolver
 {
-    /**
-     * @param OptionsResolver $resolver
-     * @param Security $security
-     */
     public function configureOptions(
         OptionsResolver $resolver,
         Security $security = null
@@ -23,11 +19,6 @@ class SecurityResolver
         ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     * @param Security $security
-     * @return callable
-     */
     public function getConfigureOptions(
         OptionsResolver $resolver,
         Security $security

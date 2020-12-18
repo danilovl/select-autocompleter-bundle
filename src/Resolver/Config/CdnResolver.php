@@ -10,10 +10,6 @@ use Symfony\Component\OptionsResolver\{
 
 class CdnResolver
 {
-    /**
-     * @param OptionsResolver $resolver
-     * @param Cdn $cdn
-     */
     public function configureOptions(
         OptionsResolver $resolver,
         Cdn $cdn = null
@@ -23,11 +19,6 @@ class CdnResolver
         ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     * @param Cdn $cdn
-     * @return callable
-     */
     public function getConfigureOptions(
         OptionsResolver $resolver,
         Cdn $cdn

@@ -22,47 +22,14 @@ use Symfony\Component\OptionsResolver\{
 
 class AutocompleterTypeResolver
 {
-    /**
-     * @var SelectOptionResolver
-     */
-    private $selectOptionResolver;
-
-    /**
-     * @var CdnResolver
-     */
-    private $cdnResolver;
-
-    /**
-     * @var ToStringResolver
-     */
-    private $toStringResolver;
-
-    /**
-     * @var DependentSelectResolver
-     */
-    private $dependentSelectResolver;
-
-    /**
-     * @param SelectOptionResolver $selectOptionResolver
-     * @param CdnResolver $cdnResolver
-     * @param ToStringResolver $toStringResolver
-     * @param DependentSelectResolver $dependentSelectResolver
-     */
     public function __construct(
-        SelectOptionResolver $selectOptionResolver,
-        CdnResolver $cdnResolver,
-        ToStringResolver $toStringResolver,
-        DependentSelectResolver $dependentSelectResolver
+        private SelectOptionResolver $selectOptionResolver,
+        private CdnResolver $cdnResolver,
+        private ToStringResolver $toStringResolver,
+        private DependentSelectResolver $dependentSelectResolver
     ) {
-        $this->selectOptionResolver = $selectOptionResolver;
-        $this->cdnResolver = $cdnResolver;
-        $this->toStringResolver = $toStringResolver;
-        $this->dependentSelectResolver = $dependentSelectResolver;
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $defaults = [

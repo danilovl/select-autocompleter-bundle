@@ -6,11 +6,11 @@ use Danilovl\SelectAutocompleterBundle\Model\Interfaces\ChildItemInterface;
 
 class ArrayHelper
 {
-    public static function modelToArray($object): array
+    public static function modelToArray(mixed $object): array
     {
         $result = [];
 
-        foreach ((array)$object as $key => $value) {
+        foreach ((array) $object as $key => $value) {
             $keyUnderscore = StringHelper::changeToUnderscore($key);
             $result[$keyUnderscore] = $value;
 

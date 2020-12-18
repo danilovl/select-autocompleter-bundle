@@ -10,10 +10,6 @@ use Symfony\Component\OptionsResolver\{
 
 class RepositoryResolver
 {
-    /**
-     * @param OptionsResolver $resolver
-     * @param Repository $repository
-     */
     public function configureOptions(
         OptionsResolver $resolver,
         Repository $repository = null
@@ -23,11 +19,6 @@ class RepositoryResolver
         ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     * @param Repository $repository
-     * @return callable
-     */
     public function getConfigureOptions(
         OptionsResolver $resolver,
         Repository $repository

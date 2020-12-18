@@ -10,10 +10,6 @@ use Symfony\Component\OptionsResolver\{
 
 class DependentSelectsResolver
 {
-    /**
-     * @param OptionsResolver $resolver
-     * @param DependentSelects $dependentSelects
-     */
     public function configureOptions(
         OptionsResolver $resolver,
         DependentSelects $dependentSelects = null
@@ -25,11 +21,6 @@ class DependentSelectsResolver
         ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     * @param DependentSelects $dependentSelects
-     * @return callable
-     */
     public function getConfigureOptions(
         OptionsResolver $resolver,
         DependentSelects $dependentSelects

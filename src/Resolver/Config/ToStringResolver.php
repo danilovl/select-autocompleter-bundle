@@ -10,24 +10,15 @@ use Symfony\Component\OptionsResolver\{
 
 class ToStringResolver
 {
-    /**
-     * @param OptionsResolver $resolver
-     * @param ToString $toStringOption
-     */
     public function configureOptions(
         OptionsResolver $resolver,
         ToString $toStringOption = null
     ): void {
         $resolver->setDefaults([
-            'to_string' => $this->getConfigureOptions($resolver, $toStringOption?? new ToString)
+            'to_string' => $this->getConfigureOptions($resolver, $toStringOption ?? new ToString)
         ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     * @param ToString $toStringOption
-     * @return callable
-     */
     public function getConfigureOptions(
         OptionsResolver $resolver,
         ToString $toStringOption

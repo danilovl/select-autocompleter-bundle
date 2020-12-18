@@ -11,12 +11,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class AutocompleterContainer implements AutocompleterContainerInterface
 {
-    private ContainerInterface $container;
     private array $autocompleters = [];
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(private ContainerInterface $container)
     {
-        $this->container = $container;
     }
 
     public function addAutocompleter(string $name, string $serviceName): void

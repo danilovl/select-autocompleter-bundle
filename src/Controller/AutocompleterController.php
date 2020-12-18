@@ -12,11 +12,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AutocompleterController
 {
-    private AutocompleterService $autocompleterService;
-
-    public function __construct(AutocompleterService $autocompleterService)
+    public function __construct(private AutocompleterService $autocompleterService)
     {
-        $this->autocompleterService = $autocompleterService;
     }
 
     public function autocomplete(Request $request, string $name): JsonResponse

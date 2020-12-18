@@ -2,18 +2,14 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Resolver\Config;
 
- use Danilovl\SelectAutocompleterBundle\Model\Config\SelectOption;
- use Symfony\Component\OptionsResolver\{
+use Danilovl\SelectAutocompleterBundle\Model\Config\SelectOption;
+use Symfony\Component\OptionsResolver\{
     Options,
     OptionsResolver
 };
 
 class SelectOptionResolver
 {
-    /**
-     * @param OptionsResolver $resolver
-     * @param SelectOption $selectOption
-     */
     public function configureOptions(
         OptionsResolver $resolver,
         SelectOption $selectOption = null
@@ -23,11 +19,6 @@ class SelectOptionResolver
         ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     * @param SelectOption $selectOptions
-     * @return callable
-     */
     public function getConfigureOptions(
         OptionsResolver $resolver,
         SelectOption $selectOptions

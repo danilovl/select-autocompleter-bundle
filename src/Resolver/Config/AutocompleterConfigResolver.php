@@ -15,27 +15,14 @@ use Symfony\Component\OptionsResolver\{
 
 class AutocompleterConfigResolver
 {
-    private SelectOptionResolver $selectOptionResolver;
-    private CdnResolver $cdnResolver;
-    private ToStringResolver $toStringResolver;
-    private SecurityResolver $securityResolver;
-    private RepositoryResolver $repositoryResolver;
-    private DependentSelectsResolver $dependentSelectResolver;
-
     public function __construct(
-        SelectOptionResolver $selectOptionResolver,
-        CdnResolver $cdnResolver,
-        ToStringResolver $toStringResolver,
-        SecurityResolver $securityResolver,
-        RepositoryResolver $repositoryResolver,
-        DependentSelectsResolver $dependentSelectResolver
+        private SelectOptionResolver $selectOptionResolver,
+        private CdnResolver $cdnResolver,
+        private ToStringResolver $toStringResolver,
+        private SecurityResolver $securityResolver,
+        private RepositoryResolver $repositoryResolver,
+        private DependentSelectsResolver $dependentSelectResolver
     ) {
-        $this->selectOptionResolver = $selectOptionResolver;
-        $this->cdnResolver = $cdnResolver;
-        $this->toStringResolver = $toStringResolver;
-        $this->securityResolver = $securityResolver;
-        $this->repositoryResolver = $repositoryResolver;
-        $this->dependentSelectResolver = $dependentSelectResolver;
     }
 
     public function resolveConfig(array $options): Config
@@ -62,7 +49,6 @@ class AutocompleterConfigResolver
             'image_selection_width' => null,
             'root_alias' => null,
             'where' => [],
-            'order_by' => [],
             'excluded_entity_id' => [],
             'limit' => null,
             'manager' => null,

@@ -4,6 +4,7 @@ namespace Danilovl\SelectAutocompleterBundle\Services;
 
 use Danilovl\SelectAutocompleterBundle\Model\Config\DependentSelect;
 use Danilovl\SelectAutocompleterBundle\Model\Paginator\PaginatorBuilderObject;
+use Doctrine\DBAL\Connection;
 use Danilovl\SelectAutocompleterBundle\Constant\{
     SearchConstant,
     OrderByConstant
@@ -109,7 +110,7 @@ class OrmAutocompleter extends BaseAutocompleter
         if (!empty($excludedEntityId)) {
             $field = sprintf('%s.%s', $this->config->rootAliase, $this->config->idProperty);
             $builder->andWhere($builder->expr()->notIn($field, ':autocompleter_excluded_id'))
-                ->setParameter('autocompleter_excluded_id', [1], \Doctrine\DBAL\Connection::PARAM_INT_ARRAY);
+                ->setParameter('autocompleter_excluded_id', [1], Connection::PARAM_INT_ARRAY);
         }
     }
 
@@ -147,7 +148,7 @@ class OrmAutocompleter extends BaseAutocompleter
             }
 
             $builder->andWhere($builder->expr()->in($property, ':autocompleter_parent_id'))
-                ->setParameter('autocompleter_parent_id', $dependentIds, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY);
+                ->setParameter('autocompleter_parent_id', $dependentIds, Connection::PARAM_INT_ARRAY);
         }
     }
 
