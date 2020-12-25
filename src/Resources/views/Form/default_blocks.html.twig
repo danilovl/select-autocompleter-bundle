@@ -63,6 +63,9 @@
                     dataType: 'json',
                     delay: {{ autocompleter.select_option.delay }},
                     cache: {{ autocompleter.select_option.cache ? 'true' : 'false' }},
+                    beforeSend: function() {
+                        selectElement.html('');
+                    }
                 };
              {% endblock %}
 
