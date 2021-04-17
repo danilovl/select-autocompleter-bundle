@@ -8,7 +8,6 @@ use Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolv
 use Danilovl\SelectAutocompleterBundle\Tools\Paginator\Interfaces\PaginatorInterface;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ODM\MongoDB\Query\Builder;
-use Exception;
 use InvalidArgumentException;
 use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\{
     Item,
@@ -16,7 +15,7 @@ use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\{
     Pagination
 };
 use Danilovl\SelectAutocompleterBundle\Services\Interfaces\AutocompleterInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use RuntimeException;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityLoaderInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -60,9 +59,7 @@ abstract class BaseAutocompleter implements AutocompleterInterface
 
     public function transformObjectsToItem(array $objects): array
     {
-        return array_map(function ($object) {
-            return $this->transformObjectToItem($object);
-        }, $objects);
+        return array_map(fn(object $object): Item => $this->transformObjectToItem($object), $objects);
     }
 
     public function transformObjectToItem($object): Item

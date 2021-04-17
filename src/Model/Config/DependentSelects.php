@@ -25,8 +25,6 @@ class DependentSelects implements ChildItemInterface
 
     public static function fromArrayConfig(array $parameters): array
     {
-        return array_map(static function (array $parameter): self {
-            return self::fromConfig($parameter);
-        }, $parameters);
+        return array_map(fn(array $parameter): self => self::fromConfig($parameter), $parameters);
     }
 }

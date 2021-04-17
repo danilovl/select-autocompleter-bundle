@@ -53,9 +53,7 @@ class AutocompleterType extends AbstractType
             $values = $options['autocompleter']['multiple'] ? $value : [$value];
         }
 
-        $ids = array_map(function ($item) {
-            return $item['id'];
-        }, $values);
+        $ids = array_map(fn(array $item): int => $item['id'], $values);
 
         $view->vars['autocompleter']['ids'] = $ids;
         $view->vars['autocompleter']['values'] = $values;
