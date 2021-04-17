@@ -62,7 +62,7 @@ abstract class BaseAutocompleter implements AutocompleterInterface
         return array_map(fn(object $object): Item => $this->transformObjectToItem($object), $objects);
     }
 
-    public function transformObjectToItem($object): Item
+    public function transformObjectToItem(object $object): Item
     {
         return Item::formObject($object, $this->config);
     }

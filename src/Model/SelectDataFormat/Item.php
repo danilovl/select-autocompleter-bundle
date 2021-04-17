@@ -12,7 +12,7 @@ class Item
     public ?string $image = null;
 
     public static function formObject(
-        $object,
+        object $object,
         Config $config
     ): self {
         $item = new self;
@@ -24,7 +24,7 @@ class Item
     }
 
     private static function getText(
-        $object,
+        object $object,
         Config $config
     ): string {
         $propertyAccess = PropertyAccess::createPropertyAccessor();

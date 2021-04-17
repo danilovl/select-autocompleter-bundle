@@ -18,7 +18,7 @@ interface AutocompleterInterface
 
     public function transformObjectsToItem(array $objects): array;
 
-    public function transformObjectToItem($object): Item;
+    public function transformObjectToItem(object $object): Item;
 
     public function reverseTransform(array $ids): array;
 }
