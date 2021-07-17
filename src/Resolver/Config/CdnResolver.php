@@ -15,7 +15,7 @@ class CdnResolver
         Cdn $cdn = null
     ): void {
         $resolver->setDefaults([
-            'cdn' => $this->getConfigureOptions($resolver, $cdn ??  new Cdn)
+            'cdn' => $this->getConfigureOptions($resolver, $cdn ?? new Cdn)
         ]);
     }
 
@@ -23,7 +23,7 @@ class CdnResolver
         OptionsResolver $resolver,
         Cdn $cdn
     ): callable {
-        return function (OptionsResolver $resolver) use ($cdn): void {
+        return static function (OptionsResolver $resolver) use ($cdn): void {
             $resolver
                 ->setDefaults([
                     'auto' => $cdn->auto,

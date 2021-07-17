@@ -23,7 +23,7 @@ class RepositoryResolver
         OptionsResolver $resolver,
         Repository $repository
     ): callable {
-        return function (OptionsResolver $resolver) use ($repository): void {
+        return static function (OptionsResolver $resolver) use ($repository): void {
             $resolver
                 ->setDefaults([
                     'method' => $repository->method,

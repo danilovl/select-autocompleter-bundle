@@ -21,16 +21,11 @@ class PaginatorAdapterStrategy
     public function chooseAdapter(): PaginatorAdapterInterface
     {
         $class = get_class($this->paginatorBuilderObject->autocompleterQueryBuilder);
-        switch ($class) {
-            case "Doctrine\ORM\QueryBuilder":
-                $this->adapter = new OrmAdapter($this->paginatorBuilderObject);
-                break;
-            case "Doctrine\ODM\MongoDB\Query\Builder":
-                $this->adapter = new OdmAdapter($this->paginatorBuilderObject);
-                break;
-            default:
-                throw new RuntimeException(sprintf('Adapter for class %s not found', $class));
-        }
+        $this->adapter = match ($class) {
+            "Doctrine\ORM\QueryBuilder" => new OrmAdapter($this->paginatorBuilderObject),
+            "Doctrine\ODM\MongoDB\Query\Builder" => new OdmAdapter($this->paginatorBuilderObject),
+            default => throw new RuntimeException(sprintf('Adapter for class %s not found', $class)),
+        };
 
         return $this->adapter;
     }

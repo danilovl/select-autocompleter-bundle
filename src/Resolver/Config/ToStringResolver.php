@@ -23,7 +23,7 @@ class ToStringResolver
         OptionsResolver $resolver,
         ToString $toStringOption
     ): callable {
-        return function (OptionsResolver $resolver) use ($toStringOption): void {
+        return static function (OptionsResolver $resolver) use ($toStringOption): void {
             $resolver
                 ->setDefaults([
                     'auto' => $toStringOption->auto,

@@ -32,7 +32,7 @@ class DefaultVoter extends Voter
         return $this->checkHasRole($subject);
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         if ($attribute === VoterSupportConstant::GET_DATA) {
             return $this->security->isGranted($subject->getConfig()->security->role);

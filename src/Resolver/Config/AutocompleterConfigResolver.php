@@ -72,7 +72,7 @@ class AutocompleterConfigResolver
         $this->dependentSelectResolver->configureOptions($resolver);
 
         $resolver
-            ->setNormalizer('search_simple', function (Options $options, $value) {
+            ->setNormalizer('search_simple', static function (Options $options, array $value): array {
                 if (empty($value) && !empty($options['property'])) {
                     $value = [
                         $options['property'] => SearchConstant::ANY

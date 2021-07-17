@@ -25,7 +25,7 @@ class DependentSelectsResolver
         OptionsResolver $resolver,
         DependentSelects $dependentSelects
     ): callable {
-        return function (OptionsResolver $resolver) use ($dependentSelects): void {
+        return static function (OptionsResolver $resolver) use ($dependentSelects): void {
             $resolver
                 ->setDefaults([
                     'parent_property' => $dependentSelects->parentProperty,

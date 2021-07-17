@@ -40,15 +40,11 @@ class AutocompleterExtension extends Extension
         array $config
     ): void {
         foreach ($config as $key => $parameters) {
-            $parentService = null;
-            switch ($key) {
-                case ServiceConstant::ORM:
-                    $parentService = ServiceConstant::PARENT_SERVICE_ORM;
-                    break;
-                case ServiceConstant::ODM:
-                    $parentService = ServiceConstant::PARENT_SERVICE_ODM;
-                    break;
-            }
+            $parentService = match ($key) {
+                ServiceConstant::ORM => ServiceConstant::PARENT_SERVICE_ORM,
+                ServiceConstant::ODM => ServiceConstant::PARENT_SERVICE_ODM,
+                default => null,
+            };
 
             if ($parentService !== null && !empty($parameters)) {
                 $loader->load("{$key}.yaml");
@@ -59,8 +55,6 @@ class AutocompleterExtension extends Extension
                     $parentService,
                     $key
                 );
-
-                $parentService = null;
             }
         }
     }

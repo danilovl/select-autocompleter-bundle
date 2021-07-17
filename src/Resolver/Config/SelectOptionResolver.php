@@ -23,7 +23,7 @@ class SelectOptionResolver
         OptionsResolver $resolver,
         SelectOption $selectOptions
     ): callable {
-        return function (OptionsResolver $resolver) use ($selectOptions): void {
+        return static function (OptionsResolver $resolver) use ($selectOptions): void {
             $resolver
                 ->setDefaults([
                     'placeholder' => $selectOptions->placeholder,

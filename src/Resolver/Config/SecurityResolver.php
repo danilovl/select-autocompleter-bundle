@@ -23,7 +23,7 @@ class SecurityResolver
         OptionsResolver $resolver,
         Security $security
     ): callable {
-        return function (OptionsResolver $resolver) use ($security): void {
+        return static function (OptionsResolver $resolver) use ($security): void {
             $resolver
                 ->setDefaults([
                     'voter' => $security->voter,

@@ -91,10 +91,8 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->arrayNode('cdn')
                             ->beforeNormalization()
-                                ->ifTrue(function (array $cdn): bool {
-                                    return isset($cdn['auto']) && $cdn['auto'] === true;
-                                })
-                                ->then(function (array $cdn) use ($defaultOption): array {
+                                ->ifTrue(fn(array $cdn): bool => isset($cdn['auto']) && $cdn['auto'] === true)
+                                ->then(static function (array $cdn) use ($defaultOption): array {
                                     $cdn['link'] = $defaultOption->cdn->link;
                                     $cdn['script'] = $defaultOption->cdn->script;
 
@@ -115,9 +113,7 @@ class Configuration implements ConfigurationInterface
                                 ->arrayNode('role')
                                     ->prototype('scalar')
                                         ->validate()
-                                            ->ifTrue(function (string $role) use ($defaultOption): bool {
-                                                return strpos($role, $defaultOption->rolePrefix) === false;
-                                            })
+                                            ->ifTrue(static fn(string $role): bool => !str_contains($role, $defaultOption->rolePrefix))
                                             ->thenInvalid(sprintf('Role must be start with %s', $defaultOption->rolePrefix))
                                         ->end()
                                     ->end()
@@ -226,9 +222,7 @@ class Configuration implements ConfigurationInterface
                                     ->arrayNode('role')
                                         ->prototype('scalar')
                                             ->validate()
-                                                ->ifTrue(function (string $role) use ($defaultOption): bool {
-                                                    return strpos($role, $defaultOption->rolePrefix) === false;
-                                                })
+                                                ->ifTrue(static fn(string $role): bool => !str_contains($role, $defaultOption->rolePrefix))
                                                 ->thenInvalid(sprintf('Role must be start with %s', $defaultOption->rolePrefix))
                                             ->end()
                                         ->end()

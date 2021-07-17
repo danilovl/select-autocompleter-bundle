@@ -34,7 +34,7 @@ class AutocompleterTypeResolver
     {
         $defaults = [
             'compound' => false,
-            'autocompleter' => function (OptionsResolver $resolver) {
+            'autocompleter' => function (OptionsResolver $resolver): void {
                 $resolver
                     ->setDefaults([
                         'name' => null,
