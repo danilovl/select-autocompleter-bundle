@@ -1,3 +1,5 @@
+[![phpunit](https://github.com/danilovl/select-autocompleter-bundle/actions/workflows/phpunit.yml/badge.svg)](https://github.com/danilovl/select-autocompleter-bundle/actions/workflows/phpunit.yml)
+
 # SelectAutocompleterBundle #
 
 ## About ##

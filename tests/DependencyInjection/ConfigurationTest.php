@@ -7,13 +7,8 @@ use Danilovl\SelectAutocompleterBundle\DependencyInjection\{
     AutocompleterExtension
 };
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\DependencyInjection\{
-    ContainerBuilder,
-    ContainerInterface
-};
-use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Yaml;
 
 class ConfigurationTest extends KernelTestCase
@@ -50,7 +45,7 @@ class ConfigurationTest extends KernelTestCase
         string $service,
         bool $expected,
         ContainerBuilder $container
-    ) {
+    ): void {
         $this->assertEquals($expected, $container->hasDefinition($service));
     }
 

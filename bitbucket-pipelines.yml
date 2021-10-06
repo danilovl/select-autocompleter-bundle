@@ -1,0 +1,10 @@
+image: php:8.0.0-alpine
+
+pipelines:
+  default:
+    - step:
+        name: phpunit
+        script:
+          - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+          - composer install
+          - vendor/bin/phpunit tests

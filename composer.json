@@ -9,7 +9,9 @@
         }
     ],
     "autoload": {
-        "psr-4": { "Danilovl\\SelectAutocompleterBundle\\": "src/" }
+        "psr-4": {
+            "Danilovl\\SelectAutocompleterBundle\\": "src/"
+        }
     },
     "autoload-dev": {
         "psr-4": {
@@ -23,6 +25,8 @@
         "danilovl/static-container-twig-extension-bundle": "^3.0.0"
     },
     "require-dev": {
+        "phpunit/phpunit": "^9.2",
+        "symfony/yaml": "^5.0",
         "symfony/phpunit-bridge": "^5.0"
     }
 }

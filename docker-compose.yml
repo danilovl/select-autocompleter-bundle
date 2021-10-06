@@ -1,0 +1,16 @@
+version: '2.4'
+
+services:
+  php:
+    build:
+      context: ./
+      dockerfile: ./docker/php/Dockerfile
+    expose:
+      - '9000'
+    volumes:
+      - "./:/var/www/html/app"
+      - "/var/www/html/app/vendor"
+      - "./docker/php/conf/php-fpm.conf:/etc/php-fpm.conf"
+      - "./docker/php/conf/php.ini:/usr/local/etc/php/conf.d/100-php.ini"
+    working_dir: /var/www/html/app
+    mem_limit: 2g
