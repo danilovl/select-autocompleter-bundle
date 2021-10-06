@@ -2,16 +2,16 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Danilovl\SelectAutocompleterBundle\DependencyInjection\{
     Configuration,
     AutocompleterExtension
 };
 use Generator;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Yaml;
 
-class ConfigurationTest extends KernelTestCase
+class ConfigurationTest extends TestCase
 {
     public function testConfiguration(): void
     {
