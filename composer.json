@@ -3,6 +3,7 @@
     "type": "symfony-bundle",
     "description": "Symfony select ajax autocomleter bundle",
     "keywords": ["php","symfony","bundle","symfony"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Vladimir Danilov"

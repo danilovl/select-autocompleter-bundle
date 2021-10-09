@@ -1,4 +1,7 @@
 [![phpunit](https://github.com/danilovl/select-autocompleter-bundle/actions/workflows/phpunit.yml/badge.svg)](https://github.com/danilovl/select-autocompleter-bundle/actions/workflows/phpunit.yml)
+[![downloads](https://img.shields.io/packagist/dt/danilovl/select-autocompleter-bundle)](https://packagist.org/packages/danilovl/select-autocompleter-bundle)
+[![latest Stable Version](https://img.shields.io/packagist/v/danilovl/select-autocompleter-bundle)](https://packagist.org/packages/danilovl/select-autocompleter-bundle)
+[![license](https://img.shields.io/packagist/l/danilovl/select-autocompleter-bundle)](https://packagist.org/packages/danilovl/select-autocompleter-bundle)
 
 # SelectAutocompleterBundle #
 
@@ -1040,3 +1043,7 @@ danilovl_select_autocompleter:
       property: 'username'   
       base_template: 'autocompleter/custom_widget_template.html.twig'  
 ```
+
+## License
+
+The SelectAutocompleterBundle is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
