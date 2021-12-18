@@ -14,7 +14,7 @@ class AutocompleterResolvedFormTypeFactory extends ResolvedFormTypeFactory
         FormTypeInterface $type,
         array $typeExtensions,
         ResolvedFormTypeInterface $parent = null
-    ) {
+    ): ResolvedFormTypeInterface {
         return new AutocompeleterResolvedFormType($type, $typeExtensions, $parent);
     }
 }

@@ -48,6 +48,11 @@ class AutocompleterService
     {
         $voterName = $autocompleter->getConfig()->security->voter;
         $voter = $this->container->get($voterName);
+        $token = $this->tokenStorage->getToken();
+
+        if ($token === null) {
+            return VoterInterface::ACCESS_ABSTAIN;
+        }
 
         return $voter->vote(
             $this->tokenStorage->getToken(),
