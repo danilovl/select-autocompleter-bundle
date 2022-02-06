@@ -20,7 +20,7 @@
         }
     },
     "require": {
-        "php": "^8.0.0",
+        "php": "^8.1.0",
         "symfony/framework-bundle": "^5.0 || ^6.0",
         "symfony/form": "^5.0 || ^6.0",
         "danilovl/static-container-twig-extension-bundle": "^3.0.5"
