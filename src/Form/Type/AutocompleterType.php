@@ -4,21 +4,15 @@ namespace Danilovl\SelectAutocompleterBundle\Form\Type;
 
 use Danilovl\SelectAutocompleterBundle\Form\DataTransformer\AutocompleterTransformer;
 use Danilovl\SelectAutocompleterBundle\Helper\ArrayHelper;
+use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterContainerInterface;
 use Danilovl\SelectAutocompleterBundle\Resolver\Form\AutocompleterTypeResolver;
-use Danilovl\SelectAutocompleterBundle\Services\Interfaces\AutocompleterContainerInterface;
 use Symfony\Component\Form\{
-    FormEvent,
-    FormEvents,
     FormView,
     AbstractType,
     FormInterface,
     FormBuilderInterface
 };
-use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
-use Symfony\Component\OptionsResolver\{
-    Options,
-    OptionsResolver
-};
+use Symfony\Component\OptionsResolver\{OptionsResolver};
 use Twig\Environment;
 
 class AutocompleterType extends AbstractType

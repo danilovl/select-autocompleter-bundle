@@ -3,7 +3,6 @@
 namespace Danilovl\SelectAutocompleterBundle\Model\Config;
 
 use Danilovl\SelectAutocompleterBundle\Model\Interfaces\ChildItemInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class Attr implements ChildItemInterface
 {

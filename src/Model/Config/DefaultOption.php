@@ -2,7 +2,6 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Model\Config;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Yaml\Yaml;
 
 class DefaultOption

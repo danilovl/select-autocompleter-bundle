@@ -6,10 +6,8 @@ use Symfony\Component\DependencyInjection\{
     ChildDefinition,
     ContainerBuilder
 };
-use Danilovl\SelectAutocompleterBundle\Constant\{
-    ConfigConstant,
-    ServiceConstant
-};
+use Danilovl\SelectAutocompleterBundle\Constant\ServiceConstant;
+use Danilovl\SelectAutocompleterBundle\Service\AutocompleterContainer;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -77,7 +75,7 @@ class AutocompleterExtension extends Extension
         string $parentService,
         string $type
     ): void {
-        $autocompleterContainer = $containerBuilder->getDefinition('danilovl.select_autocompleter.container');
+        $autocompleterContainer = $containerBuilder->getDefinition(AutocompleterContainer::class);
         foreach ($autocompleters as $autocompleterConfig) {
             $autocompleterConfig = array_replace_recursive($defaultConfig, $autocompleterConfig);
 

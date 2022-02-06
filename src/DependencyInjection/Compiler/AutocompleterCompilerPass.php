@@ -3,6 +3,7 @@
 namespace Danilovl\SelectAutocompleterBundle\DependencyInjection\Compiler;
 
 use Danilovl\SelectAutocompleterBundle\DependencyInjection\Configuration;
+use Danilovl\SelectAutocompleterBundle\Service\AutocompleterContainer;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -16,7 +17,7 @@ class AutocompleterCompilerPass implements CompilerPassInterface
         $configuration = new Configuration;
         $config = $this->processConfiguration($configuration, $configs);
 
-        $autocompleterContainer = $containerBuilder->getDefinition('danilovl.select_autocompleter.container');
+        $autocompleterContainer = $containerBuilder->getDefinition(AutocompleterContainer::class);
         $taggedServices = $containerBuilder->findTaggedServiceIds('danilovl.select_autocompleter.autocompleter');
 
         foreach ($taggedServices as $id => $tags) {

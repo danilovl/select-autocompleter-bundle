@@ -10,7 +10,7 @@ class ArrayHelper
     {
         $result = [];
 
-        foreach ((array) $object as $key => $value) {
+        foreach ((array)$object as $key => $value) {
             $keyUnderscore = StringHelper::changeToUnderscore($key);
             $result[$keyUnderscore] = $value;
 

@@ -2,13 +2,11 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Controller;
 
-use Danilovl\SelectAutocompleterBundle\Services\AutocompleterService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Danilovl\SelectAutocompleterBundle\Service\AutocompleterService;
 use Symfony\Component\HttpFoundation\{
     Request,
     JsonResponse
 };
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AutocompleterController
 {

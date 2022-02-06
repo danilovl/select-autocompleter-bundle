@@ -3,7 +3,6 @@
 namespace Danilovl\SelectAutocompleterBundle\Model\Config;
 
 use Danilovl\SelectAutocompleterBundle\Model\Interfaces\ChildItemInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class DependentSelects implements ChildItemInterface
 {
@@ -25,6 +24,6 @@ class DependentSelects implements ChildItemInterface
 
     public static function fromArrayConfig(array $parameters): array
     {
-        return array_map(fn(array $parameter): self => self::fromConfig($parameter), $parameters);
+        return array_map(static fn(array $parameter): self => self::fromConfig($parameter), $parameters);
     }
 }

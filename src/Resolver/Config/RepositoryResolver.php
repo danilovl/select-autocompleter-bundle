@@ -3,10 +3,7 @@
 namespace Danilovl\SelectAutocompleterBundle\Resolver\Config;
 
 use Danilovl\SelectAutocompleterBundle\Model\Config\Repository;
-use Symfony\Component\OptionsResolver\{
-    Options,
-    OptionsResolver
-};
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RepositoryResolver
 {
@@ -15,14 +12,12 @@ class RepositoryResolver
         Repository $repository = null
     ): void {
         $resolver->setDefaults([
-            'repository' => $this->getConfigureOptions($resolver, $repository ?? new Repository)
+            'repository' => $this->getConfigureOptions($repository ?? new Repository)
         ]);
     }
 
-    public function getConfigureOptions(
-        OptionsResolver $resolver,
-        Repository $repository
-    ): callable {
+    public function getConfigureOptions(Repository $repository): callable
+    {
         return static function (OptionsResolver $resolver) use ($repository): void {
             $resolver
                 ->setDefaults([

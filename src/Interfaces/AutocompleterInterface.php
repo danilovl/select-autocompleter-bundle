@@ -1,10 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Danilovl\SelectAutocompleterBundle\Services\Interfaces;
+namespace Danilovl\SelectAutocompleterBundle\Interfaces;
 
 use Danilovl\SelectAutocompleterBundle\Model\Autocompleter\AutocompleterQuery;
 use Danilovl\SelectAutocompleterBundle\Model\Config\Config;
-use Danilovl\SelectAutocompleterBundle\Model\Config\DefaultOption;
 use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\{
     Item,
     Result

@@ -3,10 +3,7 @@
 namespace Danilovl\SelectAutocompleterBundle\Resolver\Config;
 
 use Danilovl\SelectAutocompleterBundle\Model\Config\DependentSelect;
-use Symfony\Component\OptionsResolver\{
-    Options,
-    OptionsResolver
-};
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DependentSelectResolver
 {
@@ -15,14 +12,12 @@ class DependentSelectResolver
         DependentSelect $repository
     ): void {
         $resolver->setDefaults([
-            'dependent_select' => $this->getConfigureOptions($resolver, $repository)
+            'dependent_select' => $this->getConfigureOptions($repository)
         ]);
     }
 
-    public function getConfigureOptions(
-        OptionsResolver $resolver,
-        DependentSelect $dependentSelect
-    ): callable {
+    public function getConfigureOptions(DependentSelect $dependentSelect): callable
+    {
         return static function (OptionsResolver $resolver) use ($dependentSelect): void {
             $resolver
                 ->setDefaults([

@@ -3,10 +3,7 @@
 namespace Danilovl\SelectAutocompleterBundle\Resolver\Config;
 
 use Danilovl\SelectAutocompleterBundle\Model\Config\Cdn;
-use Symfony\Component\OptionsResolver\{
-    Options,
-    OptionsResolver
-};
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CdnResolver
 {
@@ -15,14 +12,12 @@ class CdnResolver
         Cdn $cdn = null
     ): void {
         $resolver->setDefaults([
-            'cdn' => $this->getConfigureOptions($resolver, $cdn ?? new Cdn)
+            'cdn' => $this->getConfigureOptions($cdn ?? new Cdn)
         ]);
     }
 
-    public function getConfigureOptions(
-        OptionsResolver $resolver,
-        Cdn $cdn
-    ): callable {
+    public function getConfigureOptions(Cdn $cdn): callable
+    {
         return static function (OptionsResolver $resolver) use ($cdn): void {
             $resolver
                 ->setDefaults([

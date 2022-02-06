@@ -3,10 +3,10 @@
 namespace Danilovl\SelectAutocompleterBundle\Security\Voter;
 
 use Danilovl\SelectAutocompleterBundle\Constant\VoterSupportConstant;
-use Danilovl\SelectAutocompleterBundle\Services\Interfaces\AutocompleterInterface;
+use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterInterface;
 use LogicException;
-use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
 
 class DefaultVoter extends Voter

@@ -3,10 +3,11 @@
 namespace Danilovl\SelectAutocompleterBundle\Form\DataTransformer;
 
 use Danilovl\SelectAutocompleterBundle\Helper\ArrayHelper;
+use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterInterface;
 use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\Item;
-use Danilovl\SelectAutocompleterBundle\Services\Interfaces\AutocompleterInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
+use Traversable;
 
 class AutocompleterTransformer implements DataTransformerInterface
 {
@@ -22,7 +23,7 @@ class AutocompleterTransformer implements DataTransformerInterface
             return null;
         }
 
-        if ($this->isMultiple && !($value instanceof iterable)) {
+        if ($this->isMultiple && !($value instanceof Traversable)) {
             throw new TransformationFailedException;
         }
 

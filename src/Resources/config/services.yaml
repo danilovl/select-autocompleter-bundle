@@ -1,23 +1,19 @@
 services:
-  danilovl.select_autocompleter.container:
-    class: Danilovl\SelectAutocompleterBundle\Services\AutocompleterContainer
-    arguments:
-      - '@service_container'
-    public: false
-
-  danilovl.select_autocompleter.autocompleter:
-    class: Danilovl\SelectAutocompleterBundle\Services\AutocompleterService
-    arguments:
-      - '@service_container'
-      - '@danilovl.select_autocompleter.container'
-      - '@security.token_storage'
+  _defaults:
+    autowire: true
     public: true
 
-  danilovl.select_autocompleter.controller:
-    class: Danilovl\SelectAutocompleterBundle\Controller\AutocompleterController
+  Danilovl\SelectAutocompleterBundle\Service\AutocompleterContainer:
     arguments:
-      - "@danilovl.select_autocompleter.autocompleter"
-    public: true
+      - '@service_container'
+
+  Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterContainerInterface: '@Danilovl\SelectAutocompleterBundle\Service\AutocompleterContainer'
+
+  Danilovl\SelectAutocompleterBundle\Service\AutocompleterService:
+    arguments:
+      $container: '@service_container'
+
+  Danilovl\SelectAutocompleterBundle\Controller\AutocompleterController: ~
 
   form.resolved_type_factory:
     class: Danilovl\SelectAutocompleterBundle\Proxy\AutocompleterResolvedFormTypeFactory

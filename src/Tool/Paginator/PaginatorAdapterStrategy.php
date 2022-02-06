@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Danilovl\SelectAutocompleterBundle\Tools\Paginator;
+namespace Danilovl\SelectAutocompleterBundle\Tool\Paginator;
 
 use Danilovl\SelectAutocompleterBundle\Model\Paginator\PaginatorBuilderObject;
-use Danilovl\SelectAutocompleterBundle\Tools\Paginator\Adapters\{
+use Danilovl\SelectAutocompleterBundle\Tool\Paginator\Adapters\{
     OdmAdapter,
     OrmAdapter
 };
-use Danilovl\SelectAutocompleterBundle\Tools\Paginator\Interfaces\PaginatorAdapterInterface;
+use Danilovl\SelectAutocompleterBundle\Tool\Paginator\Interfaces\PaginatorAdapterInterface;
 use RuntimeException;
 
 class PaginatorAdapterStrategy

@@ -2,7 +2,7 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Constant;
 
-class SearchConstant
+enum SearchConstant
 {
     public const ANY = 'any';
     public const START = 'start';

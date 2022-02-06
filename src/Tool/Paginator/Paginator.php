@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Danilovl\SelectAutocompleterBundle\Tools\Paginator;
+namespace Danilovl\SelectAutocompleterBundle\Tool\Paginator;
 
 use Danilovl\SelectAutocompleterBundle\Model\Paginator\PaginatorBuilderObject;
-use Danilovl\SelectAutocompleterBundle\Tools\Paginator\Interfaces\{
+use Danilovl\SelectAutocompleterBundle\Tool\Paginator\Interfaces\{
     PaginatorInterface,
     PaginatorAdapterInterface
 };

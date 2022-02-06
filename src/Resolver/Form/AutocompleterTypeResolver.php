@@ -3,11 +3,7 @@
 namespace Danilovl\SelectAutocompleterBundle\Resolver\Form;
 
 use Danilovl\SelectAutocompleterBundle\Model\Config\SelectOption;
-use Danilovl\SelectAutocompleterBundle\Resolver\Config\{
-    CdnResolver,
-    ToStringResolver,
-    SelectOptionResolver
-};
+use Danilovl\SelectAutocompleterBundle\Resolver\Config\SelectOptionResolver;
 use Danilovl\SelectAutocompleterBundle\Model\Form\DependentSelect;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
@@ -15,17 +11,12 @@ use Symfony\Bridge\Doctrine\Form\ChoiceList\{
     EntityLoaderInterface,
     ORMQueryBuilderLoader
 };
-use Symfony\Component\OptionsResolver\{
-    Options,
-    OptionsResolver
-};
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AutocompleterTypeResolver
 {
     public function __construct(
         private SelectOptionResolver $selectOptionResolver,
-        private CdnResolver $cdnResolver,
-        private ToStringResolver $toStringResolver,
         private DependentSelectResolver $dependentSelectResolver
     ) {
     }

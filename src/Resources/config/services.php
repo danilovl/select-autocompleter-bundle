@@ -2,41 +2,33 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Danilovl\SelectAutocompleterBundle\Services\{
+use Danilovl\SelectAutocompleterBundle\Service\{
     AutocompleterService,
     AutocompleterContainer
 };
 use Danilovl\SelectAutocompleterBundle\Controller\AutocompleterController;
-use Danilovl\SelectAutocompleterBundle\Form\Type\AutocompleterType;
+use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterContainerInterface;
 use Danilovl\SelectAutocompleterBundle\Proxy\AutocompleterResolvedFormTypeFactory;
 
 return static function (ContainerConfigurator $container): void {
-    $container->services()
-        ->set('danilovl.select_autocompleter.container', AutocompleterContainer::class)
-        ->args([
-            service('service_container')
-        ])
-        ->private()
-        ->alias(AutocompleterContainer::class, 'danilovl.select_autocompleter.container');
+    $services = $container->services()
+        ->defaults()
+        ->autowire()
+        ->public();
 
-    $container->services()
-        ->set('danilovl.select_autocompleter.autocompleter', AutocompleterService::class)
-        ->args([
-            service('service_container'),
-            service('danilovl.select_autocompleter.container'),
-            service('security.token_storage')
-        ])
+    $services
+        ->set(AutocompleterContainer::class, AutocompleterContainer::class)
+        ->arg('$container', service('service_container'))
+        ->alias(AutocompleterContainerInterface::class, AutocompleterContainer::class);
+
+    $services
+        ->set(AutocompleterService::class, AutocompleterService::class)
+        ->arg('$container', service('service_container'));
+
+    $services
+        ->set(AutocompleterController::class, AutocompleterController::class)
         ->public()
-        ->alias(AutocompleterService::class, 'danilovl.select_autocompleter.autocompleter');
+        ->autowire();
 
-    $container->services()
-        ->set('danilovl.select_autocompleter.controller', AutocompleterController::class)
-        ->args([
-            service('danilovl.select_autocompleter.autocompleter')
-        ])
-        ->public()
-        ->alias(AutocompleterController::class, 'danilovl.select_autocompleter.controller');
-
-    $container->services()
-        ->set('form.resolved_type_factory', AutocompleterResolvedFormTypeFactory::class);
+    $services->set('form.resolved_type_factory', AutocompleterResolvedFormTypeFactory::class);
 };

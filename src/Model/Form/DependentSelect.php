@@ -3,7 +3,6 @@
 namespace Danilovl\SelectAutocompleterBundle\Model\Form;
 
 use Danilovl\SelectAutocompleterBundle\Model\Interfaces\ChildItemInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class DependentSelect implements ChildItemInterface
 {

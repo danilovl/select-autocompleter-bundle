@@ -1,11 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Danilovl\SelectAutocompleterBundle\Services;
+namespace Danilovl\SelectAutocompleterBundle\Service;
 
-use Danilovl\SelectAutocompleterBundle\Services\Interfaces\{
-    AutocompleterInterface,
-    AutocompleterContainerInterface
-};
+use Danilovl\SelectAutocompleterBundle\Interfaces\{AutocompleterContainerInterface};
+use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterInterface;
 use InvalidArgumentException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

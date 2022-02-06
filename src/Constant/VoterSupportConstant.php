@@ -2,7 +2,7 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Constant;
 
-class VoterSupportConstant
+enum VoterSupportConstant
 {
     public const GET_DATA = 'get.result';
 }

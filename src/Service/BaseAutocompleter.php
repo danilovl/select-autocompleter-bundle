@@ -1,28 +1,21 @@
 <?php declare(strict_types=1);
 
-namespace Danilovl\SelectAutocompleterBundle\Services;
+namespace Danilovl\SelectAutocompleterBundle\Service;
 
+use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterInterface;
 use Danilovl\SelectAutocompleterBundle\Model\Autocompleter\AutocompleterQuery;
 use Danilovl\SelectAutocompleterBundle\Model\Config\Config;
+use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\{Item, Pagination, Result};
 use Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolver;
-use Danilovl\SelectAutocompleterBundle\Tools\Paginator\Interfaces\PaginatorInterface;
-use Doctrine\ORM\QueryBuilder;
+use Danilovl\SelectAutocompleterBundle\Tool\Paginator\Interfaces\PaginatorInterface;
 use Doctrine\ODM\MongoDB\Query\Builder;
-use InvalidArgumentException;
-use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\{
-    Item,
-    Result,
-    Pagination
-};
-use Danilovl\SelectAutocompleterBundle\Services\Interfaces\AutocompleterInterface;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
+use InvalidArgumentException;
 use RuntimeException;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityLoaderInterface;
-use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\OptionsResolver\{
-    Options,
-    OptionsResolver
-};
+use Symfony\Component\OptionsResolver\{Options};
 
 abstract class BaseAutocompleter implements AutocompleterInterface
 {

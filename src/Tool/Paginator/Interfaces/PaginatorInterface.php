@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Danilovl\SelectAutocompleterBundle\Tools\Paginator\Interfaces;
+namespace Danilovl\SelectAutocompleterBundle\Tool\Paginator\Interfaces;
 
-interface PaginatorAdapterInterface
+interface PaginatorInterface
 {
     public function getTotalCount(): int;
 

@@ -3,10 +3,7 @@
 namespace Danilovl\SelectAutocompleterBundle\Resolver\Config;
 
 use Danilovl\SelectAutocompleterBundle\Model\Config\Security;
-use Symfony\Component\OptionsResolver\{
-    Options,
-    OptionsResolver
-};
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SecurityResolver
 {
@@ -15,14 +12,12 @@ class SecurityResolver
         Security $security = null
     ): void {
         $resolver->setDefaults([
-            'security' => $this->getConfigureOptions($resolver, $security ?? new Security)
+            'security' => $this->getConfigureOptions($security ?? new Security)
         ]);
     }
 
-    public function getConfigureOptions(
-        OptionsResolver $resolver,
-        Security $security
-    ): callable {
+    public function getConfigureOptions(Security $security): callable
+    {
         return static function (OptionsResolver $resolver) use ($security): void {
             $resolver
                 ->setDefaults([

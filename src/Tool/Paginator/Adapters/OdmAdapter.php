@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Danilovl\SelectAutocompleterBundle\Tools\Paginator\Adapters;
+namespace Danilovl\SelectAutocompleterBundle\Tool\Paginator\Adapters;
 
 use Danilovl\SelectAutocompleterBundle\Model\Paginator\PaginatorBuilderObject;
-use Danilovl\SelectAutocompleterBundle\Tools\Paginator\Interfaces\PaginatorAdapterInterface;
+use Danilovl\SelectAutocompleterBundle\Tool\Paginator\Interfaces\PaginatorAdapterInterface;
 use Doctrine\ODM\MongoDB\Query\Builder;
 
 class OdmAdapter implements PaginatorAdapterInterface

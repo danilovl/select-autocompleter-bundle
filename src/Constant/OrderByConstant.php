@@ -2,7 +2,7 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Constant;
 
-class OrderByConstant
+enum OrderByConstant
 {
     public const ASC = 'ASC';
     public const DESC = 'DESC';

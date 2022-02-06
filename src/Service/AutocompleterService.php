@@ -1,12 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Danilovl\SelectAutocompleterBundle\Services;
+namespace Danilovl\SelectAutocompleterBundle\Service;
 
-use Danilovl\SelectAutocompleterBundle\Services\Interfaces\{
-    AutocompleterInterface,
-    AutocompleterContainerInterface
-};
 use Danilovl\SelectAutocompleterBundle\Constant\VoterSupportConstant;
+use Danilovl\SelectAutocompleterBundle\Interfaces\{AutocompleterInterface};
+use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterContainerInterface;
 use Danilovl\SelectAutocompleterBundle\Model\Autocompleter\AutocompleterQuery;
 use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\Result;
 use Exception;
@@ -14,8 +12,8 @@ use LogicException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class AutocompleterService
 {

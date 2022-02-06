@@ -27,11 +27,11 @@
      <script type="text/javascript">
          (function ($) {
              {% block input %}
-                var selectElement = $('#{{ id }}');
+                let selectElement = $('#{{ id }}');
              {% endblock %}
 
              {% block options %}
-                var options = {
+                let options = {
                     dir: '{{ autocompleter.select_option.dir }}',
                     minimumInputLength: {{ autocompleter.select_option.minimum_input_length }},
                     maximumInputLength: {{ autocompleter.select_option.maximum_input_length }},
@@ -70,15 +70,17 @@
              {% endblock %}
 
              {% block options_ajax_data %}
-                var dependentName = undefined;
-                var dependentId = undefined;
+                let dependentName = undefined;
+                let dependentId = undefined;
 
                 {% if autocompleter.dependent_select.name is defined %}
                     dependentName = '{{ autocompleter.dependent_select.name }}';
                 {% endif %}
 
                 {% if autocompleter.dependent_select.parent_field is defined %}
-                    jQuery("select#{{ form.parent.offsetGet(autocompleter.dependent_select.parent_field).vars.id }}").change( function() {
+                    let selectId = '{{ form.parent.offsetGet(autocompleter.dependent_select.parent_field).vars.id }}';
+
+                    jQuery(`select#${selectId}`).change( function() {
                         dependentId = jQuery(this).val();
                     });
                 {% endif %}
@@ -98,16 +100,20 @@
                 {% if autocompleter.image is not empty %}
                     options.templateResult = function (item) {
                         if (item.image && item.image.length !== 0) {
-                            return $("<span><img width='{{ autocompleter.image_result_width }}' src='" + item.image + "'/> " + item.text + "</span>");
+                            let width = '{{ autocompleter.image_result_width }}';
+
+                            return $(`<span><img width="${width}" src="${item.image}"/>${item.text}</span>`);
                         } else {
-                            return $("<span>" + item.text + "</span>");
+                            return $(`<span>${item.text}</span>`);
                         }
                     };
                     options.templateSelection = function (item) {
                         if (item.image && item.image.length !== 0) {
-                            return $("<span><img width='{{ autocompleter.image_selection_width }}' src='" + item.image + "'/> " + item.text + "</span>");
+                            let width = '{{ autocompleter.image_selection_width }}';
+
+                            return $(`<span><img width="${width}" src="${item.image}"/>${item.text}</span>`);
                         } else {
-                            return $("<span>" + item.text + "</span>");
+                            return $(`<span>${item.text}</span>`);
                         }
                     }
                 {% endif %}

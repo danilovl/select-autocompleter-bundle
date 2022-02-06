@@ -2,7 +2,7 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Constant;
 
-class SelectOptionConstant
+enum SelectOptionConstant
 {
     public const LTR = 'ltr';
     public const RTL = 'rtl';

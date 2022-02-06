@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Danilovl\SelectAutocompleterBundle\Services;
+namespace Danilovl\SelectAutocompleterBundle\Service;
 
 use Danilovl\SelectAutocompleterBundle\Model\Paginator\PaginatorBuilderObject;
 use Danilovl\SelectAutocompleterBundle\Constant\{
@@ -8,8 +8,8 @@ use Danilovl\SelectAutocompleterBundle\Constant\{
     OrderByConstant
 };
 use Danilovl\SelectAutocompleterBundle\Model\Autocompleter\AutocompleterQuery;
-use Danilovl\SelectAutocompleterBundle\Tools\Paginator\Interfaces\PaginatorInterface;
-use Danilovl\SelectAutocompleterBundle\Tools\Paginator\Paginator;
+use Danilovl\SelectAutocompleterBundle\Tool\Paginator\Interfaces\PaginatorInterface;
+use Danilovl\SelectAutocompleterBundle\Tool\Paginator\Paginator;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityLoaderInterface;
 use Doctrine\Bundle\MongoDBBundle\Form\ChoiceList\MongoDBQueryBuilderLoader;
 use Doctrine\ODM\MongoDB\Query\Builder;

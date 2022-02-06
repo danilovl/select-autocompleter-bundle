@@ -2,8 +2,6 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Model\Config;
 
-use Symfony\Component\HttpFoundation\Request;
-
 class Config
 {
     public ?string $name = null;

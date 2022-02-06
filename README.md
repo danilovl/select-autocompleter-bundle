@@ -13,7 +13,7 @@ The main feature of this bundle is that the list of choices is retrieved via a r
 
 ### Requirements 
 
-  * PHP 8.0.0 or higher
+  * PHP 8.1.0 or higher
   * Symfony 5.0 or higher
   * StaticContainerTwigExtensionBundle 3.0 or higher
 
@@ -534,12 +534,7 @@ You could create you own voter for autcompleters.
 
 namespace App\Security\Voter;
 
-use Danilovl\SelectAutocompleterBundle\Constant\VoterSupportConstant;
-use Danilovl\SelectAutocompleterBundle\Services\Interfaces\AutocompleterInterface;
-use LogicException;
-use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Security;
+use Danilovl\SelectAutocompleterBundle\Constant\VoterSupportConstant;use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterInterface;use LogicException;use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;use Symfony\Component\Security\Core\Authorization\Voter\Voter;use Symfony\Component\Security\Core\Security;
 
 class CustomAutocompleterVoter extends Voter
 {
@@ -655,36 +650,24 @@ namespace App\Entity;
 
 //use code
 
-/**
- * @ORM\Table(name="city")
- * @ORM\Entity(repositoryClass="App\Entity\Repository\CityRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Table(name: 'city')]
+#[ORM\Entity(repositoryClass: CityRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class City
 {
     use IdTrait;
     use TimestampAbleTrait;
     use LocationTrait;
 
-    /**
-     * @ORM\Column(name="name", type="string", nullable=false)
-     */
+    #[ORM\Column(name: 'name', type: Types::STRING, nullable: false)]
     protected ?string $name = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Country", inversedBy="cities")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_country", nullable=false, referencedColumnName="id")
-     * })
-     */
+    #[ORM\ManyToOne(targetEntity: Country::class, inversedBy: 'cities')]
+    #[ORM\JoinColumn(name: 'id_country', referencedColumnName: 'id', nullable: false)]
     protected ?Country $country = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Region", inversedBy="regions")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_region", nullable=false, referencedColumnName="id")
-     * })
-     */
+    #[ORM\ManyToOne(targetEntity: Region::class, inversedBy: 'regions')]
+    #[ORM\JoinColumn(name: 'id_region', referencedColumnName: 'id', nullable: false)]
     protected ?Region $region = null;
 
     //other code
@@ -742,7 +725,7 @@ class CityType extends AbstractType
 
 #### 5.2 Simple ManyToMany
 
-For example entity - `Tag` has many `Cheque` 
+For example entity - `Tag` has many `Cheque`
 
 ```yaml
 # config/config.yaml
@@ -785,7 +768,7 @@ danilovl_select_autocompleter:
             firmWork: 'e.firms'
             firm: 'firmWork.firm'
 ```
-### 6. Using 
+### 6. Using
 
 Simple configuration in form.
 
@@ -848,7 +831,7 @@ class CityType extends AbstractType
 ### 7.  Custom Autocompleter
 
 You can create your own custom autocompleter.
- 
+
 ```yaml
 # config/config.yaml
 
@@ -858,7 +841,7 @@ danilovl_select_autocompleter:
     - name: 'customShop'
       class: 'App:Shop'
 ``` 
- 
+
 ```php
 <?php declare(strict_types=1);
 
@@ -870,7 +853,7 @@ use Danilovl\SelectAutocompleterBundle\Constant\{
     SearchConstant
 };
 use Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolver;
-use Danilovl\SelectAutocompleterBundle\Services\OrmAutocompleter;
+use Danilovl\SelectAutocompleterBundle\Service\OrmAutocompleter;
 
 class CustomShopAutocompleter extends OrmAutocompleter
 {
@@ -879,7 +862,7 @@ class CustomShopAutocompleter extends OrmAutocompleter
 ```
 
 If the standard functionality is not enough, or you want to reuse you existing code.
-   
+
 ```php
 <?php declare(strict_types=1);
 
@@ -889,7 +872,7 @@ namespace App\Autocompleter;
 use Danilovl\SelectAutocompleterBundle\Model\Autocompleter\AutocompleterQuery;
 use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\Item;
 use Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolver;
-use Danilovl\SelectAutocompleterBundle\Services\OrmAutocompleter;
+use Danilovl\SelectAutocompleterBundle\Service\OrmAutocompleter;
 
 class CustomShopAutocompleter extends OrmAutocompleter
 {
@@ -974,7 +957,7 @@ app.autocompleter.custom:
 #### 8. Custom autocompleter widget template
 
 Create you own custom autocompleter template which extends `versions.html.twig` and redefine the blocks you need.
- 
+
 ```twig
 {# templates/autocompleter/custom_widget_template.html.twig #}
 
@@ -1016,10 +999,10 @@ Create you own custom autocompleter template which extends `versions.html.twig` 
     {# new code #}
 {% endblock %}
 ```
-    
+
 Then you need to add path for new custom template to config.
 
-For all autocompleters.  
+For all autocompleters.
 
 ```yaml
 # config/config.yaml

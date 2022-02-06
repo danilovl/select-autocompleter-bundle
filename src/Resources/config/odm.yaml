@@ -1,7 +1,7 @@
 services:
-  danilovl.select_autocompleter.odm:
-    class: Danilovl\SelectAutocompleterBundle\Services\OdmAutocompleter
-    arguments:
-      - '@doctrine_mongodb'
-      - '@danilovl.select_autocompleter.resolver.config'
+  _defaults:
+    autowire: true
+    public: true
+
+  Danilovl\SelectAutocompleterBundle\Service\OdmAutocompleter:
     abstract: true
