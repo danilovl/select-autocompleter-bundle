@@ -4,10 +4,6 @@ namespace Danilovl\SelectAutocompleterBundle\Resolver\Config;
 
 use Danilovl\SelectAutocompleterBundle\Constant\SearchConstant;
 use Danilovl\SelectAutocompleterBundle\Model\Config\Config;
-use Symfony\Bridge\Doctrine\Form\ChoiceList\{
-    EntityLoaderInterface,
-    ORMQueryBuilderLoader
-};
 use Symfony\Component\OptionsResolver\{
     Options,
     OptionsResolver
@@ -33,15 +29,16 @@ class AutocompleterConfigResolver
     public function resolve(array $options): array
     {
         $resolver = new OptionsResolver;
-        $this->configureOptions($resolver);
+        $this->configureOptions($resolver, $options);
 
         return $resolver->resolve($options);
     }
 
-    private function configureOptions(OptionsResolver $resolver): void
+    private function configureOptions(OptionsResolver $resolver, array $options): void
     {
         $defaults = [
             'name' => null,
+            'class' => null,
             'id_property' => null,
             'property' => null,
             'image' => null,
@@ -68,8 +65,14 @@ class AutocompleterConfigResolver
         $this->cdnResolver->configureOptions($resolver);
         $this->toStringResolver->configureOptions($resolver);
         $this->securityResolver->configureOptions($resolver);
-        $this->repositoryResolver->configureOptions($resolver);
-        $this->dependentSelectResolver->configureOptions($resolver);
+
+        if (isset($options['repository'])) {
+            $this->repositoryResolver->configureOptions($resolver);
+        }
+
+        if (isset($options['dependent_selects'])) {
+            $this->dependentSelectResolver->configureOptions($resolver);
+        }
 
         $resolver
             ->setNormalizer('search_simple', static function (Options $options, array $value): array {
@@ -81,10 +84,10 @@ class AutocompleterConfigResolver
 
                 return $value;
             })
-            ->setRequired(['class'])
+            ->setAllowedTypes('class', ['string', 'null'])
             ->setAllowedTypes('name', 'string')
-            ->setAllowedTypes('id_property', 'string')
-            ->setAllowedTypes('property', 'string')
+            ->setAllowedTypes('id_property', ['string', 'null'])
+            ->setAllowedTypes('property', ['string', 'null'])
             ->setAllowedTypes('image', ['string', 'null'])
             ->setAllowedTypes('image_result_width', ['string', 'null'])
             ->setAllowedTypes('image_selection_width', ['string', 'null'])

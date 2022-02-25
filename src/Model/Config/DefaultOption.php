@@ -17,9 +17,9 @@ class DefaultOption
     public ?int $limit = null;
     public ?string $baseTemplate = null;
     public ?string $widget = null;
-    public ?SelectOption $selectOption = null;
-    public ?Cdn $cdn = null;
-    public ?Security $security = null;
+    public SelectOption $selectOption;
+    public Cdn $cdn;
+    public Security $security;
     public ?string $rolePrefix = null;
 
     public static function fromDefaultYaml(): self

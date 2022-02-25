@@ -4,9 +4,9 @@ namespace Danilovl\SelectAutocompleterBundle\Model\Config;
 
 class Config
 {
-    public ?string $name = null;
+    public string $name;
     public ?string $class = null;
-    public ?string $rootAliase = null;
+    public ?string $rootAlias = null;
     public bool $multiple = false;
     public ?string $idProperty = null;
     public ?string $property = null;
@@ -22,19 +22,20 @@ class Config
     public ?int $limit = null;
     public ?string $widget = null;
     public ?string $baseTemplate = null;
-    public ?ToString $toString = null;
-    public ?Cdn $cdn = null;
-    public ?SelectOption $selectOption = null;
-    public ?Security $security = null;
-    public ?Repository $repository = null;
-    public ?array $dependentSelects = [];
+    public ToString $toString;
+    public Cdn $cdn;
+    public SelectOption $selectOption;
+    public Security $security;
+    public Repository $repository;
+    /** @var DependentSelects[]|[] */
+    public array $dependentSelects = [];
 
     public static function fromConfig(array $parameters): self
     {
         $self = new self;
         $self->name = $parameters['name'] ?? null;
         $self->class = $parameters['class'] ?? null;
-        $self->rootAliase = $parameters['root_alias'] ?? null;
+        $self->rootAlias = $parameters['root_alias'] ?? null;
         $self->multiple = $parameters['multiple'] ?? false;
         $self->idProperty = $parameters['id_property'] ?? null;
         $self->manager = $parameters['manager'] ?? null;

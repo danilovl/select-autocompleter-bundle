@@ -2,8 +2,10 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Service;
 
-use Danilovl\SelectAutocompleterBundle\Interfaces\{AutocompleterContainerInterface};
-use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterInterface;
+use Danilovl\SelectAutocompleterBundle\Interfaces\{
+    AutocompleterInterface,
+    AutocompleterContainerInterface
+};
 use InvalidArgumentException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -26,10 +28,6 @@ class AutocompleterContainer implements AutocompleterContainerInterface
 
     public function replaceAutocompleter(string $name, string $serviceName): void
     {
-        if (!isset($this->autocompleters[$name])) {
-            throw new InvalidArgumentException(sprintf('Autocompleter "%s" is not yet registered', $name));
-        }
-
         $this->autocompleters[$name] = $serviceName;
     }
 

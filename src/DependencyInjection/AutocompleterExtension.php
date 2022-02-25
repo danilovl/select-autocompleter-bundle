@@ -41,19 +41,21 @@ class AutocompleterExtension extends Extension
             $parentService = match ($key) {
                 ServiceConstant::ORM => ServiceConstant::PARENT_SERVICE_ORM,
                 ServiceConstant::ODM => ServiceConstant::PARENT_SERVICE_ODM,
-                default => null,
+                default => null
             };
 
-            if ($parentService !== null && !empty($parameters)) {
-                $loader->load("{$key}.yaml");
-                $this->createAutocompleterService(
-                    $container,
-                    $config['default_option'],
-                    $parameters,
-                    $parentService,
-                    $key
-                );
+            if ($parentService === null || empty($parameters)) {
+                continue;
             }
+
+            $loader->load("{$key}.yaml");
+            $this->createAutocompleterService(
+                $container,
+                $config['default_option'],
+                $parameters,
+                $parentService,
+                $key
+            );
         }
     }
 

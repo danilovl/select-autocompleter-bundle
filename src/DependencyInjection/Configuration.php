@@ -126,6 +126,7 @@ class Configuration implements ConfigurationInterface
 
         $this->addConfiguration($rootNode, 'orm', $defaultOption);
         $this->addConfiguration($rootNode, 'odm', $defaultOption);
+        $this->addConfiguration($rootNode, 'own', $defaultOption);
 
         return $treeBuilder;
     }

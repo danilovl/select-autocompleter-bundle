@@ -3,7 +3,9 @@
 namespace Danilovl\SelectAutocompleterBundle\DependencyInjection\Compiler;
 
 use Danilovl\SelectAutocompleterBundle\DependencyInjection\Configuration;
+use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterInterface;
 use Danilovl\SelectAutocompleterBundle\Service\AutocompleterContainer;
+use RuntimeException;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -27,18 +29,29 @@ class AutocompleterCompilerPass implements CompilerPassInterface
                 }
 
                 $alias = $attributes['alias'];
-                $aliasType = explode('.', $alias);
+                $aliasData = explode('.', $alias);
+                $aliasType = $aliasData[0];
+                $aliasName = $aliasData[1];
 
                 $defaultAutocompleterConfig = $config['default_option'];
-                foreach ($config[$aliasType[0]] as $autocompleterConfig) {
-                    if ($autocompleterConfig['name'] === $aliasType[1]) {
+
+                foreach ($config[$aliasType] as $autocompleterConfig) {
+                    if ($autocompleterConfig['name'] === $aliasName) {
                         $defaultAutocompleterConfig = array_replace_recursive($defaultAutocompleterConfig, $autocompleterConfig);
                     }
                 }
 
                 $customAutocompleter = $containerBuilder->getDefinition($id);
-                $customAutocompleter->addMethodCall('addConfig', [$defaultAutocompleterConfig]);
 
+                if (!is_subclass_of($customAutocompleter->getClass(), AutocompleterInterface::class)) {
+                    throw new RuntimeException(sprintf('Autocompleter must implement interface %s', AutocompleterInterface::class));
+                }
+
+                if (!isset($defaultAutocompleterConfig['name'])) {
+                    $defaultAutocompleterConfig['name'] = $aliasName;
+                }
+
+                $customAutocompleter->addMethodCall('addConfig', [$defaultAutocompleterConfig]);
                 $autocompleterContainer->addMethodCall('replaceAutocompleter', [$attributes['alias'], $id]);
             }
         }

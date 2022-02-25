@@ -15,7 +15,7 @@ use Doctrine\Bundle\MongoDBBundle\Form\ChoiceList\MongoDBQueryBuilderLoader;
 use Doctrine\ODM\MongoDB\Query\Builder;
 use MongoDB\BSON\Regex;
 
-class OdmAutocompleter extends BaseAutocompleter
+class OdmAutocompleter extends BaseDoctrineAutocompleter
 {
     protected function createBuilder(): Builder
     {

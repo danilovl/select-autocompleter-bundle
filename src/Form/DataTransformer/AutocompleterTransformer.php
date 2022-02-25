@@ -39,19 +39,19 @@ class AutocompleterTransformer implements DataTransformerInterface
         return $result[0] ?? null;
     }
 
-    public function reverseTransform(mixed $id): mixed
+    public function reverseTransform(mixed $value): mixed
     {
-        if ($id === null) {
+        if ($value === null) {
             return $this->isMultiple ? [] : null;
         }
 
-        if ($this->isMultiple && is_string($id)) {
-            $id = array_map('trim', explode(',', $id));
+        if ($this->isMultiple && is_string($value)) {
+            $value = array_map('trim', explode(',', $value));
         } else {
-            $id = [$id];
+            $value = [$value];
         }
 
-        $result = $this->autocompleter->reverseTransform($id);
+        $result = $this->autocompleter->reverseTransform($value);
         if ($this->isMultiple) {
             return $result;
         }

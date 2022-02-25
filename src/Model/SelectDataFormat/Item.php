@@ -32,11 +32,11 @@ class Item
 
         $text = null;
         if ($toString->auto === true) {
-            $text = (string)$object;
+            $text = (string) $object;
         } elseif (!empty($toString->properties)) {
             $properties = [];
             foreach ($toString->properties as $property) {
-                $properties[] = (string)$propertyAccess->getValue($object, $property);
+                $properties[] = (string) $propertyAccess->getValue($object, $property);
             }
 
             $text = implode(' ', $properties);

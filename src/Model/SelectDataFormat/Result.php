@@ -7,13 +7,13 @@ class Result
     /**
      * @var Item[]
      */
-    public array $items = [];
+    public array $results = [];
     public ?Pagination $pagination = null;
 
     public static function fromConfig(array $parameters): self
     {
         $item = new self;
-        $item->items = $parameters['items'] ?? [];
+        $item->results = $parameters['items'] ?? [];
         $item->pagination = $parameters['pagination'] ?? null;
 
         return $item;
@@ -22,7 +22,7 @@ class Result
     public function toArray(): array
     {
         return [
-            'results' => $this->items,
+            'results' => $this->results,
             'pagination' => $this->pagination->toArray()
         ];
     }

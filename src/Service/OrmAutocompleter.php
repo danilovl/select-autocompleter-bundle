@@ -2,7 +2,6 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Service;
 
-use Danilovl\SelectAutocompleterBundle\Model\Config\DependentSelect;
 use Danilovl\SelectAutocompleterBundle\Model\Paginator\PaginatorBuilderObject;
 use Doctrine\DBAL\Connection;
 use Danilovl\SelectAutocompleterBundle\Constant\{
@@ -19,7 +18,7 @@ use Symfony\Bridge\Doctrine\Form\ChoiceList\{
 };
 use RuntimeException;
 
-class OrmAutocompleter extends BaseAutocompleter
+class OrmAutocompleter extends BaseDoctrineAutocompleter
 {
     protected function createQueryBuilder(): QueryBuilder
     {
@@ -29,7 +28,7 @@ class OrmAutocompleter extends BaseAutocompleter
 
         $builder = $this->getManager()
             ->getRepository($this->config->class)
-            ->createQueryBuilder($this->config->rootAliase);
+            ->createQueryBuilder($this->config->rootAlias);
 
         $this->addingWhere($builder);
         $this->excludedEntityId($builder);
@@ -68,7 +67,7 @@ class OrmAutocompleter extends BaseAutocompleter
             return;
         }
 
-        $alias = $this->config->rootAliase;
+        $alias = $this->config->rootAlias;
         $or = $builder->expr()->orX();
 
         if (empty($this->config->searchPattern)) {
@@ -91,7 +90,7 @@ class OrmAutocompleter extends BaseAutocompleter
 
     private function addingOrderBy(QueryBuilder $builder): void
     {
-        $alias = $this->config->rootAliase;
+        $alias = $this->config->rootAlias;
         if (empty($this->config->orderBy)) {
             $sort = sprintf('%s.%s', $alias, $this->config->idProperty);
             $builder->addOrderBy($sort, OrderByConstant::ASC);
@@ -108,7 +107,7 @@ class OrmAutocompleter extends BaseAutocompleter
     {
         $excludedEntityId = $this->config->excludedEntityId;
         if (!empty($excludedEntityId)) {
-            $field = sprintf('%s.%s', $this->config->rootAliase, $this->config->idProperty);
+            $field = sprintf('%s.%s', $this->config->rootAlias, $this->config->idProperty);
             $builder->andWhere($builder->expr()->notIn($field, ':autocompleter_excluded_id'))
                 ->setParameter('autocompleter_excluded_id', [1], Connection::PARAM_INT_ARRAY);
         }
@@ -120,21 +119,26 @@ class OrmAutocompleter extends BaseAutocompleter
     ): void {
         $dependentName = $query->dependentName;
         $dependentIds = $query->dependentId;
-        $dependentSelects = $this->config->dependentSelects;
+        $dependentSelectItems = $this->config->dependentSelects;
 
         if (!empty($dependentName) &&
             !empty($dependentIds) &&
             !empty($dependentSelects)
         ) {
-            $dependentIds = is_array($dependentIds) ? $dependentIds : [$dependentIds];
-            $dependentName = array_search($dependentName, array_column($dependentSelects, 'name'));
-            if ($dependentName === false) {
-                throw new RuntimeException('Dependent name not found');
+            $dependentSelect = null;
+            foreach ($dependentSelectItems as $dependentSelectItem) {
+                if ($dependentName === $dependentSelectItem->name) {
+                    $dependentSelect = $dependentSelectItem;
+
+                    break;
+                }
             }
 
-            /* @var DependentSelect $dependentSelect */
-            $dependentSelect = $dependentSelects[$dependentName];
-            $property = sprintf('%s.%s', $this->config->rootAliase, $dependentSelect->parentProperty);
+            if ($dependentSelect === null) {
+                throw new RuntimeException('Dependent select not found');
+            }
+
+            $property = sprintf('%s.%s', $this->config->rootAlias, $dependentSelect->parentProperty);
 
             if (!empty($dependentSelect->manyToMany)) {
                 $lastAlies = null;
