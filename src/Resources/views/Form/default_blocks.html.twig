@@ -16,7 +16,15 @@
              {% if autocompleter.multiple %} multiple="multiple"{% endif %}
      >
          {% for item in autocompleter.values %}
-             <option selected="selected" value="{{ item.id }}">
+             {% set dataImage = null %}
+             {% if item.image is defined and item.image is not null %}
+                 {% set dataImage = item.image %}
+             {% endif %}
+
+             <option selected="selected"
+                     value="{{ item.id }}"
+                     {% if dataImage is not null %}data-image="{{ dataImage }}"{% endif %}
+             >
                  {{ item.text }}
              </option>
          {% endfor %}
@@ -99,7 +107,7 @@
              {% block options_image %}
                 {% if autocompleter.image is not empty %}
                     options.templateResult = function (item) {
-                        if (item.image && item.image.length !== 0) {
+                        if (item.image !== undefined && item.image.length !== 0) {
                             let width = '{{ autocompleter.image_result_width }}';
 
                             return $(`<span><img width="${width}" src="${item.image}"/>${item.text}</span>`);
@@ -108,10 +116,22 @@
                         }
                     };
                     options.templateSelection = function (item) {
+                        let image = null;
+                        if (item.element !== undefined) {
+                            let dataImage = $(item.element).attr('data-image');
+                            if (dataImage !== undefined) {
+                                image = dataImage;
+                            }
+                        }
+
                         if (item.image && item.image.length !== 0) {
+                            image = item.image;
+                        }
+
+                        if (image !== null && image.length !== 0) {
                             let width = '{{ autocompleter.image_selection_width }}';
 
-                            return $(`<span><img width="${width}" src="${item.image}"/>${item.text}</span>`);
+                            return $(`<span><img width="${width}" src="${image}"/>${item.text}</span>`);
                         } else {
                             return $(`<span>${item.text}</span>`);
                         }
