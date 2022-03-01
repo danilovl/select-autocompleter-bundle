@@ -7,7 +7,7 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class Item
 {
-    public ?int $id = null;
+    public mixed $id = null;
     public ?string $text = null;
     public ?string $image = null;
 
