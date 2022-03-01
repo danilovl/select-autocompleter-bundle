@@ -12,13 +12,15 @@ default:
     placeholder: 'search'
     delay: 1000
     theme: 'default'
-    language: 'en'
+    language: 'auto'
     width: 'resolve'
     amd_base: './'
     amd_language_base: './i18n/'
     cache: false
   cdn:
+    auto: false
     script: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js'
     link: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css'
+    language: 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/%%language%%.min.js'
   security:
     voter: 'danilovl.select_autocompleter.voter.default'

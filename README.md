@@ -66,7 +66,7 @@ default:
   select_option:
     delay: 1000
     theme: 'default'
-    language: 'en'
+    language: 'auto'
     width: 'resolve'
     amd_base: './'
     amd_language_base: './i18n/'
@@ -115,7 +115,7 @@ danilovl_select_autocompleter:
       scroll_after_select: false
       select_on_close: false
       theme: 'custom'
-      language: 'en'
+      language: 'auto'
       amd_base: './'
       amd_language_base: './i18n/'
       cache: true

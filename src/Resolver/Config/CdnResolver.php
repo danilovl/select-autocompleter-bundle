@@ -24,10 +24,12 @@ class CdnResolver
                     'auto' => $cdn->auto,
                     'link' => $cdn->link,
                     'script' => $cdn->script,
+                    'language' => $cdn->language,
                 ])
                 ->setAllowedTypes('auto', 'bool')
                 ->setAllowedTypes('link', ['string', 'null'])
-                ->setAllowedTypes('script', ['string', 'null']);
+                ->setAllowedTypes('script', ['string', 'null'])
+                ->setAllowedTypes('language', ['string', 'null']);
         };
     }
 }

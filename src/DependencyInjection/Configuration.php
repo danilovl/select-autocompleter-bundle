@@ -90,11 +90,16 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                         ->arrayNode('cdn')
+                            ->addDefaultsIfNotSet()
+                            ->ignoreExtraKeys()
                             ->beforeNormalization()
-                                ->ifTrue(fn(array $cdn): bool => isset($cdn['auto']) && $cdn['auto'] === true)
+                                ->ifTrue(static function (array $cdn): bool {
+                                    return isset($cdn['auto']) && $cdn['auto'] === true;
+                                })
                                 ->then(static function (array $cdn) use ($defaultOption): array {
                                     $cdn['link'] = $defaultOption->cdn->link;
                                     $cdn['script'] = $defaultOption->cdn->script;
+                                    $cdn['language'] = $defaultOption->cdn->language;
 
                                     return $cdn;
                                 })
@@ -103,6 +108,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('auto')->defaultFalse()->end()
                                 ->scalarNode('link')->defaultNull()->end()
                                 ->scalarNode('script')->defaultNull()->end()
+                                ->scalarNode('language')->defaultValue($defaultOption->cdn->language)->end()
                             ->end()
                         ->end()
                         ->arrayNode('security')

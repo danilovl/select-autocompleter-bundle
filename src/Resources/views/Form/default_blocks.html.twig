@@ -1,10 +1,15 @@
 {% block cdn %}
     {% if static_container_has('autocompleterCdnAdded') == false %}
         {% if autocompleter.cdn.link is not empty %}
-            <link href="{{ asset(autocompleter.cdn.link) }}" rel="stylesheet"/>
+            <link href="{{ asset(autocompleter.cdn.link) }}" rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer"/>
         {% endif %}
         {% if autocompleter.cdn.script is not empty %}
-            <script src="{{ asset(autocompleter.cdn.script) }} "></script>
+            <script src="{{ asset(autocompleter.cdn.script) }}" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        {% endif %}
+
+        {% if autocompleter.cdn.language is not empty %}
+            {% set language = autocompleter.select_option.language == 'auto' ? app.request.locale : autocompleter.select_option.language %}
+            <script src="{{ asset(autocompleter.cdn.language | replace({'%language%': language})) }}" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         {% endif %}
 
         {{ static_container_create('autocompleterCdnAdded') }}
@@ -39,6 +44,8 @@
              {% endblock %}
 
              {% block options %}
+                {% set language = autocompleter.select_option.language == 'auto' ? app.request.locale : autocompleter.select_option.language %}
+
                 let options = {
                     dir: '{{ autocompleter.select_option.dir }}',
                     minimumInputLength: {{ autocompleter.select_option.minimum_input_length }},
@@ -48,7 +55,7 @@
                     minimumSelectionLength: {{ autocompleter.select_option.minimum_selection_length }},
                     width: '{{ autocompleter.select_option.width }}',
                     scrollAfterSelect: {{ autocompleter.select_option.scroll_after_select ? 'true' : 'false' }},
-                    language: '{{ autocompleter.select_option.language }}',
+                    language: '{{ language }}',
                     disabled: selectElement.prop('desable'),
                     allowClear: !selectElement.prop('required'),
                     placeholder: '{{ autocompleter.select_option.placeholder | trans }}',
@@ -107,7 +114,7 @@
              {% block options_image %}
                 {% if autocompleter.image is not empty %}
                     options.templateResult = function (item) {
-                        if (item.image !== undefined && item.image.length !== 0) {
+                        if (item.image && item.image.length !== 0) {
                             let width = '{{ autocompleter.image_result_width }}';
 
                             return $(`<span><img width="${width}" src="${item.image}"/>${item.text}</span>`);

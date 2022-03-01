@@ -9,6 +9,7 @@ class Cdn implements ChildItemInterface
     public bool $auto = false;
     public ?string $link = null;
     public ?string $script = null;
+    public ?string $language = null;
 
     public static function fromConfig(array $parameters): self
     {
@@ -16,6 +17,7 @@ class Cdn implements ChildItemInterface
         $self->auto = $parameters['auto'] ?? false;
         $self->link = $parameters['link'] ?? null;
         $self->script = $parameters['script'] ?? null;
+        $self->language = $parameters['language'] ?? null;
 
         return $self;
     }

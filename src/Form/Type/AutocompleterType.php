@@ -12,7 +12,10 @@ use Symfony\Component\Form\{
     FormInterface,
     FormBuilderInterface
 };
-use Symfony\Component\OptionsResolver\{OptionsResolver};
+use LogicException;
+use ReflectionClass;
+use ReflectionProperty;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Twig\Environment;
 
 class AutocompleterType extends AbstractType
@@ -52,7 +55,19 @@ class AutocompleterType extends AbstractType
         $view->vars['autocompleter']['ids'] = $ids;
         $view->vars['autocompleter']['values'] = $values;
 
-        $this->environment->addGlobal('autocompleter_base_template', $view->vars['autocompleter']['base_template']);
+        $baseTemplate = $view->vars['autocompleter']['base_template'];
+
+        try {
+            $this->environment->addGlobal('autocompleter_base_template', $baseTemplate);
+        } catch (LogicException) {
+            $reflection = new ReflectionClass($this->environment);
+            $property = $reflection->getProperty('resolvedGlobals');
+            $property->setAccessible(true);
+
+            $resolvedGlobals = $property->getValue($this->environment);
+            $resolvedGlobals['autocompleter_base_template'] = $baseTemplate;
+            $property->setValue($this->environment, $resolvedGlobals);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
