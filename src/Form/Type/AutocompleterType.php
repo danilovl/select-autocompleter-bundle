@@ -14,7 +14,6 @@ use Symfony\Component\Form\{
 };
 use LogicException;
 use ReflectionClass;
-use ReflectionProperty;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Twig\Environment;
 
@@ -50,9 +49,6 @@ class AutocompleterType extends AbstractType
             $values = $options['autocompleter']['multiple'] ? $value : [$value];
         }
 
-        $ids = array_map(static fn(array $item): int => $item['id'], $values);
-
-        $view->vars['autocompleter']['ids'] = $ids;
         $view->vars['autocompleter']['values'] = $values;
 
         $baseTemplate = $view->vars['autocompleter']['base_template'];

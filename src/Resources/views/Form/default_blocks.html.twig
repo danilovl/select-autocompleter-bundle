@@ -1,42 +1,77 @@
 {% block cdn %}
-    {% if static_container_has('autocompleterCdnAdded') == false %}
-        {% if autocompleter.cdn.link is not empty %}
-            <link href="{{ asset(autocompleter.cdn.link) }}" rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        {% endif %}
-        {% if autocompleter.cdn.script is not empty %}
-            <script src="{{ asset(autocompleter.cdn.script) }}" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        {% endif %}
+    {% if autocompleter.cdn.link is not empty or autocompleter.cdn.script is not empty or autocompleter.cdn.language is not empty %}
+        <script>
+            (function () {
+                let cdnId = 'autocompleter-cdn-link';
+                let scriptId = 'autocompleter-cdn-script';
+                let languageId = 'autocompleter-cdn-language';
 
-        {% if autocompleter.cdn.language is not empty %}
-            {% set language = autocompleter.select_option.language == 'auto' ? app.request.locale : autocompleter.select_option.language %}
-            <script src="{{ asset(autocompleter.cdn.language | replace({'%language%': language})) }}" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        {% endif %}
+                function addTag(type, id, path) {
+                    let head = document.getElementsByTagName('head')[0];
+                    let script = document.createElement(type);
 
-        {{ static_container_create('autocompleterCdnAdded') }}
+                    if (type === 'link') {
+                        script.rel = 'stylesheet';
+                        script.href = path;
+                    }
+
+                    if (type === 'script') {
+                        script.src = path;
+                    }
+
+                    script.crossorigin = 'anonymous';
+                    script.id = id;
+                    script.async = false;
+                    head.appendChild(script);
+                }
+
+                {% if autocompleter.cdn.link is not empty %}
+                    if (!document.getElementById(cdnId)) {
+                        addTag('link', cdnId, "{{ asset(autocompleter.cdn.link) }}");
+                    }
+                {% endif %}
+
+                {% if autocompleter.cdn.script is not empty %}
+                    if (!document.getElementById(scriptId)) {
+                        addTag('script', scriptId, "{{ asset(autocompleter.cdn.script) }}");
+                    }
+                {% endif %}
+
+                {% if autocompleter.cdn.language is not empty %}
+                    {% set language = autocompleter.select_option.language == 'auto' ? app.request.locale : autocompleter.select_option.language %}
+
+                    if (!document.getElementById(languageId)) {
+                        addTag('script', languageId, "{{ asset(autocompleter.cdn.language | replace({'%language%': language})) }}");
+                    }
+                {% endif %}
+            })();
+        </script>
     {% endif %}
 {% endblock %}
 
- {% block select_tag %}
-     <select {{ block('widget_attributes') }}
-             {% if autocompleter.multiple %} multiple="multiple"{% endif %}
-     >
-         {% for item in autocompleter.values %}
-             {% set dataImage = null %}
-             {% if item.image is defined and item.image is not null %}
-                 {% set dataImage = item.image %}
-             {% endif %}
+{% block style %}{% endblock %}
 
-             <option selected="selected"
-                     value="{{ item.id }}"
-                     {% if dataImage is not null %}data-image="{{ dataImage }}"{% endif %}
-             >
-                 {{ item.text }}
-             </option>
-         {% endfor %}
-     </select>
- {% endblock %}
+{% block select_tag %}
+    <select {{ block('widget_attributes') }}
+            {% if autocompleter.multiple %} multiple="multiple"{% endif %}
+    >
+        {% for item in autocompleter.values %}
+            {% set dataImage = null %}
+            {% if item.image is defined and item.image is not null %}
+                {% set dataImage = item.image %}
+            {% endif %}
 
- {% block script %}
+            <option selected="selected"
+                    value="{{ item.id }}"
+                    {% if dataImage is not null %}data-image="{{ dataImage }}"{% endif %}
+            >
+                {{ item.text }}
+            </option>
+        {% endfor %}
+    </select>
+{% endblock %}
+
+{% block script %}
      <script type="text/javascript">
          (function ($) {
              {% block input %}
@@ -77,10 +112,7 @@
                     url: '{{ path('danilovl_select_autocomplete', {name: autocompleter.name}) }}',
                     dataType: 'json',
                     delay: {{ autocompleter.select_option.delay }},
-                    cache: {{ autocompleter.select_option.cache ? 'true' : 'false' }},
-                    beforeSend: function() {
-                        selectElement.html('');
-                    }
+                    cache: {{ autocompleter.select_option.cache ? 'true' : 'false' }}
                 };
              {% endblock %}
 
@@ -123,6 +155,10 @@
                         }
                     };
                     options.templateSelection = function (item) {
+                        if (!item.id) {
+                            return item.text;
+                        }
+
                         let image = null;
                         if (item.element !== undefined) {
                             let dataImage = $(item.element).attr('data-image');
@@ -147,10 +183,30 @@
              {% endblock %}
 
              {% block initialize %}
-                $(document).ready(function () {
-                    selectElement.select2(options);
-                });
+                 if (window.selectAutocompleterEventLoad !== undefined && window.selectAutocompleterEventLoad === true) {
+                     selectElement.select2(options);
+                 } else {
+                     window.addEventListener('load', () => {
+                         window.selectAutocompleterEventLoad = true
+                         selectElement.select2(options);
+                     });
+                 }
+             {% endblock %}
+
+             {% block select_event_selecting %}
+                {% if autocompleter.multiple == false %}
+                     selectElement.on('select2:selecting', () => {
+                         selectElement.empty();
+                     });
+                {% endif %}
+             {% endblock %}
+
+             {% block select_event_unselecting %}
+                 selectElement.on('select2:unselecting', event => {
+                     let select2Id = event.params.args.data.id;
+                     selectElement.find(`option[value='${select2Id}']`).remove();
+                 });
              {% endblock %}
          }(jQuery));
      </script>
- {% endblock %}
+{% endblock %}

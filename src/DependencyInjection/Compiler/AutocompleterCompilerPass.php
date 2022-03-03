@@ -42,6 +42,7 @@ class AutocompleterCompilerPass implements CompilerPassInterface
                 }
 
                 $customAutocompleter = $containerBuilder->getDefinition($id);
+                $customAutocompleter->setPublic(true);
 
                 if (!is_subclass_of($customAutocompleter->getClass(), AutocompleterInterface::class)) {
                     throw new RuntimeException(sprintf('Autocompleter must implement interface %s', AutocompleterInterface::class));
