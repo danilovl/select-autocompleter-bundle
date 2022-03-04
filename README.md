@@ -104,7 +104,7 @@ danilovl_select_autocompleter:
     image_result_width: '100px'
     image_selection_width: '18px'
     limit: 10
-    base_template: '@SelectAutocompleter/Form/versions.html.twig'
+    base_template: '@SelectAutocompleter/Form/versions.html.twig'  
     cdn:
       auto: false
       link: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css'
@@ -129,7 +129,7 @@ danilovl_select_autocompleter:
       cache: true
     security:
       voter: 'danilovl.select_autocompleter.voter.default'
-      role:
+      role: 
         - ROLE_ADMIN
         - ROLE_API
       condition: 'or'
@@ -143,10 +143,10 @@ danilovl_select_autocompleter:
     order_by:
       createdAt: 'ASC'
       uptadetAt: 'DESC'
-    route:
-      name: 'custom_select_autocomplete'
-      parameters: []
-      extra: []
+  route:
+    name: 'custom_select_autocomplete'
+    parameters: []
+    extra: []
 ```
 
 ### 3. Customization default options for all autcompleters
@@ -301,14 +301,14 @@ Generated SQL query.
 ORDER BY e.created_at ASC, e.uptadet_at DESC
 ```
 
-### 3. Configuring autocompleters
+### 4. Configuring autocompleters
 
 For `Doctrine ORM` you should use key `orm`. For `Doctrine ODM` you should use key `odm`.
 
 The configuration is practically no different for `orm` or `odm`.
 
-#### 3.1. ORM autocompleters
-##### 3.1.1 Simple configuration
+#### 4.1. ORM autocompleters
+##### 4.1.1 Simple configuration
 
 Simple configuration.
 
@@ -329,7 +329,7 @@ danilovl_select_autocompleter:
       property: 'name'   
 ```
 
-##### 3.1.2 Simple search
+##### 4.1.2 Simple search
 
 `start` is `LIKE 'search%'`
 
@@ -352,7 +352,7 @@ danilovl_select_autocompleter:
         descrption: 'and'
 ```
 
-##### 3.1.3 Custom search pattern
+##### 4.1.3 Custom search pattern
 
 You can defined custom search pattern. Symbol `%` in yaml must be duplicate - `%%`.
 
@@ -378,7 +378,7 @@ danilovl_select_autocompleter:
         price: 'EUR%%'
 ```
 
-##### 3.1.4 toString
+##### 4.1.4 toString
 
 If `to_string` option `auto` is `true`, then `__toString()` method will be called by Class.
 
@@ -417,7 +417,7 @@ danilovl_select_autocompleter:
           - 'price'
 ```
 
-##### 3.1.5 Result ordering
+##### 4.1.5 Result ordering
 
 You can add ordering.
 
@@ -435,7 +435,7 @@ danilovl_select_autocompleter:
         uptadetAt: 'DESC'
 ```
 
-##### 3.1.6 Call repository method
+##### 4.1.6 Call repository method
 
 If you want to use a existing repository method from you project. Other parameters will be ignored.
 
@@ -457,7 +457,7 @@ For entity `App:Product` will be found `Repository`, then method `createSearchQu
 
 This means that all the search logic will be processing by the method which you defined.
 
-##### 3.1.7 Overriding `default_option`
+##### 4.1.7 Overriding `default_option`
 
 You can override `default_option` for specific autocompleter.
 
@@ -492,9 +492,9 @@ danilovl_select_autocompleter:
           - 'ROLE_ADMIN'  
 ```
 
-### 4. Security
+### 5. Security
 
-#### 4.1 By roles
+#### 5.1 By roles
 
 You could restrict access to autcompleter by user roles.
 
@@ -558,7 +558,7 @@ danilovl_select_autocompleter:
           - 'ROLE_ADMIN'      
 ```
 
-#### 4.2 By URL patterns
+#### 5.2 By URL patterns
 
 You could restrict access to autocompleters by securing URL patterns
 
@@ -570,7 +570,7 @@ security:
         - { path: ^/(%app_locales%)/select-autocompleter/(\w+)/autocomplete, roles: [ROLE_AUTCOMOPLETER, ROLE_ADMIN] }
 ```
 
-#### 4.3 By voter
+#### 5.3 By voter
 
 You could create you own voter for autcompleters.
 
@@ -663,11 +663,11 @@ danilovl_select_autocompleter:
         voter: 'app.voter.custom'
 ```
 
-### 5. Dependent select
+### 6. Dependent select
 
 Sometimes you need options of a select will be loaded/refreshed by ajax based on selection of another select.
 
-#### 5.1 OnyToMany
+#### 6.1 OnyToMany
 
 For example entity - `City` dependent on `Country` and `Region`.
 
@@ -775,7 +775,7 @@ class CityType extends AbstractType
 }
 ```
 
-#### 5.2 Simple ManyToMany
+#### 6.2 Simple ManyToMany
 
 For example entity - `Tag` has many `Cheque`
 
@@ -798,7 +798,7 @@ danilovl_select_autocompleter:
              chequesAlies: 'e.cheques'
 ```
 
-#### 5.3 Complicated ManyToMany
+#### 6.3 Complicated ManyToMany
 
 For example entity - `Work` dependent on `Firm` through custom entity `FirmWork`
 
@@ -821,9 +821,9 @@ danilovl_select_autocompleter:
             firm: 'firmWork.firm'
 ```
 
-### 6. Route
+### 7. Route
 
-#### 6.1 Redefine global route
+#### 7.1 Redefine global route
 
 You can redefine global autocomleter route and add some extra route parameters.
 
@@ -839,7 +839,7 @@ danilovl_select_autocompleter:
       extra: []
 ```
 
-#### 6.2 Redefine autocompleter route
+#### 7.2 Redefine autocompleter route
 
 You can redefine specific autocomleter route and add some extra route parameters.
 
@@ -858,7 +858,7 @@ danilovl_select_autocompleter:
           enable_migraiton: 'yes'
 ```
 
-### 7. Using
+### 8. Using
 
 Simple configuration in form.
 
@@ -918,7 +918,7 @@ class CityType extends AbstractType
 }
 ```
 
-### 7.  Custom Autocompleter
+### 9.  Custom Autocompleter
 
 You can create your own custom autocompleter.
 
@@ -1035,7 +1035,7 @@ app.autocompleter.custom:
     - {name: 'danilovl.select_autocompleter.autocompleter', alias: 'orm.customShop'}
 ```
 
-#### 8. Custom autocompleter widget template
+### 10. Custom autocompleter widget template
 
 Create you own custom autocompleter template which extends `versions.html.twig` and redefine the blocks you need.
 
