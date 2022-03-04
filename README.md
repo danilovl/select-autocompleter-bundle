@@ -74,6 +74,7 @@ default:
   cdn:
     script: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js'
     link: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css'
+    language: 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/%%language%%.min.js'
   security:
     voter: 'danilovl.select_autocompleter.voter.default'
     condition: 'and'
@@ -108,6 +109,7 @@ danilovl_select_autocompleter:
       auto: false
       link: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css'
       script: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js'
+      language: 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/%%language%%.min.js'
     select_option:
       placeholder: "app.search_placeholder"
       delay: 1000
@@ -141,6 +143,10 @@ danilovl_select_autocompleter:
     order_by:
       createdAt: 'ASC'
       uptadetAt: 'DESC'
+    route:
+      name: 'custom_select_autocomplete'
+      parameters: []
+      extra: []
 ```
 
 ### 3. Customization default options for all autcompleters
@@ -534,7 +540,7 @@ danilovl_select_autocompleter:
       condition: 'or'
 ```
 
-If the user has at least one of `ROLE_USER` or `ROLE_ADMIN`, voter return `екгу`
+If the user has at least one of `ROLE_USER` or `ROLE_ADMIN`, voter return `true`
 
 Restrict access for some specific autocompleter.
 
@@ -564,7 +570,7 @@ security:
         - { path: ^/(%app_locales%)/select-autocompleter/(\w+)/autocomplete, roles: [ROLE_AUTCOMOPLETER, ROLE_ADMIN] }
 ```
 
-#### 4.2 By voter
+#### 4.3 By voter
 
 You could create you own voter for autcompleters.
 
@@ -573,7 +579,12 @@ You could create you own voter for autcompleters.
 
 namespace App\Security\Voter;
 
-use Danilovl\SelectAutocompleterBundle\Constant\VoterSupportConstant;use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterInterface;use LogicException;use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;use Symfony\Component\Security\Core\Authorization\Voter\Voter;use Symfony\Component\Security\Core\Security;
+use Danilovl\SelectAutocompleterBundle\Constant\VoterSupportConstant;
+use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterInterface;
+use LogicException;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\Security;
 
 class CustomAutocompleterVoter extends Voter
 {
@@ -588,7 +599,7 @@ class CustomAutocompleterVoter extends Voter
         $this->security = $security;
     }
 
-    protected function supports($attribute, $subject): bool
+    protected function supports(string $attribute, mixed $subject): bool
     {
         if (!in_array($attribute, self::SUPPORTS, true)) {
             return false;
@@ -599,13 +610,15 @@ class CustomAutocompleterVoter extends Voter
         }
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
-        if ($attribute === VoterSupportConstant::GET_RESULT) {
-            // custom logic            
+        if ($attribute !== VoterSupportConstant::GET_DATA) {
+            throw new LogicException('This code should not be reached!');
         }
 
-        throw new LogicException('This code should not be reached!');
+        // custom logic    
+
+        return true;
     }
 }
 ```
