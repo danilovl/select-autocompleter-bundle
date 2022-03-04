@@ -8,19 +8,20 @@ class DefaultOption
 {
     private const DIR_DEFAULT_CONFIG = '/../../Resources/config/default.yaml';
 
-    public ?string $idProperty = null;
-    public ?string $property = null;
+    public string $idProperty;
+    public string $property;
     public ?string $image = null;
-    public ?string $imageResultWidth = null;
-    public ?string $imageSelectionWidth = null;
-    public ?string $rootAlias = null;
-    public ?int $limit = null;
-    public ?string $baseTemplate = null;
-    public ?string $widget = null;
+    public string $imageResultWidth;
+    public string $imageSelectionWidth;
+    public string $rootAlias;
+    public int $limit;
+    public string $baseTemplate;
+    public string $widget;
+    public string $rolePrefix;
     public SelectOption $selectOption;
     public Cdn $cdn;
     public Security $security;
-    public ?string $rolePrefix = null;
+    public Route $route;
 
     public static function fromDefaultYaml(): self
     {
@@ -32,19 +33,20 @@ class DefaultOption
     public static function fromConfig(array $parameters): self
     {
         $self = new self;
-        $self->idProperty = $parameters['id_property'] ?? null;
-        $self->property = $parameters['property'] ?? null;
+        $self->idProperty = $parameters['id_property'];
+        $self->property = $parameters['property'];
         $self->image = $parameters['image'] ?? null;
-        $self->imageResultWidth = $parameters['image_result_width'] ?? null;
-        $self->imageSelectionWidth = $parameters['image_selection_width'] ?? null;
-        $self->rootAlias = $parameters['root_alias'] ?? null;
-        $self->limit = $parameters['limit'] ?? null;
-        $self->baseTemplate = $parameters['base_template'] ?? null;
-        $self->widget = $parameters['widget'] ?? null;
-        $self->rolePrefix = $parameters['role_prefix'] ?? null;
-        $self->selectOption = SelectOption::fromConfig($parameters['select_option'] ?? []);
-        $self->cdn = Cdn::fromConfig($parameters['cdn'] ?? []);
-        $self->security = Security::fromConfig($parameters['security'] ?? []);
+        $self->imageResultWidth = $parameters['image_result_width'];
+        $self->imageSelectionWidth = $parameters['image_selection_width'];
+        $self->rootAlias = $parameters['root_alias'];
+        $self->limit = $parameters['limit'];
+        $self->baseTemplate = $parameters['base_template'];
+        $self->widget = $parameters['widget'];
+        $self->rolePrefix = $parameters['role_prefix'];
+        $self->selectOption = SelectOption::fromConfig($parameters['select_option']);
+        $self->cdn = Cdn::fromConfig($parameters['cdn']);
+        $self->security = Security::fromConfig($parameters['security']);
+        $self->route = Route::fromConfig($parameters['route']);
 
         return $self;
     }

@@ -23,9 +23,11 @@ class SecurityResolver
                 ->setDefaults([
                     'voter' => $security->voter,
                     'role' => $security->role,
+                    'condition' => $security->condition,
                 ])
                 ->setAllowedTypes('voter', ['string', 'null'])
-                ->setAllowedTypes('role', ['array', 'null']);
+                ->setAllowedTypes('role', ['array'])
+                ->setAllowedTypes('condition', ['string']);
         };
     }
 }

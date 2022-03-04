@@ -24,3 +24,9 @@ default:
     language: 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/%%language%%.min.js'
   security:
     voter: 'danilovl.select_autocompleter.voter.default'
+    condition: 'and'
+    role: []
+  route:
+    name: 'danilovl_select_autocomplete'
+    parameters: []
+    extra: []

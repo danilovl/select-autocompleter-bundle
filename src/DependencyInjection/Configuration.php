@@ -5,8 +5,8 @@ namespace Danilovl\SelectAutocompleterBundle\DependencyInjection;
 use Danilovl\SelectAutocompleterBundle\Constant\{
     SearchConstant,
     OrderByConstant,
-    SelectOptionConstant
-};
+    SecurityConditionConstant,
+    SelectOptionConstant};
 use Danilovl\SelectAutocompleterBundle\Model\Config\DefaultOption;
 use Symfony\Component\Config\Definition\Builder\{
     TreeBuilder,
@@ -93,9 +93,7 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->ignoreExtraKeys()
                             ->beforeNormalization()
-                                ->ifTrue(static function (array $cdn): bool {
-                                    return isset($cdn['auto']) && $cdn['auto'] === true;
-                                })
+                                ->ifTrue(static fn(array $cdn): bool => isset($cdn['auto']) && $cdn['auto'] === true)
                                 ->then(static function (array $cdn) use ($defaultOption): array {
                                     $cdn['link'] = $defaultOption->cdn->link;
                                     $cdn['script'] = $defaultOption->cdn->script;
@@ -123,6 +121,28 @@ class Configuration implements ConfigurationInterface
                                             ->thenInvalid(sprintf('Role must be start with %s', $defaultOption->rolePrefix))
                                         ->end()
                                     ->end()
+                                ->end()
+                                ->scalarNode('condition')
+                                    ->defaultValue($defaultOption->security->condition)
+                                    ->validate()
+                                        ->ifNotInArray(SecurityConditionConstant::TYPES)
+                                        ->thenInvalid('Available condition types: ' . implode(',', SecurityConditionConstant::TYPES))
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('route')
+                            ->addDefaultsIfNotSet()
+                            ->ignoreExtraKeys()
+                            ->children()
+                                ->scalarNode('name')->defaultValue($defaultOption->route->name)->end()
+                                ->arrayNode('parameters')
+                                    ->defaultValue($defaultOption->route->parameters)
+                                    ->prototype('scalar')->end()
+                                ->end()
+                                ->arrayNode('extra')
+                                    ->defaultValue($defaultOption->route->extra)
+                                    ->prototype('scalar')->end()
                                 ->end()
                             ->end()
                         ->end()
@@ -158,7 +178,6 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('limit')->end()
                             ->scalarNode('compound')->defaultFalse()->end()
                             ->scalarNode('multiple')->defaultFalse()->end()
-                            ->scalarNode('extra')->defaultValue([])->end()
                             ->scalarNode('manager')->end()
                             ->arrayNode('search_simple')
                                 ->prototype('scalar')
@@ -234,6 +253,12 @@ class Configuration implements ConfigurationInterface
                                             ->end()
                                         ->end()
                                     ->end()
+                                    ->scalarNode('condition')
+                                        ->validate()
+                                            ->ifNotInArray(SecurityConditionConstant::TYPES)
+                                            ->thenInvalid('Available condition types: ' . implode(',', SecurityConditionConstant::TYPES))
+                                        ->end()
+                                    ->end()
                                 ->end()
                             ->end()
                             ->arrayNode('repository')
@@ -250,6 +275,17 @@ class Configuration implements ConfigurationInterface
                                         ->arrayNode('many_to_many')
                                             ->prototype('scalar')->end()
                                         ->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                            ->arrayNode('route')
+                                ->children()
+                                    ->scalarNode('name')->end()
+                                    ->arrayNode('parameters')
+                                        ->prototype('scalar')->end()
+                                    ->end()
+                                    ->arrayNode('extra')
+                                        ->prototype('scalar')->end()
                                     ->end()
                                 ->end()
                             ->end()

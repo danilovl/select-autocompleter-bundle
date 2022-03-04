@@ -11,20 +11,20 @@ This is a Symfony bundle which enables the popular [Select2](https://select2.git
 
 The main feature of this bundle is that the list of choices is retrieved via a remote ajax call.
 
-### Requirements 
+### Requirements
 
-  * PHP 8.1.0 or higher
-  * Symfony 5.0 or higher
-  * StaticContainerTwigExtensionBundle 3.0 or higher
+* PHP 8.1.0 or higher
+* Symfony 5.0 or higher
+* StaticContainerTwigExtensionBundle 3.0 or higher
 
 ### 1. Installation
 
 Install `danilovl/select-autocompleter-bundle` package by Composer:
- 
+
 ``` bash
 $ composer require danilovl/select-autocompleter-bundle
 ```
- 
+
 ``` php
 <?php
 // config/bundles.php
@@ -75,12 +75,18 @@ default:
     script: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js'
     link: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css'
   security:
-    voter: 'danilovl_select_autocompleter.voter.default'
+    voter: 'danilovl.select_autocompleter.voter.default'
+    condition: 'and'
+    role: []
+  route:
+    name: 'danilovl_select_autocomplete'
+    parameters: []
+    extra: []
 ```
 
 List of available options which you can change in you project.
 
-This options will be applied for all autocompleters. For example: 
+This options will be applied for all autocompleters. For example:
 
 ```yaml
 # config/config.yaml
@@ -97,7 +103,7 @@ danilovl_select_autocompleter:
     image_result_width: '100px'
     image_selection_width: '18px'
     limit: 10
-    base_template: '@SelectAutocompleter/Form/versions.html.twig'  
+    base_template: '@SelectAutocompleter/Form/versions.html.twig'
     cdn:
       auto: false
       link: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css'
@@ -121,7 +127,10 @@ danilovl_select_autocompleter:
       cache: true
     security:
       voter: 'danilovl.select_autocompleter.voter.default'
-      role: []
+      role:
+        - ROLE_ADMIN
+        - ROLE_API
+      condition: 'or'
     to_string:
       format: "ID %%d: %%s"
       properties:
@@ -179,7 +188,7 @@ danilovl_select_autocompleter:
 
 #### 3.3 Select options
 
-For customization select is available following settings. 
+For customization select is available following settings.
 
 Text defined in `placeholder` will be translated by twig function `truns`.
 
@@ -239,7 +248,7 @@ danilovl_select_autocompleter:
 
 #### 3.5 Where
 
-Simple `where` condition. 
+Simple `where` condition.
 
 ```yaml
 # config/config.yaml
@@ -288,7 +297,7 @@ ORDER BY e.created_at ASC, e.uptadet_at DESC
 
 ### 3. Configuring autocompleters
 
-For `Doctrine ORM` you should use key `orm`. For `Doctrine ODM` you should use key `odm`.    
+For `Doctrine ORM` you should use key `orm`. For `Doctrine ODM` you should use key `odm`.
 
 The configuration is practically no different for `orm` or `odm`.
 
@@ -422,7 +431,7 @@ danilovl_select_autocompleter:
 
 ##### 3.1.6 Call repository method
 
-If you want to use a existing repository method from you project. Other parameters will be ignored. 
+If you want to use a existing repository method from you project. Other parameters will be ignored.
 
 Repository method should have `public` access and return `QueryBuilder` or `Builder`.
 
@@ -496,6 +505,36 @@ danilovl_select_autocompleter:
         - 'ROLE_USER'
         - 'ROLE_ADMIN'
 ```
+
+You can user condition `or` or `and`
+```yaml
+# config/config.yaml
+
+...
+danilovl_select_autocompleter:
+  default_option:
+    security: 
+      role:
+        - 'ROLE_USER'
+        - 'ROLE_ADMIN'
+      condition: 'and'
+```
+If the user has no role `ROLE_USER` or `ROLE_ADMIN`, voter return `false`
+
+```yaml
+# config/config.yaml
+
+...
+danilovl_select_autocompleter:
+  default_option:
+    security: 
+      role:
+        - 'ROLE_USER'
+        - 'ROLE_ADMIN'
+      condition: 'or'
+```
+
+If the user has at least one of `ROLE_USER` or `ROLE_ADMIN`, voter return `екгу`
 
 Restrict access for some specific autocompleter.
 
@@ -768,7 +807,45 @@ danilovl_select_autocompleter:
             firmWork: 'e.firms'
             firm: 'firmWork.firm'
 ```
-### 6. Using
+
+### 6. Route
+
+#### 6.1 Redefine global route
+
+You can redefine global autocomleter route and add some extra route parameters.
+
+```yaml
+# config/config.yaml
+
+...
+danilovl_select_autocompleter:
+  default_option:
+    route:
+      name: 'danilovl_select_autocomplete'
+      parameters: []
+      extra: []
+```
+
+#### 6.2 Redefine autocompleter route
+
+You can redefine specific autocomleter route and add some extra route parameters.
+
+```yaml
+# config/config.yaml
+
+...
+danilovl_select_autocompleter:
+  orm:
+    - name: 'firm'
+      class: 'App:Firm'
+      route:
+        name: 'danilovl_select_autocomplete_firm'
+        parameters: 
+          id: 200
+          enable_migraiton: 'yes'
+```
+
+### 7. Using
 
 Simple configuration in form.
 
@@ -847,18 +924,11 @@ danilovl_select_autocompleter:
 
 namespace App\Autocompleter;
 
-// ...
-use Danilovl\SelectAutocompleterBundle\Constant\{
-    OrderByConstant,
-    SearchConstant
-};
-use Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolver;
 use Danilovl\SelectAutocompleterBundle\Service\OrmAutocompleter;
 
 class CustomShopAutocompleter extends OrmAutocompleter
 {
 }
-
 ```
 
 If the standard functionality is not enough, or you want to reuse you existing code.
@@ -868,7 +938,6 @@ If the standard functionality is not enough, or you want to reuse you existing c
 
 namespace App\Autocompleter;
 
-// ...
 use Danilovl\SelectAutocompleterBundle\Model\Autocompleter\AutocompleterQuery;
 use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\Item;
 use Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolver;
@@ -906,8 +975,8 @@ class CustomShopAutocompleter extends OrmAutocompleter
     public function transformObjectToItem($object): Item
     {
         $item = new Item;
-        $item->id = $object->getIdentificator();
-        $item->text = sprintf('%s (%s,%s)', $object->getName(), $object->getAddress(), $object->getCity()->getName());
+        $item->option = $object->getIdentificator();
+        $item->value = sprintf('%s (%s,%s)', $object->getName(), $object->getAddress(), $object->getCity()->getName());
 
         return $item;
     }
@@ -922,7 +991,6 @@ If you need additional parameters in request you can defined `extra` parameter w
 
 namespace App\Form;
 
-// ...
 use App\Autocompleter\CustomAutocompleter;
 
 class CityType extends AbstractType
@@ -967,6 +1035,10 @@ Create you own custom autocompleter template which extends `versions.html.twig` 
     {# new code #}
 {% endblock %}
 
+{% block style %}
+    {# new code #}
+{% endblock %}
+
 {% block select_tag %}
     {# new code #}
 {% endblock %}
@@ -992,6 +1064,14 @@ Create you own custom autocompleter template which extends `versions.html.twig` 
 {% endblock %}
 
 {% block initialize %}
+    {# new code #}
+{% endblock %}
+ 
+{% block select_event_selecting %}
+    {# new code #}
+{% endblock %} 
+
+{% block select_event_unselecting %}
     {# new code #}
 {% endblock %}
  
@@ -1023,7 +1103,7 @@ danilovl_select_autocompleter:
   orm:
     - name: 'user'
       class: 'App:User'
-      property: 'username'   
+      property: 'username'
       base_template: 'autocompleter/custom_widget_template.html.twig'  
 ```
 

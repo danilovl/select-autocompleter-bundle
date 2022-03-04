@@ -6,27 +6,28 @@ class Config
 {
     public string $name;
     public ?string $class = null;
-    public ?string $rootAlias = null;
+    public string $rootAlias;
     public bool $multiple = false;
-    public ?string $idProperty = null;
-    public ?string $property = null;
+    public string $idProperty;
+    public string $property;
     public ?string $image = null;
-    public ?string $imageResultWidth = null;
-    public ?string $imageSelectionWidth = null;
+    public string $imageResultWidth;
+    public string $imageSelectionWidth;
     public array $excludedEntityId = [];
     public array $searchSimple = [];
     public array $searchPattern = [];
     public array $orderBy = [];
     public array $where = [];
     public ?string $manager = null;
-    public ?int $limit = null;
+    public int $limit;
     public ?string $widget = null;
-    public ?string $baseTemplate = null;
+    public string $baseTemplate;
     public ToString $toString;
     public Cdn $cdn;
     public SelectOption $selectOption;
     public Security $security;
     public Repository $repository;
+    public Route $route;
     /** @var DependentSelects[]|[] */
     public array $dependentSelects = [];
 
@@ -37,26 +38,27 @@ class Config
         $self->class = $parameters['class'] ?? null;
         $self->rootAlias = $parameters['root_alias'] ?? null;
         $self->multiple = $parameters['multiple'] ?? false;
-        $self->idProperty = $parameters['id_property'] ?? null;
+        $self->idProperty = $parameters['id_property'];
         $self->manager = $parameters['manager'] ?? null;
-        $self->property = $parameters['property'] ?? null;
+        $self->property = $parameters['property'];
         $self->image = $parameters['image'] ?? null;
-        $self->imageResultWidth = $parameters['image_result_width'] ?? null;
-        $self->imageSelectionWidth = $parameters['image_selection_width'] ?? null;
+        $self->imageResultWidth = $parameters['image_result_width'];
+        $self->imageSelectionWidth = $parameters['image_selection_width'];
         $self->excludedEntityId = $parameters['excluded_entity_id'] ?? [];
         $self->searchSimple = $parameters['search_simple'] ?? [];
         $self->searchPattern = $parameters['search_pattern'] ?? [];
         $self->orderBy = $parameters['order_by'] ?? [];
         $self->where = $parameters['where'] ?? [];
-        $self->limit = $parameters['limit'] ?? null;
+        $self->limit = $parameters['limit'];
         $self->widget = $parameters['widget'] ?? null;
-        $self->baseTemplate = $parameters['base_template'] ?? null;
+        $self->baseTemplate = $parameters['base_template'];
         $self->toString = ToString::fromConfig($parameters['to_string'] ?? []);
         $self->selectOption = SelectOption::fromConfig($parameters['select_option'] ?? []);
         $self->cdn = Cdn::fromConfig($parameters['cdn'] ?? []);
         $self->security = Security::fromConfig($parameters['security'] ?? []);
         $self->repository = Repository::fromConfig($parameters['repository'] ?? []);
         $self->dependentSelects = DependentSelects::fromArrayConfig($parameters['dependent_selects'] ?? []);
+        $self->route = Route::fromConfig($parameters['route'] ?? []);
 
         return $self;
     }

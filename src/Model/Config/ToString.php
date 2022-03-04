@@ -8,7 +8,7 @@ class ToString implements ChildItemInterface
 {
     public bool $auto = false;
     public ?string $format = null;
-    public ?array $properties = [];
+    public array $properties = [];
 
     public static function fromConfig(array $parameters): self
     {

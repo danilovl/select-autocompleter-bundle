@@ -17,7 +17,8 @@ class AutocompleterConfigResolver
         private ToStringResolver $toStringResolver,
         private SecurityResolver $securityResolver,
         private RepositoryResolver $repositoryResolver,
-        private DependentSelectsResolver $dependentSelectResolver
+        private DependentSelectsResolver $dependentSelectResolver,
+        private RouteResolver $routeResolver
     ) {
     }
 
@@ -65,6 +66,7 @@ class AutocompleterConfigResolver
         $this->cdnResolver->configureOptions($resolver);
         $this->toStringResolver->configureOptions($resolver);
         $this->securityResolver->configureOptions($resolver);
+        $this->routeResolver->configureOptions($resolver);
 
         if (isset($options['repository'])) {
             $this->repositoryResolver->configureOptions($resolver);
@@ -86,11 +88,11 @@ class AutocompleterConfigResolver
             })
             ->setAllowedTypes('class', ['string', 'null'])
             ->setAllowedTypes('name', 'string')
-            ->setAllowedTypes('id_property', ['string', 'null'])
-            ->setAllowedTypes('property', ['string', 'null'])
+            ->setAllowedTypes('id_property', ['string'])
+            ->setAllowedTypes('property', ['string'])
             ->setAllowedTypes('image', ['string', 'null'])
-            ->setAllowedTypes('image_result_width', ['string', 'null'])
-            ->setAllowedTypes('image_selection_width', ['string', 'null'])
+            ->setAllowedTypes('image_result_width', ['string'])
+            ->setAllowedTypes('image_selection_width', ['string'])
             ->setAllowedTypes('root_alias', 'string')
             ->setAllowedTypes('where', 'array')
             ->setAllowedTypes('order_by', 'array')

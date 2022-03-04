@@ -108,8 +108,10 @@
              {% endblock %}
 
              {% block options_ajax %}
+                {% set routeParameters = autocompleter.route.parameters | merge({name: autocompleter.name}) %}
+
                 options.ajax = {
-                    url: '{{ path('danilovl_select_autocomplete', {name: autocompleter.name}) }}',
+                    url: '{{ path(autocompleter.route.name, routeParameters) }}',
                     dataType: 'json',
                     delay: {{ autocompleter.select_option.delay }},
                     cache: {{ autocompleter.select_option.cache ? 'true' : 'false' }}
@@ -138,7 +140,7 @@
                         page: params.page,
                         dependentName: dependentName,
                         dependentId: dependentId,
-                        extra: {{ autocompleter.extra | default({}) | json_encode | raw }}
+                        extra: {{ autocompleter.route.extra | default({}) | json_encode | raw }}
                     }
                 };
              {% endblock %}
