@@ -3,6 +3,7 @@
 namespace Danilovl\SelectAutocompleterBundle\DependencyInjection;
 
 use Danilovl\SelectAutocompleterBundle\Constant\{
+    AuthenticatedVoterConstant,
     SearchConstant,
     OrderByConstant,
     SecurityConditionConstant,
@@ -117,8 +118,8 @@ class Configuration implements ConfigurationInterface
                                 ->arrayNode('role')
                                     ->prototype('scalar')
                                         ->validate()
-                                            ->ifTrue(static fn(string $role): bool => !str_contains($role, $defaultOption->rolePrefix))
-                                            ->thenInvalid(sprintf('Role must be start with %s', $defaultOption->rolePrefix))
+                                            ->ifTrue(static fn(string $role): bool => !str_contains($role, $defaultOption->rolePrefix) && !AuthenticatedVoterConstant::supportsAttribute($role))
+                                            ->thenInvalid(sprintf('Roles must be start with prefix [%s] or some of reserved roles [%s]', $defaultOption->rolePrefix, implode(',', AuthenticatedVoterConstant::VOTERS)))
                                         ->end()
                                     ->end()
                                 ->end()
@@ -248,8 +249,8 @@ class Configuration implements ConfigurationInterface
                                     ->arrayNode('role')
                                         ->prototype('scalar')
                                             ->validate()
-                                                ->ifTrue(static fn(string $role): bool => !str_contains($role, $defaultOption->rolePrefix))
-                                                ->thenInvalid(sprintf('Role must be start with %s', $defaultOption->rolePrefix))
+                                                ->ifTrue(static fn(string $role): bool => !str_contains($role, $defaultOption->rolePrefix) && !AuthenticatedVoterConstant::supportsAttribute($role))
+                                                ->thenInvalid(sprintf('Roles must be start with prefix [%s] or some of reserved roles [%s]', $defaultOption->rolePrefix, implode(',', AuthenticatedVoterConstant::VOTERS)))
                                             ->end()
                                         ->end()
                                     ->end()
