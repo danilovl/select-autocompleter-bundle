@@ -48,10 +48,15 @@ class AutocompleterService
     public function isGranted(AutocompleterInterface $autocompleter): int
     {
         $voterName = $autocompleter->getConfig()->security->voter;
-        $token = $this->tokenStorage->getToken();
+        $publicAccess = $autocompleter->getConfig()->security->publicAccess;
 
-        if ($token === null) {
+        if ($publicAccess) {
             return VoterInterface::ACCESS_ABSTAIN;
+        }
+
+        $token = $this->tokenStorage->getToken();
+        if (!$publicAccess && $token === null) {
+            return VoterInterface::ACCESS_DENIED;
         }
 
         /** @var VoterInterface $voter */

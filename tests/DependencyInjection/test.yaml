@@ -23,6 +23,7 @@ danilovl_select_autocompleter:
       width: false
       scroll_after_select: false
       security:
+        public_access: true
         voter: 'danilovl.select_autocompleter.voter.default'
         role: []
     to_string:
@@ -35,6 +36,12 @@ danilovl_select_autocompleter:
     order_by:
       created_at: 'ASC'
       uptadet_at: 'DESC'
+    route:
+      name: 'ASC'
+      parameters:
+        param1: 'convert'
+        param2: 1111
+      extra: []
   orm:
     - name: 'shop'
       class: 'App:Shop'
@@ -51,6 +58,7 @@ danilovl_select_autocompleter:
         placeholder: "food_app.search222"
         minimum_input_length: 102
       security:
+        public_access: true
         role: ['ROLE_USER']
 
     - name: 'product'
@@ -84,3 +92,5 @@ danilovl_select_autocompleter:
           many_to_many:
             firmWork: 'e.firms'
             firm: 'firmWork.firm'
+      security:
+        public_access: false

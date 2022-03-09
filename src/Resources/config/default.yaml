@@ -23,6 +23,7 @@ default:
     link: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css'
     language: 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/%%language%%.min.js'
   security:
+    public_access: false
     voter: 'danilovl.select_autocompleter.voter.default'
     condition: 'and'
     role: []

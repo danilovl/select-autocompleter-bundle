@@ -32,7 +32,7 @@ class DefaultVoter extends Voter
             return false;
         }
 
-        return $this->checkHasRole($subject);
+        return $this->checkSupports($subject);
     }
 
     /**
@@ -57,9 +57,9 @@ class DefaultVoter extends Voter
         return $this->checkCondition($result, $subject->getConfig()->security->condition);
     }
 
-    private function checkHasRole(AutocompleterInterface $subject): bool
+    private function checkSupports(AutocompleterInterface $subject): bool
     {
-        return !empty($subject->getConfig()->security->role);
+        return !$subject->getConfig()->security->publicAccess;
     }
 
     private function checkCondition(array $result, string $condition): bool

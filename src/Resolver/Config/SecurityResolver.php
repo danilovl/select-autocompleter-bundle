@@ -24,10 +24,12 @@ class SecurityResolver
                     'voter' => $security->voter,
                     'role' => $security->role,
                     'condition' => $security->condition,
+                    'public_access' => $security->publicAccess,
                 ])
                 ->setAllowedTypes('voter', ['string', 'null'])
                 ->setAllowedTypes('role', ['array'])
-                ->setAllowedTypes('condition', ['string']);
+                ->setAllowedTypes('condition', ['string'])
+                ->setAllowedTypes('public_access', ['bool']);
         };
     }
 }

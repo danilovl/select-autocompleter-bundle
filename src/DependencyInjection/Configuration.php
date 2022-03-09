@@ -7,7 +7,8 @@ use Danilovl\SelectAutocompleterBundle\Constant\{
     SearchConstant,
     OrderByConstant,
     SecurityConditionConstant,
-    SelectOptionConstant};
+    SelectOptionConstant
+};
 use Danilovl\SelectAutocompleterBundle\Model\Config\DefaultOption;
 use Symfony\Component\Config\Definition\Builder\{
     TreeBuilder,
@@ -114,6 +115,7 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->ignoreExtraKeys()
                             ->children()
+                                ->scalarNode('public_access')->defaultFalse()->end()
                                 ->scalarNode('voter')->defaultValue($defaultOption->security->voter)->end()
                                 ->arrayNode('role')
                                     ->prototype('scalar')
@@ -245,6 +247,7 @@ class Configuration implements ConfigurationInterface
                             ->end()
                             ->arrayNode('security')
                                 ->children()
+                                    ->scalarNode('public_access')->end()
                                     ->scalarNode('voter')->end()
                                     ->arrayNode('role')
                                         ->prototype('scalar')
