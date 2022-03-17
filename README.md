@@ -181,7 +181,7 @@ danilovl_select_autocompleter:
       auto: true
 ```
 
-Or you can choose a specific ыскшзе if, for example, you already have ыщьу scripts available on the page .
+Or you can choose a specific script if, for example, you already have some scripts available on the page.
 
 ```yaml
 # config/config.yaml
