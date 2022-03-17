@@ -95,11 +95,25 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->ignoreExtraKeys()
                             ->beforeNormalization()
-                                ->ifTrue(static fn(array $cdn): bool => isset($cdn['auto']) && $cdn['auto'] === true)
+                                ->always()
                                 ->then(static function (array $cdn) use ($defaultOption): array {
-                                    $cdn['link'] = $defaultOption->cdn->link;
-                                    $cdn['script'] = $defaultOption->cdn->script;
-                                    $cdn['language'] = $defaultOption->cdn->language;
+                                    if (isset($cdn['auto']) && $cdn['auto'] === true) {
+                                        $cdn['link'] = $defaultOption->cdn->link;
+                                        $cdn['script'] = $defaultOption->cdn->script;
+                                        $cdn['language'] = $defaultOption->cdn->language;
+                                    } else {
+                                        if (isset($cdn['link']) && $cdn['link'] === 'auto') {
+                                            $cdn['link'] = $defaultOption->cdn->link;
+                                        }
+
+                                        if (isset($cdn['script']) && $cdn['script'] === 'auto') {
+                                            $cdn['script'] = $defaultOption->cdn->script;
+                                        }
+
+                                        if (isset($cdn['language']) && $cdn['language'] === 'auto') {
+                                            $cdn['language'] = $defaultOption->cdn->language;
+                                        }
+                                    }
 
                                     return $cdn;
                                 })
@@ -108,7 +122,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('auto')->defaultFalse()->end()
                                 ->scalarNode('link')->defaultNull()->end()
                                 ->scalarNode('script')->defaultNull()->end()
-                                ->scalarNode('language')->defaultValue($defaultOption->cdn->language)->end()
+                                ->scalarNode('language')->defaultNull()->end()
                             ->end()
                         ->end()
                         ->arrayNode('security')

@@ -11,19 +11,19 @@ This is a Symfony bundle which enables the popular [Select2](https://select2.git
 
 The main feature of this bundle is that the list of choices is retrieved via a remote ajax call.
 
-### Requirements
+### Requirements 
 
-* PHP 8.1.0 or higher
-* Symfony 6.0 or higher
+  * PHP 8.1.0 or higher
+  * Symfony 6.0 or higher
 
 ### 1. Installation
 
 Install `danilovl/select-autocompleter-bundle` package by Composer:
-
+ 
 ``` bash
 $ composer require danilovl/select-autocompleter-bundle
 ```
-
+ 
 ``` php
 <?php
 // config/bundles.php
@@ -71,10 +71,12 @@ default:
     amd_language_base: './i18n/'
     cache: false
   cdn:
+    auti: false
     script: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js'
     link: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css'
     language: 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/%%language%%.min.js'
   security:
+    public_access: false
     voter: 'danilovl.select_autocompleter.voter.default'
     condition: 'and'
     role: []
@@ -86,7 +88,7 @@ default:
 
 List of available options which you can change in you project.
 
-This options will be applied for all autocompleters. For example:
+This options will be applied for all autocompleters. For example: 
 
 ```yaml
 # config/config.yaml
@@ -127,6 +129,7 @@ danilovl_select_autocompleter:
       amd_language_base: './i18n/'
       cache: true
     security:
+      public_access: false
       voter: 'danilovl.select_autocompleter.voter.default'
       role: 
         - ROLE_ADMIN
@@ -164,7 +167,7 @@ danilovl_select_autocompleter:
 ```
 #### 3.2 Cdn
 
-If you want to add default `select2.min.js` and `select2.min.css` files on page.
+If you want to add default `select2.min.js`, `select2.min.css` and `i18n.js` files on page.
 
 Links are defined in `default.yaml`.
 
@@ -178,7 +181,21 @@ danilovl_select_autocompleter:
       auto: true
 ```
 
-Or you can defined you own path for script and css files.
+Or you can choose a specific ыскшзе if, for example, you already have ыщьу scripts available on the page .
+
+```yaml
+# config/config.yaml
+
+...
+danilovl_select_autocompleter:
+  default_option:
+    cdn:
+      link: auto
+      script: auto
+      language: auto
+```
+
+Or you can define you own path for script and css files.
 
 ```yaml
 # config/config.yaml
@@ -189,11 +206,12 @@ danilovl_select_autocompleter:
     cdn:
       link: 'public/css/select2.min.css'
       script: 'public/js/select2.min.js'
+      language: 'public/js/language.en.js'
 ```
 
 #### 3.3 Select options
 
-For customization select is available following settings.
+For customization select is available following settings. 
 
 Text defined in `placeholder` will be translated by twig function `truns`.
 
@@ -253,7 +271,7 @@ danilovl_select_autocompleter:
 
 #### 3.5 Where
 
-Simple `where` condition.
+Simple `where` condition. 
 
 ```yaml
 # config/config.yaml
@@ -302,7 +320,7 @@ ORDER BY e.created_at ASC, e.uptadet_at DESC
 
 ### 4. Configuring autocompleters
 
-For `Doctrine ORM` you should use key `orm`. For `Doctrine ODM` you should use key `odm`.
+For `Doctrine ORM` you should use key `orm`. For `Doctrine ODM` you should use key `odm`.    
 
 The configuration is practically no different for `orm` or `odm`.
 
@@ -436,7 +454,7 @@ danilovl_select_autocompleter:
 
 ##### 4.1.6 Call repository method
 
-If you want to use a existing repository method from you project. Other parameters will be ignored.
+If you want to use a existing repository method from you project. Other parameters will be ignored. 
 
 Repository method should have `public` access and return `QueryBuilder` or `Builder`.
 
@@ -485,7 +503,8 @@ danilovl_select_autocompleter:
         delay: 1500
         minimum_input_length: 1
         maximum_input_length: 4
-      security: 
+      security:
+        public_access: false
         role:
           - 'ROLE_USER'
           - 'ROLE_ADMIN'  
@@ -776,7 +795,7 @@ class CityType extends AbstractType
 
 #### 6.2 Simple ManyToMany
 
-For example entity - `Tag` has many `Cheque`
+For example entity - `Tag` has many `Cheque` 
 
 ```yaml
 # config/config.yaml
@@ -857,7 +876,7 @@ danilovl_select_autocompleter:
           enable_migraiton: 'yes'
 ```
 
-### 8. Using
+### 8. Using 
 
 Simple configuration in form.
 
@@ -920,7 +939,7 @@ class CityType extends AbstractType
 ### 9.  Custom Autocompleter
 
 You can create your own custom autocompleter.
-
+ 
 ```yaml
 # config/config.yaml
 
@@ -1037,7 +1056,7 @@ app.autocompleter.custom:
 ### 10. Custom autocompleter widget template
 
 Create you own custom autocompleter template which extends `versions.html.twig` and redefine the blocks you need.
-
+ 
 ```twig
 {# templates/autocompleter/custom_widget_template.html.twig #}
 
@@ -1091,10 +1110,10 @@ Create you own custom autocompleter template which extends `versions.html.twig` 
     {# new code #}
 {% endblock %}
 ```
-
+    
 Then you need to add path for new custom template to config.
 
-For all autocompleters.
+For all autocompleters.  
 
 ```yaml
 # config/config.yaml
@@ -1115,7 +1134,7 @@ danilovl_select_autocompleter:
   orm:
     - name: 'user'
       class: 'App:User'
-      property: 'username'
+      property: 'username'   
       base_template: 'autocompleter/custom_widget_template.html.twig'  
 ```
 
