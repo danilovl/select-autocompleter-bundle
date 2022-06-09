@@ -22,9 +22,9 @@ class AutocompleterType extends AbstractType
     public const NAME = 'select_autocompleter';
 
     public function __construct(
-        private AutocompleterContainerInterface $autocompleterContainer,
-        private AutocompleterTypeResolver $autocompleterTypeResolver,
-        private Environment $environment
+        private readonly AutocompleterContainerInterface $autocompleterContainer,
+        private readonly AutocompleterTypeResolver $autocompleterTypeResolver,
+        private readonly Environment $environment
     ) {
     }
 

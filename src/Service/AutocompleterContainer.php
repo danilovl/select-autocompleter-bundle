@@ -13,7 +13,7 @@ class AutocompleterContainer implements AutocompleterContainerInterface
 {
     private array $autocompleters = [];
 
-    public function __construct(private ContainerInterface $container)
+    public function __construct(private readonly ContainerInterface $container)
     {
     }
 

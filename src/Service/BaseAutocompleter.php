@@ -19,7 +19,7 @@ abstract class BaseAutocompleter implements AutocompleterInterface
     protected ?Options $options = null;
     protected ?AutocompleterQuery $autocompleterQuery = null;
 
-    public function __construct(protected AutocompleterConfigResolver $resolver)
+    public function __construct(protected readonly AutocompleterConfigResolver $resolver)
     {
     }
 

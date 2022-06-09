@@ -8,7 +8,7 @@ use Doctrine\ODM\MongoDB\Query\Builder;
 
 class OdmAdapter implements PaginatorAdapterInterface
 {
-    public function __construct(private PaginatorBuilderObject $paginatorBuilderObject)
+    public function __construct(private readonly PaginatorBuilderObject $paginatorBuilderObject)
     {
     }
 

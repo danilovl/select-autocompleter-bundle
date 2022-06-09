@@ -21,9 +21,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class AutocompleterService
 {
     public function __construct(
-        private ContainerInterface $container,
-        private AutocompleterContainerInterface $autocompleterContainer,
-        private TokenStorageInterface $tokenStorage
+        private readonly ContainerInterface $container,
+        private readonly AutocompleterContainerInterface $autocompleterContainer,
+        private readonly TokenStorageInterface $tokenStorage
     ) {
     }
 

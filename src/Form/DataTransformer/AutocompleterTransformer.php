@@ -12,8 +12,8 @@ use Traversable;
 class AutocompleterTransformer implements DataTransformerInterface
 {
     public function __construct(
-        private AutocompleterInterface $autocompleter,
-        private bool $isMultiple = false
+        private readonly AutocompleterInterface $autocompleter,
+        private readonly bool $isMultiple = false
     ) {
     }
 

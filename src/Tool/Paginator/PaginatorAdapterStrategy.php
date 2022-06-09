@@ -14,7 +14,7 @@ class PaginatorAdapterStrategy
 {
     private ?PaginatorAdapterInterface $adapter = null;
 
-    public function __construct(private PaginatorBuilderObject $paginatorBuilderObject)
+    public function __construct(private readonly PaginatorBuilderObject $paginatorBuilderObject)
     {
     }
 

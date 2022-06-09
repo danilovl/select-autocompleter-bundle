@@ -12,8 +12,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class AutocompleterTypeResolver
 {
     public function __construct(
-        private SelectOptionResolver $selectOptionResolver,
-        private DependentSelectResolver $dependentSelectResolver
+        private readonly SelectOptionResolver $selectOptionResolver,
+        private readonly DependentSelectResolver $dependentSelectResolver
     ) {
     }
 

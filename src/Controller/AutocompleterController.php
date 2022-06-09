@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\{
 
 class AutocompleterController
 {
-    public function __construct(private AutocompleterService $autocompleterService)
+    public function __construct(private readonly AutocompleterService $autocompleterService)
     {
     }
 

@@ -33,7 +33,7 @@ abstract class BaseDoctrineAutocompleter extends BaseAutocompleter
     protected $queryBuilder;
 
     public function __construct(
-        protected ManagerRegistry $registry,
+        protected readonly ManagerRegistry $registry,
         AutocompleterConfigResolver $resolver
     ) {
         parent::__construct($resolver);
