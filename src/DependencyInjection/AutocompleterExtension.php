@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class AutocompleterExtension extends Extension
 {
-    public const ALIAS = 'danilovl_select_autocompleter';
+    final public const ALIAS = 'danilovl_select_autocompleter';
     private const DIR_CONFIG = '/../Resources/config';
 
     public function load(array $configs, ContainerBuilder $container)

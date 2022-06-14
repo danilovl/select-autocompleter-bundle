@@ -6,14 +6,14 @@ use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 
 enum AuthenticatedVoterConstant
 {
-    public const IS_AUTHENTICATED_FULLY = AuthenticatedVoter::IS_AUTHENTICATED_FULLY;
-    public const IS_AUTHENTICATED_REMEMBERED = AuthenticatedVoter::IS_AUTHENTICATED_REMEMBERED;
-    public const IS_AUTHENTICATED = AuthenticatedVoter::IS_AUTHENTICATED;
-    public const IS_IMPERSONATOR = AuthenticatedVoter::IS_IMPERSONATOR;
-    public const IS_REMEMBERED = AuthenticatedVoter::IS_REMEMBERED;
-    public const PUBLIC_ACCESS = AuthenticatedVoter::PUBLIC_ACCESS;
+    final public const IS_AUTHENTICATED_FULLY = AuthenticatedVoter::IS_AUTHENTICATED_FULLY;
+    final public const IS_AUTHENTICATED_REMEMBERED = AuthenticatedVoter::IS_AUTHENTICATED_REMEMBERED;
+    final public const IS_AUTHENTICATED = AuthenticatedVoter::IS_AUTHENTICATED;
+    final public const IS_IMPERSONATOR = AuthenticatedVoter::IS_IMPERSONATOR;
+    final public const IS_REMEMBERED = AuthenticatedVoter::IS_REMEMBERED;
+    final public const PUBLIC_ACCESS = AuthenticatedVoter::PUBLIC_ACCESS;
 
-    public const VOTERS = [
+    final public const VOTERS = [
         self::IS_AUTHENTICATED_FULLY,
         self::IS_AUTHENTICATED_REMEMBERED,
         self::IS_AUTHENTICATED,

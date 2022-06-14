@@ -4,11 +4,11 @@ namespace Danilovl\SelectAutocompleterBundle\Constant;
 
 enum SearchConstant
 {
-    public const ANY = 'any';
-    public const START = 'start';
-    public const END = 'end';
+    final public const ANY = 'any';
+    final public const START = 'start';
+    final public const END = 'end';
 
-    public const TYPES = [
+    final public const TYPES = [
         self::START,
         self::ANY,
         self::END

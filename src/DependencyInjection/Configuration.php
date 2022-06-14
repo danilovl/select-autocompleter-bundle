@@ -18,7 +18,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    public const TREE_KEY_NAME = 'danilovl_select_autocompleter';
+    final public const TREE_KEY_NAME = 'danilovl_select_autocompleter';
 
     public function getConfigTreeBuilder(): TreeBuilder
     {
