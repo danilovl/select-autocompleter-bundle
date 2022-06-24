@@ -2,60 +2,85 @@
 
 namespace Danilovl\SelectAutocompleterBundle\DependencyInjection\Compiler;
 
-use Danilovl\SelectAutocompleterBundle\DependencyInjection\Configuration;
+use Danilovl\SelectAutocompleterBundle\DependencyInjection\{
+    Configuration,
+    AutocompleterExtension
+};
+use Danilovl\SelectAutocompleterBundle\Attribute\AsAutocompleter;
+use Danilovl\SelectAutocompleterBundle\Helper\AttributeHelper;
 use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterInterface;
 use Danilovl\SelectAutocompleterBundle\Service\AutocompleterContainer;
+use LogicException;
 use RuntimeException;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\DependencyInjection\Definition;
 
 class AutocompleterCompilerPass implements CompilerPassInterface
 {
+    final public const TAGGED_SERVICE_ID_AUTOCOMPLETER = 'danilovl.select_autocompleter.autocompleter';
+
     public function process(ContainerBuilder $containerBuilder): void
     {
-        $configs = $containerBuilder->getExtensionConfig('danilovl_select_autocompleter');
+        $configs = $containerBuilder->getExtensionConfig(AutocompleterExtension::ALIAS);
         $configuration = new Configuration;
         $config = $this->processConfiguration($configuration, $configs);
 
         $autocompleterContainer = $containerBuilder->getDefinition(AutocompleterContainer::class);
-        $taggedServices = $containerBuilder->findTaggedServiceIds('danilovl.select_autocompleter.autocompleter');
+        $taggedServices = $containerBuilder->findTaggedServiceIds(self::TAGGED_SERVICE_ID_AUTOCOMPLETER, true);
 
         foreach ($taggedServices as $id => $tags) {
-            foreach ($tags as $attributes) {
-                if (!isset($attributes['alias'])) {
-                    continue;
-                }
+            $customAutocompleter = $containerBuilder->getDefinition($id);
 
-                $alias = $attributes['alias'];
-                $aliasData = explode('.', $alias);
-                $aliasType = $aliasData[0];
-                $aliasName = $aliasData[1];
-
-                $defaultAutocompleterConfig = $config['default_option'];
-
-                foreach ($config[$aliasType] as $autocompleterConfig) {
-                    if ($autocompleterConfig['name'] === $aliasName) {
-                        $defaultAutocompleterConfig = array_replace_recursive($defaultAutocompleterConfig, $autocompleterConfig);
-                    }
-                }
-
-                $customAutocompleter = $containerBuilder->getDefinition($id);
-                $customAutocompleter->setPublic(true);
-
-                if (!is_subclass_of($customAutocompleter->getClass(), AutocompleterInterface::class)) {
-                    throw new RuntimeException(sprintf('Autocompleter must implement interface %s', AutocompleterInterface::class));
-                }
-
-                if (!isset($defaultAutocompleterConfig['name'])) {
-                    $defaultAutocompleterConfig['name'] = $aliasName;
-                }
-
-                $customAutocompleter->addMethodCall('addConfig', [$defaultAutocompleterConfig]);
-                $autocompleterContainer->addMethodCall('replaceAutocompleter', [$attributes['alias'], $id]);
+            $alias = $this->getAlias($id, $customAutocompleter, $tags);
+            if (empty($alias)) {
+                continue;
             }
+
+            $aliasData = explode('.', $alias);
+            $aliasType = $aliasData[0];
+            $aliasName = $aliasData[1];
+
+            $defaultAutocompleterConfig = $config['default_option'];
+
+            foreach ($config[$aliasType] as $autocompleterConfig) {
+                if ($autocompleterConfig['name'] === $aliasName) {
+                    $defaultAutocompleterConfig = array_replace_recursive($defaultAutocompleterConfig, $autocompleterConfig);
+                }
+            }
+
+            $customAutocompleter->setPublic(true);
+
+            if (!is_subclass_of($customAutocompleter->getClass(), AutocompleterInterface::class)) {
+                throw new RuntimeException(sprintf('Autocompleter must implement interface %s', AutocompleterInterface::class));
+            }
+
+            if (!isset($defaultAutocompleterConfig['name'])) {
+                $defaultAutocompleterConfig['name'] = $aliasName;
+            }
+
+            $customAutocompleter->addMethodCall('addConfig', [$defaultAutocompleterConfig]);
+            $autocompleterContainer->addMethodCall('replaceAutocompleter', [$alias, $id]);
         }
+    }
+
+    private function getAlias(string $serviceId, Definition $serviceDefinition, array $tags): string
+    {
+        $alias = $tags[0]['alias'] ?? null;
+        if ($alias !== null) {
+            return $alias;
+        }
+
+        $class = $serviceDefinition->getClass();
+        $attribute = AttributeHelper::getInstance($class, AsAutocompleter::class);
+
+        if ($attribute === null) {
+            throw new LogicException(sprintf('The service "%s" needs to implement attribute "%s".', $serviceId,  AsAutocompleter::class));
+        }
+
+        return $attribute->getAlias();
     }
 
     private function processConfiguration(ConfigurationInterface $configuration, array $configs): array

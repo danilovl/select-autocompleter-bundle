@@ -10,10 +10,10 @@ class PaginatorBuilderObject
     /**
      * @var QueryBuilder|Builder
      */
-    public $originQueryBuilder;
+    public object $originQueryBuilder;
 
     /**
      * @var QueryBuilder|Builder
      */
-    public $autocompleterQueryBuilder;
+    public object $autocompleterQueryBuilder;
 }

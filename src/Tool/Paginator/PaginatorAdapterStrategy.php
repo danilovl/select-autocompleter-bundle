@@ -22,8 +22,8 @@ class PaginatorAdapterStrategy
     {
         $class = get_class($this->paginatorBuilderObject->autocompleterQueryBuilder);
         $this->adapter = match ($class) {
-            "Doctrine\ORM\QueryBuilder" => new OrmAdapter($this->paginatorBuilderObject),
-            "Doctrine\ODM\MongoDB\Query\Builder" => new OdmAdapter($this->paginatorBuilderObject),
+            'Doctrine\ORM\QueryBuilder' => new OrmAdapter($this->paginatorBuilderObject),
+            'Doctrine\ODM\MongoDB\Query\Builder' => new OdmAdapter($this->paginatorBuilderObject),
             default => throw new RuntimeException(sprintf('Adapter for class %s not found', $class)),
         };
 

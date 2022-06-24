@@ -11,19 +11,19 @@ This is a Symfony bundle which enables the popular [Select2](https://select2.git
 
 The main feature of this bundle is that the list of choices is retrieved via a remote ajax call.
 
-### Requirements 
+### Requirements
 
-  * PHP 8.1.0 or higher
-  * Symfony 6.0 or higher
+* PHP 8.1.0 or higher
+* Symfony 6.0 or higher
 
 ### 1. Installation
 
 Install `danilovl/select-autocompleter-bundle` package by Composer:
- 
+
 ``` bash
 $ composer require danilovl/select-autocompleter-bundle
 ```
- 
+
 ``` php
 <?php
 // config/bundles.php
@@ -88,7 +88,7 @@ default:
 
 List of available options which you can change in you project.
 
-This options will be applied for all autocompleters. For example: 
+This options will be applied for all autocompleters. For example:
 
 ```yaml
 # config/config.yaml
@@ -105,7 +105,7 @@ danilovl_select_autocompleter:
     image_result_width: '100px'
     image_selection_width: '18px'
     limit: 10
-    base_template: '@SelectAutocompleter/Form/versions.html.twig'  
+    base_template: '@SelectAutocompleter/Form/versions.html.twig'
     cdn:
       auto: false
       link: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css'
@@ -131,7 +131,7 @@ danilovl_select_autocompleter:
     security:
       public_access: false
       voter: 'danilovl.select_autocompleter.voter.default'
-      role: 
+      role:
         - ROLE_ADMIN
         - ROLE_API
       condition: 'or'
@@ -211,7 +211,7 @@ danilovl_select_autocompleter:
 
 #### 3.3 Select options
 
-For customization select is available following settings. 
+For customization select is available following settings.
 
 Text defined in `placeholder` will be translated by twig function `truns`.
 
@@ -271,7 +271,7 @@ danilovl_select_autocompleter:
 
 #### 3.5 Where
 
-Simple `where` condition. 
+Simple `where` condition.
 
 ```yaml
 # config/config.yaml
@@ -320,7 +320,7 @@ ORDER BY e.created_at ASC, e.uptadet_at DESC
 
 ### 4. Configuring autocompleters
 
-For `Doctrine ORM` you should use key `orm`. For `Doctrine ODM` you should use key `odm`.    
+For `Doctrine ORM` you should use key `orm`. For `Doctrine ODM` you should use key `odm`.
 
 The configuration is practically no different for `orm` or `odm`.
 
@@ -339,8 +339,8 @@ danilovl_select_autocompleter:
   orm:
     - name: 'user'
       class: 'App:User'
-      property: 'username'   
-    
+      property: 'username'
+
     - name: 'group'
       class: 'App:Group'
       property: 'name'   
@@ -362,7 +362,7 @@ danilovl_select_autocompleter:
   orm:
     - name: 'group'
       class: 'App:Group'
-      property: 'name' 
+      property: 'name'
       search_simple:
         name: 'start'
         text: 'any'
@@ -383,16 +383,16 @@ danilovl_select_autocompleter:
   orm:
     - name: 'group'
       class: 'App:Group'
-      property: 'name' 
+      property: 'name'
       search_pattern:
         name: 'group_$search%%'
         description: '%%$search%%'
 
-  - name: 'product'
-      class: 'App:Product'
-      property: 'name' 
-      search_pattern:
-        price: 'EUR%%'
+    - name: 'product'
+        class: 'App:Product'
+        property: 'name'
+        search_pattern:
+          price: 'EUR%%'
 ```
 
 ##### 4.1.4 toString
@@ -407,7 +407,7 @@ danilovl_select_autocompleter:
   orm:
     - name: 'group'
       class: 'App:Group'
-      property: 'name' 
+      property: 'name'
       to_string:
         auto: true
 ```
@@ -454,7 +454,7 @@ danilovl_select_autocompleter:
 
 ##### 4.1.6 Call repository method
 
-If you want to use a existing repository method from you project. Other parameters will be ignored. 
+If you want to use a existing repository method from you project. Other parameters will be ignored.
 
 Repository method should have `public` access and return `QueryBuilder` or `Builder`.
 
@@ -524,7 +524,7 @@ Restrict access for all autocompleters.
 ...
 danilovl_select_autocompleter:
   default_option:
-    security: 
+    security:
       role:
         - 'ROLE_USER'
         - 'ROLE_ADMIN'
@@ -537,7 +537,7 @@ You can user condition `or` or `and`
 ...
 danilovl_select_autocompleter:
   default_option:
-    security: 
+    security:
       role:
         - 'ROLE_USER'
         - 'ROLE_ADMIN'
@@ -551,7 +551,7 @@ If the user has no role `ROLE_USER` or `ROLE_ADMIN`, voter return `false`
 ...
 danilovl_select_autocompleter:
   default_option:
-    security: 
+    security:
       role:
         - 'ROLE_USER'
         - 'ROLE_ADMIN'
@@ -570,7 +570,7 @@ danilovl_select_autocompleter:
   orm:
     - name: 'user'
       class: 'App:User'
-      security: 
+      security:
         role:
           - 'ROLE_USER'
           - 'ROLE_ADMIN'      
@@ -584,8 +584,8 @@ You could restrict access to autocompleters by securing URL patterns
 # config/security.yaml
 
 security:
-   access_control:
-        - { path: ^/(%app_locales%)/select-autocompleter/(\w+)/autocomplete, roles: [ROLE_AUTCOMOPLETER, ROLE_ADMIN] }
+  access_control:
+    - { path: ^/(%app_locales%)/select-autocompleter/(\w+)/autocomplete, roles: [ROLE_AUTCOMOPLETER, ROLE_ADMIN] }
 ```
 
 #### 5.3 By voter
@@ -663,7 +663,7 @@ Set voter for all autocompleters.
 ...
 danilovl_select_autocompleter:
   default_option:
-    security: 
+    security:
       voter: 'app.voter.custom'
 ```
 
@@ -677,7 +677,7 @@ danilovl_select_autocompleter:
   orm:
     - name: 'user'
       class: 'App:User'
-      security: 
+      security:
         voter: 'app.voter.custom'
 ```
 
@@ -696,7 +696,7 @@ For example entity - `City` dependent on `Country` and `Region`.
 danilovl_select_autocompleter:
   orm:
     - name: 'autocompleter.country'
-      class: 'App:Country' 
+      class: 'App:Country'
 
     - name: 'autocompleter.region'
       class: 'App:Region'
@@ -705,7 +705,7 @@ danilovl_select_autocompleter:
       class: 'App:City'
       dependent_selects:
         - name: 'dependent_on_country'
-          parent_property: 'country'  
+          parent_property: 'country'
 
         - name: 'dependent_on_region'
           parent_property: 'region'
@@ -717,8 +717,6 @@ danilovl_select_autocompleter:
 <?php declare(strict_types=1);
 
 namespace App\Entity;
-
-//use code
 
 #[ORM\Table(name: 'city')]
 #[ORM\Entity(repositoryClass: CityRepository::class)]
@@ -739,8 +737,6 @@ class City
     #[ORM\ManyToOne(targetEntity: Region::class, inversedBy: 'regions')]
     #[ORM\JoinColumn(name: 'id_region', referencedColumnName: 'id', nullable: false)]
     protected ?Region $region = null;
-
-    //other code
 }
 ```
 
@@ -753,7 +749,6 @@ Parent and dependent fields should be in form together.
 
 namespace App\Form;
 
-// ...
 use Danilovl\SelectAutocompleterBundle\Form\Type\AutocompleterType;
 
 class CityType extends AbstractType
@@ -795,7 +790,7 @@ class CityType extends AbstractType
 
 #### 6.2 Simple ManyToMany
 
-For example entity - `Tag` has many `Cheque` 
+For example entity - `Tag` has many `Cheque`
 
 ```yaml
 # config/config.yaml
@@ -876,7 +871,7 @@ danilovl_select_autocompleter:
           enable_migraiton: 'yes'
 ```
 
-### 8. Using 
+### 8. Using
 
 Simple configuration in form.
 
@@ -885,7 +880,6 @@ You should use `'name' => 'orm.shop'` for identification autocompleter.
 ```php
 <?php declare(strict_types=1);
 
-// ...
 use Danilovl\SelectAutocompleterBundle\Form\Type\AutocompleterType;
 
 class CityType extends AbstractType
@@ -910,7 +904,6 @@ You can override `select_option`.
 ```php
 <?php declare(strict_types=1);
 
-// ...
 use Danilovl\SelectAutocompleterBundle\Form\Type\AutocompleterType;
 
 class CityType extends AbstractType
@@ -939,7 +932,7 @@ class CityType extends AbstractType
 ### 9.  Custom Autocompleter
 
 You can create your own custom autocompleter.
- 
+
 ```yaml
 # config/config.yaml
 
@@ -1050,13 +1043,43 @@ Then you must defined new autocompleter service in you `services.yaml` with `dan
 app.autocompleter.custom:
   class: App\Autocompleter\CustomShopAutocompleter
   tags:
-    - {name: 'danilovl.select_autocompleter.autocompleter', alias: 'orm.customShop'}
+    - {name: 'danilovl.select_autocompleter.autocompleter', alias: 'own.customAutocompleter'}
+```
+
+Or you can use autocompleter attribute `AsAutocompleter` with require `alias` field.
+
+```php
+<?php declare(strict_types=1);
+
+namespace App\Autocompleter;
+
+use Danilovl\SelectAutocompleterBundle\Attribute\AsAutocompleter;
+
+#[AsAutocompleter(alias: 'own.customShop')]
+class CustomShopAutocompleter extends OrmAutocompleter
+{
+}
+```
+
+Or you can use symfony service attribute `AutoconfigureTag` with require `name` and `alias` parameters.
+
+```php
+<?php declare(strict_types=1);
+
+namespace App\Autocompleter;
+
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+
+#[AutoconfigureTag(name: 'danilovl.select_autocompleter.autocompleter', attributes: ['alias' => 'own.customAutocompleter'])]
+class CustomShopAutocompleter extends OrmAutocompleter
+{
+}
 ```
 
 ### 10. Custom autocompleter widget template
 
 Create you own custom autocompleter template which extends `versions.html.twig` and redefine the blocks you need.
- 
+
 ```twig
 {# templates/autocompleter/custom_widget_template.html.twig #}
 
@@ -1110,10 +1133,10 @@ Create you own custom autocompleter template which extends `versions.html.twig` 
     {# new code #}
 {% endblock %}
 ```
-    
+
 Then you need to add path for new custom template to config.
 
-For all autocompleters.  
+For all autocompleters.
 
 ```yaml
 # config/config.yaml
@@ -1134,7 +1157,7 @@ danilovl_select_autocompleter:
   orm:
     - name: 'user'
       class: 'App:User'
-      property: 'username'   
+      property: 'username'
       base_template: 'autocompleter/custom_widget_template.html.twig'  
 ```
 

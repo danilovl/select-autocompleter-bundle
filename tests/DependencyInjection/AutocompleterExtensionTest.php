@@ -1,7 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Danilovl\SelectAutocompleterBundle\Tests;
+namespace Danilovl\SelectAutocompleterBundle\Tests\DependencyInjection;
 
+use Danilovl\SelectAutocompleterBundle\Service\AutocompleterContainer;
+use Danilovl\SelectAutocompleterBundle\Tests\Mock\LoadConfigHelper;
 use PHPUnit\Framework\TestCase;
 use Danilovl\SelectAutocompleterBundle\DependencyInjection\{
     Configuration,
@@ -9,15 +11,14 @@ use Danilovl\SelectAutocompleterBundle\DependencyInjection\{
 };
 use Generator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Yaml\Yaml;
 
-class ConfigurationTest extends TestCase
+class AutocompleterExtensionTest extends TestCase
 {
     public function testConfiguration(): void
     {
         $configuration = new Configuration;
         $node = $configuration->getConfigTreeBuilder()->buildTree();
-        $normalizedConfig = $node->normalize($this->getYamlConfigData()['danilovl_select_autocompleter']);
+        $normalizedConfig = $node->normalize($this->getYamlConfigData()[AutocompleterExtension::ALIAS]);
         $node->finalize($normalizedConfig);
 
         $this->expectNotToPerformAssertions();
@@ -46,7 +47,13 @@ class ConfigurationTest extends TestCase
         bool $expected,
         ContainerBuilder $container
     ): void {
-        $this->assertEquals($expected, $container->hasDefinition($service));
+        $autocompleterContainer = $container->getDefinition(AutocompleterContainer::class);
+        $autocompleterContainer->setClass(AutocompleterContainer::class);
+
+        /** @var AutocompleterContainer $autocompleterContainer */
+        $autocompleterContainer = $container->get(AutocompleterContainer::class);
+
+        $this->assertEquals($expected, $autocompleterContainer->has($service));
     }
 
     private function prepareBuilder(): ContainerBuilder
@@ -59,13 +66,13 @@ class ConfigurationTest extends TestCase
 
     public function dataProviderHasDefinition(): Generator
     {
-        yield ['danilovl.select_autocompleter.orm.shop', true];
-        yield ['danilovl.select_autocompleter.orm.product', true];
-        yield ['danilovl.select_autocompleter.orm.not_exist', false];
+        yield ['orm.shop', true];
+        yield ['orm.product', true];
+        yield ['orm.not_exist', false];
     }
 
     private function getYamlConfigData(): array
     {
-        return Yaml::parseFile(__DIR__ . DIRECTORY_SEPARATOR . 'test.yaml');
+        return LoadConfigHelper::localTestData();
     }
 }

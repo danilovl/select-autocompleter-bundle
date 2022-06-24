@@ -4,9 +4,12 @@ namespace Danilovl\SelectAutocompleterBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\{
     ChildDefinition,
-    ContainerBuilder
+    ContainerBuilder,
+    Definition
 };
+use Danilovl\SelectAutocompleterBundle\Attribute\AsAutocompleter;
 use Danilovl\SelectAutocompleterBundle\Constant\ServiceConstant;
+use Danilovl\SelectAutocompleterBundle\DependencyInjection\Compiler\AutocompleterCompilerPass;
 use Danilovl\SelectAutocompleterBundle\Service\AutocompleterContainer;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
@@ -28,8 +31,16 @@ class AutocompleterExtension extends Extension
         $loader->load('form.yaml');
         $loader->load('voter.yaml');
 
+        $this->registerAttribute($container);
         $this->processConfigurationAutocompleters($container, $loader, $config);
         $this->addingFormResources($container);
+    }
+
+    private function registerAttribute(ContainerBuilder $container): void
+    {
+        $container->registerAttributeForAutoconfiguration(AsAutocompleter::class, function (Definition $definition) {
+            $definition->addTag(AutocompleterCompilerPass::TAGGED_SERVICE_ID_AUTOCOMPLETER);
+        });
     }
 
     private function processConfigurationAutocompleters(

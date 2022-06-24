@@ -7,6 +7,7 @@ use Danilovl\SelectAutocompleterBundle\Interfaces\{
     AutocompleterInterface,
     AutocompleterContainerInterface
 };
+use Danilovl\SelectAutocompleterBundle\Exception\NotImplementedGrantedException;
 use Danilovl\SelectAutocompleterBundle\Model\Autocompleter\AutocompleterQuery;
 use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\Result;
 use Exception;
@@ -71,7 +72,13 @@ class AutocompleterService
 
     private function denyAccessUnlessGranted(AutocompleterInterface $autocompleter): void
     {
-        if ($this->isGranted($autocompleter) === VoterInterface::ACCESS_DENIED) {
+        try {
+            $grantedStatus = $autocompleter->isGranted();
+        } catch (NotImplementedGrantedException) {
+            $grantedStatus = $this->isGranted($autocompleter);
+        }
+
+        if ($grantedStatus === VoterInterface::ACCESS_DENIED) {
             throw $this->createAccessDeniedException();
         }
     }

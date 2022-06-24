@@ -18,13 +18,11 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    final public const TREE_KEY_NAME = 'danilovl_select_autocompleter';
-
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $defaultOption = DefaultOption::fromDefaultYaml();
 
-        $treeBuilder = new TreeBuilder(self::TREE_KEY_NAME);
+        $treeBuilder = new TreeBuilder(AutocompleterExtension::ALIAS);
         $rootNode = $treeBuilder->getRootNode();
 
         $rootNode

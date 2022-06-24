@@ -56,8 +56,10 @@ abstract class BaseDoctrineAutocompleter extends BaseAutocompleter
 
     public function reverseTransform(array $identifiers): array
     {
-        return $this->getLoader()
-            ->getEntitiesByIds($this->config->idProperty, $identifiers);
+        return $this->getLoader()->getEntitiesByIds(
+            $this->config->idProperty,
+            $identifiers
+        );
     }
 
     protected function getManager(): ObjectManager

@@ -2,6 +2,11 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Service;
 
+use Danilovl\SelectAutocompleterBundle\Exception\{
+    NotImplementedGrantedException,
+    NotImplementedAutocompleteException,
+    NotImplementedReverseTransformException
+};
 use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterInterface;
 use Danilovl\SelectAutocompleterBundle\Model\Autocompleter\AutocompleterQuery;
 use Danilovl\SelectAutocompleterBundle\Model\Config\Config;
@@ -10,7 +15,6 @@ use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\{
     Result
 };
 use Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolver;
-use RuntimeException;
 use Symfony\Component\OptionsResolver\Options;
 
 abstract class BaseAutocompleter implements AutocompleterInterface
@@ -35,12 +39,12 @@ abstract class BaseAutocompleter implements AutocompleterInterface
 
     public function autocomplete(AutocompleterQuery $query): Result
     {
-        throw new RuntimeException('Need implement logic');
+        throw new NotImplementedAutocompleteException('Need implement logic');
     }
 
     public function reverseTransform(array $identifiers): array
     {
-        throw new RuntimeException('Need implement logic');
+        throw new NotImplementedReverseTransformException('Need implement logic');
     }
 
     public function transformObjectsToItem(array $objects): array
@@ -51,5 +55,10 @@ abstract class BaseAutocompleter implements AutocompleterInterface
     public function transformObjectToItem(object $object): Item
     {
         return Item::formObject($object, $this->config);
+    }
+
+    public function isGranted(): int
+    {
+        throw new NotImplementedGrantedException('Default isGranted method will be call in AutocompleterService');
     }
 }
