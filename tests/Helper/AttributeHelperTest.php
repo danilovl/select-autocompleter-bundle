@@ -11,8 +11,9 @@ class AttributeHelperTest extends TestCase
 {
     public function testGetInstance(): void
     {
+        /** @var AsAutocompleter $attribute */
         $attribute = AttributeHelper::getInstance(TestAsAutocompleter::class, AsAutocompleter::class);
 
-        $this->assertEquals('own.as_autocompleter_attribute', $attribute->getAlias());
+        $this->assertEquals('own.as_autocompleter_attribute', $attribute->alias);
     }
 }
