@@ -686,7 +686,7 @@ danilovl_select_autocompleter:
         voter: 'app.voter.custom'
 ```
 
-5.3 Use `isGranted` method in custom autocompleter.
+#### 5.4 Use `isGranted` method in custom autocompleter.
 
 ```php
 <?php declare(strict_types=1);
