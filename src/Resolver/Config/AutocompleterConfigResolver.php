@@ -42,6 +42,7 @@ class AutocompleterConfigResolver
             'class' => null,
             'id_property' => null,
             'property' => null,
+            'property_search_type' => null,
             'image' => null,
             'image_result_width' => null,
             'image_selection_width' => null,
@@ -80,7 +81,7 @@ class AutocompleterConfigResolver
             ->setNormalizer('search_simple', static function (Options $options, array $value): array {
                 if (empty($value) && !empty($options['property'])) {
                     $value = [
-                        $options['property'] => SearchConstant::ANY
+                        $options['property'] => $options['property_search_type']
                     ];
                 }
 
@@ -90,6 +91,7 @@ class AutocompleterConfigResolver
             ->setAllowedTypes('name', 'string')
             ->setAllowedTypes('id_property', ['string'])
             ->setAllowedTypes('property', ['string'])
+            ->setAllowedTypes('property_search_type', ['string'])
             ->setAllowedTypes('image', ['string', 'null'])
             ->setAllowedTypes('image_result_width', ['string'])
             ->setAllowedTypes('image_selection_width', ['string'])

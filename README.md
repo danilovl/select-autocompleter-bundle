@@ -55,6 +55,7 @@ System default options for all autocompleters, which will be used if necessary.
 default:
   id_property: 'id'
   property: 'name'
+  property_search_type: 'any'
   image_result_width: '100px'
   image_selection_width: '18px'
   widget: 'select2_v4'
@@ -101,11 +102,12 @@ danilovl_select_autocompleter:
     id_property: 'id'
     root_alias: 'e'
     property: 'name'
+    property_search_type: 'any'
     image: 'image'
     image_result_width: '100px'
     image_selection_width: '18px'
     limit: 10
-    base_template: '@SelectAutocompleter/Form/versions.html.twig'
+    base_template: '@SelectAutocompleter/Form/versions.html.twig'  
     cdn:
       auto: false
       link: 'https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css'
@@ -131,7 +133,7 @@ danilovl_select_autocompleter:
     security:
       public_access: false
       voter: 'danilovl.select_autocompleter.voter.default'
-      role:
+      role: 
         - ROLE_ADMIN
         - ROLE_API
       condition: 'or'
@@ -339,11 +341,12 @@ danilovl_select_autocompleter:
   orm:
     - name: 'user'
       class: 'App:User'
-      property: 'username'
-
+      property: 'username'   
+    
     - name: 'group'
       class: 'App:Group'
       property: 'name'   
+      property_search_type: 'equal'
 ```
 
 ##### 4.1.2 Simple search
@@ -354,6 +357,8 @@ danilovl_select_autocompleter:
 
 `end` is `LIKE 'search%'`
 
+`equal` is `= 'search'`
+
 ```yaml
 # config/config.yaml
 
@@ -362,7 +367,7 @@ danilovl_select_autocompleter:
   orm:
     - name: 'group'
       class: 'App:Group'
-      property: 'name'
+      property: 'name' 
       search_simple:
         name: 'start'
         text: 'any'
@@ -383,16 +388,16 @@ danilovl_select_autocompleter:
   orm:
     - name: 'group'
       class: 'App:Group'
-      property: 'name'
+      property: 'name' 
       search_pattern:
         name: 'group_$search%%'
         description: '%%$search%%'
 
-    - name: 'product'
-        class: 'App:Product'
-        property: 'name'
-        search_pattern:
-          price: 'EUR%%'
+  - name: 'product'
+      class: 'App:Product'
+      property: 'name' 
+      search_pattern:
+        price: 'EUR%%'
 ```
 
 ##### 4.1.4 toString
@@ -407,7 +412,7 @@ danilovl_select_autocompleter:
   orm:
     - name: 'group'
       class: 'App:Group'
-      property: 'name'
+      property: 'name' 
       to_string:
         auto: true
 ```
@@ -524,7 +529,7 @@ Restrict access for all autocompleters.
 ...
 danilovl_select_autocompleter:
   default_option:
-    security:
+    security: 
       role:
         - 'ROLE_USER'
         - 'ROLE_ADMIN'
@@ -537,7 +542,7 @@ You can user condition `or` or `and`
 ...
 danilovl_select_autocompleter:
   default_option:
-    security:
+    security: 
       role:
         - 'ROLE_USER'
         - 'ROLE_ADMIN'
@@ -551,7 +556,7 @@ If the user has no role `ROLE_USER` or `ROLE_ADMIN`, voter return `false`
 ...
 danilovl_select_autocompleter:
   default_option:
-    security:
+    security: 
       role:
         - 'ROLE_USER'
         - 'ROLE_ADMIN'
@@ -570,7 +575,7 @@ danilovl_select_autocompleter:
   orm:
     - name: 'user'
       class: 'App:User'
-      security:
+      security: 
         role:
           - 'ROLE_USER'
           - 'ROLE_ADMIN'      
@@ -584,8 +589,8 @@ You could restrict access to autocompleters by securing URL patterns
 # config/security.yaml
 
 security:
-  access_control:
-    - { path: ^/(%app_locales%)/select-autocompleter/(\w+)/autocomplete, roles: [ROLE_AUTCOMOPLETER, ROLE_ADMIN] }
+   access_control:
+        - { path: ^/(%app_locales%)/select-autocompleter/(\w+)/autocomplete, roles: [ROLE_AUTCOMOPLETER, ROLE_ADMIN] }
 ```
 
 #### 5.3 By voter
@@ -663,7 +668,7 @@ Set voter for all autocompleters.
 ...
 danilovl_select_autocompleter:
   default_option:
-    security:
+    security: 
       voter: 'app.voter.custom'
 ```
 
@@ -677,8 +682,42 @@ danilovl_select_autocompleter:
   orm:
     - name: 'user'
       class: 'App:User'
-      security:
+      security: 
         voter: 'app.voter.custom'
+```
+
+5.3 Use `isGranted` method in custom autocompleter.
+
+```php
+<?php declare(strict_types=1);
+
+namespace App\Autocompleter;
+
+use Danilovl\SelectAutocompleterBundle\Model\Autocompleter\AutocompleterQuery;
+use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\Item;
+use Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolver;
+use Danilovl\SelectAutocompleterBundle\Service\OrmAutocompleter;
+use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+
+class CustomShopAutocompleter extends OrmAutocompleter
+{
+    private ShopRepository $shopRepository;
+
+    public function __construct(
+        ManagerRegistry $registry,
+        AutocompleterConfigResolver $resolver,
+        ShopRepository $shopRepository
+    ) {
+        parent::__construct($registry, $resolver);
+
+        $this->shopRepository = $shopRepository;
+    }
+
+    public function isGranted(): int
+    {
+        return VoterInterface::ACCESS_ABSTAIN;
+    }
+}
 ```
 
 ### 6. Dependent select
@@ -696,7 +735,7 @@ For example entity - `City` dependent on `Country` and `Region`.
 danilovl_select_autocompleter:
   orm:
     - name: 'autocompleter.country'
-      class: 'App:Country'
+      class: 'App:Country' 
 
     - name: 'autocompleter.region'
       class: 'App:Region'
@@ -705,7 +744,7 @@ danilovl_select_autocompleter:
       class: 'App:City'
       dependent_selects:
         - name: 'dependent_on_country'
-          parent_property: 'country'
+          parent_property: 'country'  
 
         - name: 'dependent_on_region'
           parent_property: 'region'
@@ -1005,7 +1044,6 @@ class CustomShopAutocompleter extends OrmAutocompleter
         return $item;
     }
 }
-
 ```
 
 If you need additional parameters in request you can defined `extra` parameter which will be available in `AutocompleterQuery`.

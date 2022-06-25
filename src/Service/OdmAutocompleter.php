@@ -44,8 +44,8 @@ class OdmAutocompleter extends BaseDoctrineAutocompleter
         $this->addingSearchCondition($builder, $query);
         $this->addingSort($builder);
 
-        $builder->skip($this->getOffset($query))
-            ->limit($this->config->limit);
+        $builder->skip($this->getOffset($query));
+        $builder->limit($this->config->limit);
 
         return $builder;
     }

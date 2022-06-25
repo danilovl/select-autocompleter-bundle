@@ -48,8 +48,8 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
         $this->addingDependentSelectCondition($builder, $query);
         $this->addingOrderBy($builder);
 
-        $builder->setFirstResult($this->getOffset($query))
-            ->setMaxResults($this->config->limit);
+        $builder->setFirstResult($this->getOffset($query));
+        $builder->setMaxResults($this->config->limit);
 
         return $builder;
     }
@@ -72,11 +72,16 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
 
         if (empty($this->config->searchPattern)) {
             foreach ($this->config->searchSimple as $field => $searchType) {
-                $end = in_array($searchType, [SearchConstant::START, SearchConstant::ANY]) ? '%' : '';
-                $start = in_array($searchType, [SearchConstant::END, SearchConstant::ANY]) ? '%' : '';
+                if ($searchType === SearchConstant::EQUAL) {
+                    $or->add("{$alias}.{$field} = :autocompleter_{$field}");
+                    $builder->setParameter("autocompleter_{$field}", $query->search);
+                } else {
+                    $end = in_array($searchType, [SearchConstant::START, SearchConstant::ANY]) ? '%' : '';
+                    $start = in_array($searchType, [SearchConstant::END, SearchConstant::ANY]) ? '%' : '';
 
-                $or->add("{$alias}.{$field} LIKE :autocompleter_{$field}");
-                $builder->setParameter("autocompleter_{$field}", $start . $query->search . $end);
+                    $or->add("{$alias}.{$field} LIKE :autocompleter_{$field}");
+                    $builder->setParameter("autocompleter_{$field}", $start . $query->search . $end);
+                }
             }
         }
 
@@ -106,11 +111,13 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
     private function excludedEntityId(QueryBuilder $builder): void
     {
         $excludedEntityId = $this->config->excludedEntityId;
-        if (!empty($excludedEntityId)) {
-            $field = sprintf('%s.%s', $this->config->rootAlias, $this->config->idProperty);
-            $builder->andWhere($builder->expr()->notIn($field, ':autocompleter_excluded_id'))
-                ->setParameter('autocompleter_excluded_id', [1], Connection::PARAM_INT_ARRAY);
+        if (empty($excludedEntityId)) {
+            return;
         }
+
+        $field = sprintf('%s.%s', $this->config->rootAlias, $this->config->idProperty);
+        $builder->andWhere($builder->expr()->notIn($field, ':autocompleter_excluded_id'))
+            ->setParameter('autocompleter_excluded_id', [1], Connection::PARAM_INT_ARRAY);
     }
 
     private function addingDependentSelectCondition(
@@ -121,10 +128,7 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
         $dependentIds = $query->dependentId;
         $dependentSelectItems = $this->config->dependentSelects;
 
-        if (!empty($dependentName) &&
-            !empty($dependentIds) &&
-            !empty($dependentSelects)
-        ) {
+        if (!empty($dependentName) && !empty($dependentIds) && !empty($dependentSelects)) {
             $dependentSelect = null;
             foreach ($dependentSelectItems as $dependentSelectItem) {
                 if ($dependentName === $dependentSelectItem->name) {

@@ -74,13 +74,14 @@ class AutocompleterCompilerPass implements CompilerPassInterface
         }
 
         $class = $serviceDefinition->getClass();
+        /** @var AsAutocompleter|null $attribute */
         $attribute = AttributeHelper::getInstance($class, AsAutocompleter::class);
 
         if ($attribute === null) {
             throw new LogicException(sprintf('The service "%s" needs to implement attribute "%s".', $serviceId,  AsAutocompleter::class));
         }
 
-        return $attribute->getAlias();
+        return $attribute->alias;
     }
 
     private function processConfiguration(ConfigurationInterface $configuration, array $configs): array

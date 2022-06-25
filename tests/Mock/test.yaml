@@ -4,6 +4,7 @@ danilovl_select_autocompleter:
     manager: null
     id_property: 'id'
     property: 'name'
+    property_search_type: 'any'
     limit: 10
     base_template: '@SelectAutocompleter/Form/versions.html.twig'
     cdn:

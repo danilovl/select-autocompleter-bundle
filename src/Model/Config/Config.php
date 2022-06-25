@@ -10,6 +10,7 @@ class Config
     public bool $multiple = false;
     public string $idProperty;
     public string $property;
+    public string $propertySearchType;
     public ?string $image = null;
     public string $imageResultWidth;
     public string $imageSelectionWidth;
@@ -41,6 +42,7 @@ class Config
         $self->idProperty = $parameters['id_property'];
         $self->manager = $parameters['manager'] ?? null;
         $self->property = $parameters['property'];
+        $self->propertySearchType = $parameters['property_search_type'];
         $self->image = $parameters['image'] ?? null;
         $self->imageResultWidth = $parameters['image_result_width'];
         $self->imageSelectionWidth = $parameters['image_selection_width'];

@@ -1,6 +1,7 @@
 default:
   id_property: 'id'
   property: 'name'
+  property_search_type: 'any'
   image_result_width: '100px'
   image_selection_width: '18px'
   widget: 'select2_v4'
