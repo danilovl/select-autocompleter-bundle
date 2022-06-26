@@ -116,8 +116,9 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
         }
 
         $field = sprintf('%s.%s', $this->config->rootAlias, $this->config->idProperty);
-        $builder->andWhere($builder->expr()->notIn($field, ':autocompleter_excluded_id'))
-            ->setParameter('autocompleter_excluded_id', [1], Connection::PARAM_INT_ARRAY);
+
+        $builder->andWhere($builder->expr()->notIn($field, ':autocompleter_excluded_id'));
+        $builder->setParameter('autocompleter_excluded_id', [1], Connection::PARAM_INT_ARRAY);
     }
 
     private function addingDependentSelectCondition(
@@ -155,8 +156,8 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
                 $property = sprintf('%s.%s', $lastAlies, $dependentSelect->parentProperty);
             }
 
-            $builder->andWhere($builder->expr()->in($property, ':autocompleter_parent_id'))
-                ->setParameter('autocompleter_parent_id', $dependentIds, Connection::PARAM_INT_ARRAY);
+            $builder->andWhere($builder->expr()->in($property, ':autocompleter_parent_id'));
+            $builder->setParameter('autocompleter_parent_id', $dependentIds, Connection::PARAM_INT_ARRAY);
         }
     }
 
