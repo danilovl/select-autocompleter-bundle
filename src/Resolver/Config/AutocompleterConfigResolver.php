@@ -2,7 +2,6 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Resolver\Config;
 
-use Danilovl\SelectAutocompleterBundle\Constant\SearchConstant;
 use Danilovl\SelectAutocompleterBundle\Model\Config\Config;
 use Symfony\Component\OptionsResolver\{
     Options,

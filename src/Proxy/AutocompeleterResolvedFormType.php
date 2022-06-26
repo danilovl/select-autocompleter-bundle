@@ -2,9 +2,11 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Proxy;
 
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\ResolvedFormType;
+use Symfony\Component\Form\{
+    ResolvedFormType,
+    FormBuilderInterface,
+    FormFactoryInterface
+};
 
 class AutocompeleterResolvedFormType extends ResolvedFormType
 {

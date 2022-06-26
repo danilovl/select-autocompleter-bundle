@@ -20,7 +20,7 @@ class AutocompleterExtension extends Extension
     final public const ALIAS = 'danilovl_select_autocompleter';
     private const DIR_CONFIG = '/../Resources/config';
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration;
         $config = $this->processConfiguration($configuration, $configs);
@@ -38,7 +38,7 @@ class AutocompleterExtension extends Extension
 
     private function registerAttribute(ContainerBuilder $container): void
     {
-        $container->registerAttributeForAutoconfiguration(AsAutocompleter::class, function (Definition $definition) {
+        $container->registerAttributeForAutoconfiguration(AsAutocompleter::class, static function (Definition $definition): void {
             $definition->addTag(AutocompleterCompilerPass::TAGGED_SERVICE_ID_AUTOCOMPLETER);
         });
     }
