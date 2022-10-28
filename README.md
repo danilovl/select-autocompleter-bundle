@@ -11,6 +11,8 @@ This is a Symfony bundle which enables the popular [Select2](https://select2.git
 
 The main feature of this bundle is that the list of choices is retrieved via a remote ajax call.
 
+![Alt text](/screenshot/autocompleter.gif?raw=true "Autocompleter example")
+
 ### Requirements
 
 * PHP 8.1.0 or higher
