@@ -1,4 +1,4 @@
-version: '2.4'
+version: '3.8'
 
 services:
   php:
@@ -9,7 +9,4 @@ services:
       - '9000'
     volumes:
       - "./:/var/www/html/app"
-      - "/var/www/html/app/var"
-      - "/var/www/html/app/vendor"
     working_dir: /var/www/html/app
-    mem_limit: 2g
