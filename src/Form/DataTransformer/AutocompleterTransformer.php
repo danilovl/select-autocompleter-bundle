@@ -9,13 +9,12 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Traversable;
 
-class AutocompleterTransformer implements DataTransformerInterface
+readonly class AutocompleterTransformer implements DataTransformerInterface
 {
     public function __construct(
-        private readonly AutocompleterInterface $autocompleter,
-        private readonly bool $isMultiple = false
-    ) {
-    }
+        private AutocompleterInterface $autocompleter,
+        private bool $isMultiple = false
+    ) {}
 
     public function transform(mixed $value): mixed
     {

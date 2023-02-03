@@ -8,18 +8,17 @@ use Symfony\Component\OptionsResolver\{
     OptionsResolver
 };
 
-class AutocompleterConfigResolver
+readonly class AutocompleterConfigResolver
 {
     public function __construct(
-        private readonly SelectOptionResolver $selectOptionResolver,
-        private readonly CdnResolver $cdnResolver,
-        private readonly ToStringResolver $toStringResolver,
-        private readonly SecurityResolver $securityResolver,
-        private readonly RepositoryResolver $repositoryResolver,
-        private readonly DependentSelectsResolver $dependentSelectResolver,
-        private readonly RouteResolver $routeResolver
-    ) {
-    }
+        private SelectOptionResolver $selectOptionResolver,
+        private CdnResolver $cdnResolver,
+        private ToStringResolver $toStringResolver,
+        private SecurityResolver $securityResolver,
+        private RepositoryResolver $repositoryResolver,
+        private DependentSelectsResolver $dependentSelectResolver,
+        private RouteResolver $routeResolver
+    ) {}
 
     public function resolveConfig(array $options): Config
     {

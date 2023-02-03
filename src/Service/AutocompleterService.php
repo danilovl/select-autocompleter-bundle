@@ -19,12 +19,12 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class AutocompleterService
+readonly class AutocompleterService
 {
     public function __construct(
-        private readonly ContainerInterface $container,
-        private readonly AutocompleterContainerInterface $autocompleterContainer,
-        private readonly TokenStorageInterface $tokenStorage
+        private ContainerInterface $container,
+        private AutocompleterContainerInterface $autocompleterContainer,
+        private TokenStorageInterface $tokenStorage
     ) {
     }
 

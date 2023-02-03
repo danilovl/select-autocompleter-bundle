@@ -8,9 +8,9 @@ use Symfony\Component\HttpFoundation\{
     JsonResponse
 };
 
-class AutocompleterController
+readonly class AutocompleterController
 {
-    public function __construct(private readonly AutocompleterService $autocompleterService)
+    public function __construct(private AutocompleterService $autocompleterService)
     {
     }
 

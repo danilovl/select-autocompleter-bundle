@@ -6,9 +6,9 @@ use Danilovl\SelectAutocompleterBundle\Model\Paginator\PaginatorBuilderObject;
 use Danilovl\SelectAutocompleterBundle\Tool\Paginator\Interfaces\PaginatorAdapterInterface;
 use Doctrine\ODM\MongoDB\Query\Builder;
 
-class OdmAdapter implements PaginatorAdapterInterface
+readonly class OdmAdapter implements PaginatorAdapterInterface
 {
-    public function __construct(private readonly PaginatorBuilderObject $paginatorBuilderObject)
+    public function __construct(private PaginatorBuilderObject $paginatorBuilderObject)
     {
     }
 

@@ -9,13 +9,12 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AutocompleterTypeResolver
+readonly class AutocompleterTypeResolver
 {
     public function __construct(
-        private readonly SelectOptionResolver $selectOptionResolver,
-        private readonly DependentSelectResolver $dependentSelectResolver
-    ) {
-    }
+        private SelectOptionResolver $selectOptionResolver,
+        private DependentSelectResolver $dependentSelectResolver
+    ) {}
 
     public function configureOptions(OptionsResolver $resolver): void
     {
