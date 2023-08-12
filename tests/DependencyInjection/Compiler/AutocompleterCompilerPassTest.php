@@ -7,6 +7,8 @@ use Danilovl\SelectAutocompleterBundle\Tests\Mock\{
     LoadConfigHelper,
     TestAsAutocompleter
 };
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 use Danilovl\SelectAutocompleterBundle\DependencyInjection\AutocompleterExtension;
 use Danilovl\SelectAutocompleterBundle\DependencyInjection\Compiler\AutocompleterCompilerPass;
@@ -19,10 +21,8 @@ use Symfony\Component\DependencyInjection\{
 
 class AutocompleterCompilerPassTest extends TestCase
 {
-    /**
-     * @dataProvider dataProviderHasDefinition
-     * @depends      testLoad
-     */
+    #[DataProvider('dataProviderHasDefinition')]
+    #[Depends('testLoad')]
     public function testCreateDefinitionService(
         string $service,
         bool $expected,
@@ -65,13 +65,13 @@ class AutocompleterCompilerPassTest extends TestCase
         return $container;
     }
 
-    public function dataProviderHasDefinition(): Generator
+    public static function dataProviderHasDefinition(): Generator
     {
         yield ['orm.not_exist', false];
         yield ['own.as_autocompleter_attribute', true];
     }
 
-    private function getYamlConfigData(): array
+    private static function getYamlConfigData(): array
     {
         return LoadConfigHelper::localTestData();
     }

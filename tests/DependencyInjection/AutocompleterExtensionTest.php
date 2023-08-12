@@ -4,6 +4,8 @@ namespace Danilovl\SelectAutocompleterBundle\Tests\DependencyInjection;
 
 use Danilovl\SelectAutocompleterBundle\Service\AutocompleterContainer;
 use Danilovl\SelectAutocompleterBundle\Tests\Mock\LoadConfigHelper;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 use Danilovl\SelectAutocompleterBundle\DependencyInjection\{
     Configuration,
@@ -38,10 +40,8 @@ class AutocompleterExtensionTest extends TestCase
         return $container;
     }
 
-    /**
-     * @dataProvider dataProviderHasDefinition
-     * @depends testLoad
-     */
+    #[DataProvider('dataProviderHasDefinition')]
+    #[Depends('testLoad')]
     public function testCreateDefinitionService(
         string $service,
         bool $expected,
@@ -64,7 +64,7 @@ class AutocompleterExtensionTest extends TestCase
         return $container;
     }
 
-    public function dataProviderHasDefinition(): Generator
+    public static function dataProviderHasDefinition(): Generator
     {
         yield ['orm.shop', true];
         yield ['orm.product', true];
