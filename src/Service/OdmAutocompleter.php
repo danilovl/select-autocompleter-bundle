@@ -52,6 +52,10 @@ class OdmAutocompleter extends BaseDoctrineAutocompleter
 
     private function addingSearchCondition(Builder $builder, AutocompleterQuery $query): void
     {
+        if (empty($query->search)) {
+            return;
+        }
+
         $or = $builder->expr()->orX();
 
         if (empty($this->config->searchPattern)) {
