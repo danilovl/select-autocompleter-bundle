@@ -16,7 +16,7 @@ The main feature of this bundle is that the list of choices is retrieved via a r
 ### Requirements
 
 * PHP 8.3 or higher
-* Symfony 6.3 or higher
+* Symfony 7.0 or higher
 
 ### 1. Installation
 
@@ -609,7 +609,7 @@ use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterInterface;
 use LogicException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class CustomAutocompleterVoter extends Voter
 {
