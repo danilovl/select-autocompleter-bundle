@@ -20,7 +20,7 @@
         }
     },
     "require": {
-        "php": "^8.2.0",
+        "php": "^8.3",
         "symfony/framework-bundle": "^6.3",
         "symfony/security-bundle": "^6.3",
         "doctrine/doctrine-bundle": "^2",

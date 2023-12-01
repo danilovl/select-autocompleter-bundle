@@ -4,10 +4,10 @@ namespace Danilovl\SelectAutocompleterBundle\Constant;
 
 enum SecurityConditionConstant
 {
-    final public const OR = 'or';
-    final public const AND = 'and';
+    final public const string OR = 'or';
+    final public const string AND = 'and';
 
-    final public const TYPES = [
+    final public const array TYPES = [
         self::OR,
         self::AND
     ];

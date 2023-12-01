@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Security;
 
 class DefaultVoter extends Voter
 {
-    private const SUPPORTS = [
+    private const array SUPPORTS = [
         VoterSupportConstant::GET_DATA
     ];
 

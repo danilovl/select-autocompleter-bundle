@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\Definition;
 
 class AutocompleterCompilerPass implements CompilerPassInterface
 {
-    final public const TAGGED_SERVICE_ID_AUTOCOMPLETER = 'danilovl.select_autocompleter.autocompleter';
+    final public const string TAGGED_SERVICE_ID_AUTOCOMPLETER = 'danilovl.select_autocompleter.autocompleter';
 
     public function process(ContainerBuilder $containerBuilder): void
     {

@@ -9,10 +9,10 @@ use Danilovl\SelectAutocompleterBundle\Service\{
 
 enum ServiceConstant
 {
-    final public const ORM = 'orm';
-    final public const ODM = 'orm';
-    final public const OWN = 'own';
-    final public const SERVICE_FORMAT = 'danilovl.select_autocompleter.%s.%s';
-    final public const PARENT_SERVICE_ORM = OrmAutocompleter::class;
-    final public const PARENT_SERVICE_ODM = OdmAutocompleter::class;
+    final public const string ORM = 'orm';
+    final public const string ODM = 'orm';
+    final public const string OWN = 'own';
+    final public const string SERVICE_FORMAT = 'danilovl.select_autocompleter.%s.%s';
+    final public const string PARENT_SERVICE_ORM = OrmAutocompleter::class;
+    final public const string PARENT_SERVICE_ODM = OdmAutocompleter::class;
 }

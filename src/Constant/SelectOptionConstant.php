@@ -4,10 +4,10 @@ namespace Danilovl\SelectAutocompleterBundle\Constant;
 
 enum SelectOptionConstant
 {
-    final public const LTR = 'ltr';
-    final public const RTL = 'rtl';
+    final public const string LTR = 'ltr';
+    final public const string RTL = 'rtl';
 
-    final public const DIRS = [
+    final public const array DIRS = [
         self::LTR,
         self::RTL
     ];

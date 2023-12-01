@@ -6,7 +6,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class DefaultOption
 {
-    private const DIR_DEFAULT_CONFIG = '/../../Resources/config/default.yaml';
+    private const string DIR_DEFAULT_CONFIG = '/../../Resources/config/default.yaml';
 
     public string $idProperty;
     public string $property;

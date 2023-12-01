@@ -4,10 +4,10 @@ namespace Danilovl\SelectAutocompleterBundle\Constant;
 
 enum OrderByConstant
 {
-    final public const ASC = 'ASC';
-    final public const DESC = 'DESC';
+    final public const string ASC = 'ASC';
+    final public const string DESC = 'DESC';
 
-    final public const TYPES = [
+    final public const array TYPES = [
         self::ASC,
         self::DESC
     ];

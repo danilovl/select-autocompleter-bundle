@@ -18,8 +18,8 @@ readonly class AutocompleterQuery
         $query->search = trim($request->query->getString('search'));
         $query->page = $request->query->getInt('page', 1);
         $query->dependentName = $request->query->getString('dependentName');
-        $query->dependentId = $request->query->all('dependentId') ?? [];
-        $query->extra = $request->query->all('extra') ?? [];
+        $query->dependentId = $request->query->all('dependentId');
+        $query->extra = $request->query->all('extra');
 
         return $query;
     }

@@ -4,5 +4,5 @@ namespace Danilovl\SelectAutocompleterBundle\Constant;
 
 enum VoterSupportConstant
 {
-    final public const GET_DATA = 'get.result';
+    final public const string GET_DATA = 'get.result';
 }

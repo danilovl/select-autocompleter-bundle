@@ -19,7 +19,7 @@ use Twig\Environment;
 
 class AutocompleterType extends AbstractType
 {
-    final public const NAME = 'select_autocompleter';
+    final public const string NAME = 'select_autocompleter';
 
     public function __construct(
         private readonly AutocompleterContainerInterface $autocompleterContainer,
