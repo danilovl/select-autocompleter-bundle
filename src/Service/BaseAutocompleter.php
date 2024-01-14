@@ -15,13 +15,11 @@ use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\{
     Result
 };
 use Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolver;
-use Symfony\Component\OptionsResolver\Options;
 
 abstract class BaseAutocompleter implements AutocompleterInterface
 {
-    protected ?Config $config = null;
-    protected ?Options $options = null;
-    protected ?AutocompleterQuery $autocompleterQuery = null;
+    protected Config $config;
+    protected AutocompleterQuery $autocompleterQuery;
 
     public function __construct(protected readonly AutocompleterConfigResolver $resolver)
     {

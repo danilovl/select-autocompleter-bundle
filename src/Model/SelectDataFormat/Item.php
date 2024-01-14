@@ -2,9 +2,11 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat;
 
+use AllowDynamicProperties;
 use Danilovl\SelectAutocompleterBundle\Model\Config\Config;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
+#[AllowDynamicProperties]
 class Item
 {
     public mixed $id = null;

@@ -3,7 +3,6 @@
 namespace Danilovl\SelectAutocompleterBundle\Service;
 
 use Danilovl\SelectAutocompleterBundle\Model\Autocompleter\AutocompleterQuery;
-use Danilovl\SelectAutocompleterBundle\Model\Config\Config;
 use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\{
     Result,
     Pagination
@@ -19,14 +18,9 @@ use Doctrine\Persistence\{
 use InvalidArgumentException;
 use RuntimeException;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityLoaderInterface;
-use Symfony\Component\OptionsResolver\Options;
 
 abstract class BaseDoctrineAutocompleter extends BaseAutocompleter
 {
-    protected ?Config $config = null;
-    protected ?Options $options = null;
-    protected ?AutocompleterQuery $autocompleterQuery = null;
-
     /**
      * @var QueryBuilder|Builder|null
      */
