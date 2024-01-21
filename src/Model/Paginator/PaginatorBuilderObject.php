@@ -7,13 +7,7 @@ use Doctrine\ORM\QueryBuilder;
 
 class PaginatorBuilderObject
 {
-    /**
-     * @var QueryBuilder|Builder
-     */
-    public object $originQueryBuilder;
+    public QueryBuilder|Builder $originQueryBuilder;
 
-    /**
-     * @var QueryBuilder|Builder
-     */
-    public object $autocompleterQueryBuilder;
+    public QueryBuilder|Builder $autocompleterQueryBuilder;
 }

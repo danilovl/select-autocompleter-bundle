@@ -25,8 +25,7 @@ readonly class AutocompleterService
         private ContainerInterface $container,
         private AutocompleterContainerInterface $autocompleterContainer,
         private TokenStorageInterface $tokenStorage
-    ) {
-    }
+    ) {}
 
     public function autocompeteFromRequest(Request $request, string $name): Result
     {
@@ -48,15 +47,15 @@ readonly class AutocompleterService
 
     public function isGranted(AutocompleterInterface $autocompleter): int
     {
-        $voterName = $autocompleter->getConfig()->security->voter;
         $publicAccess = $autocompleter->getConfig()->security->publicAccess;
-
         if ($publicAccess) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
 
+        $voterName = $autocompleter->getConfig()->security->voter;
         $token = $this->tokenStorage->getToken();
-        if (!$publicAccess && $token === null) {
+
+        if ($token === null || $voterName === null) {
             return VoterInterface::ACCESS_DENIED;
         }
 
@@ -64,7 +63,7 @@ readonly class AutocompleterService
         $voter = $this->container->get($voterName);
 
         return $voter->vote(
-            $this->tokenStorage->getToken(),
+            $token,
             $autocompleter,
             [VoterSupportConstant::GET_DATA]
         );

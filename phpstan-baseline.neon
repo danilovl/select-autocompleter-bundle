@@ -1,0 +1,31 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#1 \\$objectOrClass of class ReflectionClass constructor expects class\\-string\\<T of object\\>\\|T of object, string given\\.$#"
+			count: 1
+			path: src/Helper/AttributeHelper.php
+
+		-
+			message: "#^Property Danilovl\\\\SelectAutocompleterBundle\\\\Model\\\\Paginator\\\\PaginatorBuilderObject\\:\\:\\$autocompleterQueryBuilder has unknown class Doctrine\\\\ODM\\\\MongoDB\\\\Query\\\\Builder as its type\\.$#"
+			count: 1
+			path: src/Model/Paginator/PaginatorBuilderObject.php
+
+		-
+			message: "#^Property Danilovl\\\\SelectAutocompleterBundle\\\\Model\\\\Paginator\\\\PaginatorBuilderObject\\:\\:\\$autocompleterQueryBuilder has unknown class Doctrine\\\\ORM\\\\QueryBuilder as its type\\.$#"
+			count: 1
+			path: src/Model/Paginator/PaginatorBuilderObject.php
+
+		-
+			message: "#^Property Danilovl\\\\SelectAutocompleterBundle\\\\Model\\\\Paginator\\\\PaginatorBuilderObject\\:\\:\\$originQueryBuilder has unknown class Doctrine\\\\ODM\\\\MongoDB\\\\Query\\\\Builder as its type\\.$#"
+			count: 1
+			path: src/Model/Paginator/PaginatorBuilderObject.php
+
+		-
+			message: "#^Property Danilovl\\\\SelectAutocompleterBundle\\\\Model\\\\Paginator\\\\PaginatorBuilderObject\\:\\:\\$originQueryBuilder has unknown class Doctrine\\\\ORM\\\\QueryBuilder as its type\\.$#"
+			count: 1
+			path: src/Model/Paginator/PaginatorBuilderObject.php
+
+		-
+			message: "#^Cannot cast mixed to string\\.$#"
+			count: 1
+			path: src/Model/SelectDataFormat/Item.php

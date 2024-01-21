@@ -3,7 +3,7 @@
 namespace Danilovl\SelectAutocompleterBundle\Service;
 
 use Danilovl\SelectAutocompleterBundle\Model\Paginator\PaginatorBuilderObject;
-use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ArrayParameterType;
 use Danilovl\SelectAutocompleterBundle\Constant\{
     SearchConstant,
     OrderByConstant
@@ -118,7 +118,7 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
         $field = sprintf('%s.%s', $this->config->rootAlias, $this->config->idProperty);
 
         $builder->andWhere($builder->expr()->notIn($field, ':autocompleter_excluded_id'));
-        $builder->setParameter('autocompleter_excluded_id', [1], Connection::PARAM_INT_ARRAY);
+        $builder->setParameter('autocompleter_excluded_id', [1], ArrayParameterType::INTEGER);
     }
 
     private function addingDependentSelectCondition(
@@ -129,7 +129,7 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
         $dependentIds = $query->dependentId;
         $dependentSelectItems = $this->config->dependentSelects;
 
-        if (!empty($dependentName) && !empty($dependentIds) && !empty($dependentSelects)) {
+        if (!empty($dependentName) && !empty($dependentIds) && !empty($dependentSelectItems)) {
             $dependentSelect = null;
             foreach ($dependentSelectItems as $dependentSelectItem) {
                 if ($dependentName === $dependentSelectItem->name) {
@@ -157,7 +157,7 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
             }
 
             $builder->andWhere($builder->expr()->in($property, ':autocompleter_parent_id'));
-            $builder->setParameter('autocompleter_parent_id', $dependentIds, Connection::PARAM_INT_ARRAY);
+            $builder->setParameter('autocompleter_parent_id', $dependentIds, ArrayParameterType::INTEGER);
         }
     }
 

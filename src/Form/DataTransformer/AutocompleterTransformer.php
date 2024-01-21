@@ -26,6 +26,7 @@ readonly class AutocompleterTransformer implements DataTransformerInterface
             throw new TransformationFailedException;
         }
 
+        /** @var array $value */
         $value = !$this->isMultiple ? [$value] : $value;
 
         $items = $this->autocompleter->transformObjectsToItem($value);

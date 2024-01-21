@@ -8,6 +8,9 @@ class LoadConfigHelper
 {
     public static function localTestData(): array
     {
-        return Yaml::parseFile(__DIR__ . DIRECTORY_SEPARATOR . 'test.yaml');
+        /** @var array $result */
+        $result = Yaml::parseFile(__DIR__ . DIRECTORY_SEPARATOR . 'test.yaml');
+
+        return $result;
     }
 }

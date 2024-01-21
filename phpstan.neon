@@ -1,0 +1,17 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+ level: 9
+ paths:
+    - src
+    - tests
+ excludePaths:
+     - src/DependencyInjection/Configuration.php
+     - src/Service/BaseDoctrineAutocompleter.php
+     - src/Service/OdmAutocompleter.php
+     - src/Service/OrmAutocompleter.php
+     - src/Tool/Paginator/Adapters/
+ treatPhpDocTypesAsCertain: false
+ checkMissingIterableValueType: false
+ checkGenericClassInNonGenericObjectType: false

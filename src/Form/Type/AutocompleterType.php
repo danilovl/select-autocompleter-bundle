@@ -25,9 +25,11 @@ class AutocompleterType extends AbstractType
         private readonly AutocompleterContainerInterface $autocompleterContainer,
         private readonly AutocompleterTypeResolver $autocompleterTypeResolver,
         private readonly Environment $environment
-    ) {
-    }
+    ) {}
 
+    /**
+     * @param array{autocompleter: array{name: string, multiple: bool}} $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $autocompleter = $this->autocompleterContainer->get($options['autocompleter']['name']);
@@ -35,6 +37,9 @@ class AutocompleterType extends AbstractType
         $builder->addViewTransformer(new AutocompleterTransformer($autocompleter, $options['autocompleter']['multiple']));
     }
 
+    /**
+     * @param array{autocompleter: array{name: string, multiple: bool, base_template: string}} $options
+     */
     public function buildView(
         FormView $view,
         FormInterface $form,
@@ -60,6 +65,7 @@ class AutocompleterType extends AbstractType
             $property = $reflection->getProperty('resolvedGlobals');
             $property->setAccessible(true);
 
+            /** @var array $resolvedGlobals */
             $resolvedGlobals = $property->getValue($this->environment);
             $resolvedGlobals['autocompleter_base_template'] = $baseTemplate;
             $property->setValue($this->environment, $resolvedGlobals);
@@ -73,7 +79,9 @@ class AutocompleterType extends AbstractType
 
     private function configurateOptionsByLevels(FormInterface $form): array
     {
-        $passedOptions = $form->getConfig()->getAttribute('autocompleter/passed_options')['autocompleter'];
+        /** @var array $options */
+        $options = $form->getConfig()->getAttribute('autocompleter/passed_options');
+        $passedOptions = $options['autocompleter'];
 
         $autocompleter = $this->autocompleterContainer->get($passedOptions['name']);
         $autocompleterConfig = ArrayHelper::modelToArray($autocompleter->getConfig());

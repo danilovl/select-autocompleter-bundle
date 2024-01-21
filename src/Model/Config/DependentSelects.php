@@ -9,7 +9,7 @@ class DependentSelects implements ChildItemInterface
     public ?string $name = null;
     public ?string $parentProperty = null;
     public ?string $parentField = null;
-    public ?string $manyToMany = null;
+    public array $manyToMany = [];
 
     public static function fromConfig(array $parameters): self
     {
@@ -17,7 +17,7 @@ class DependentSelects implements ChildItemInterface
         $self->name = $parameters['name'] ?? null;
         $self->parentProperty = $parameters['parent_property'] ?? null;
         $self->parentField = $parameters['parent_field'] ?? null;
-        $self->manyToMany = $parameters['many_to_many'] ?? null;
+        $self->manyToMany = $parameters['many_to_many'] ?? [];
 
         return $self;
     }

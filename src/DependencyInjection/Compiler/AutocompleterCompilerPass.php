@@ -52,8 +52,10 @@ class AutocompleterCompilerPass implements CompilerPassInterface
             }
 
             $customAutocompleter->setPublic(true);
+            /** @var string $class */
+            $class = $customAutocompleter->getClass();
 
-            if (!is_subclass_of($customAutocompleter->getClass(), AutocompleterInterface::class)) {
+            if (!is_subclass_of($class, AutocompleterInterface::class)) {
                 throw new RuntimeException(sprintf('Autocompleter must implement interface %s', AutocompleterInterface::class));
             }
 
@@ -73,6 +75,7 @@ class AutocompleterCompilerPass implements CompilerPassInterface
             return $alias;
         }
 
+        /** @var string $class */
         $class = $serviceDefinition->getClass();
         /** @var AsAutocompleter|null $attribute */
         $attribute = AttributeHelper::getInstance($class, AsAutocompleter::class);

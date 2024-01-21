@@ -6,6 +6,9 @@ class StringHelper
 {
     public static function changeToUnderscore(string $string): string
     {
-        return strtolower(preg_replace('~([A-Z])~', '_$1', $string));
+        /** @var string $result */
+        $result = preg_replace('~([A-Z])~', '_$1', $string);
+
+        return strtolower($result);
     }
 }

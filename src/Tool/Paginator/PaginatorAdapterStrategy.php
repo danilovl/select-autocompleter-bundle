@@ -29,9 +29,4 @@ class PaginatorAdapterStrategy
 
         return $this->adapter;
     }
-
-    public function getAdapter(): PaginatorAdapterInterface
-    {
-        return $this->adapter;
-    }
 }

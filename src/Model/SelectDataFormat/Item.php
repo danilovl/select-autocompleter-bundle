@@ -9,20 +9,25 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 #[AllowDynamicProperties]
 class Item
 {
-    public mixed $id = null;
-    public ?string $text = null;
-    public ?string $image = null;
+    private function __construct(
+        public mixed $id,
+        public ?string $text,
+        public ?string $image
+    ) {}
 
     public static function formObject(
         object $object,
         Config $config
     ): self {
-        $item = new self;
-        $item->id = (PropertyAccess::createPropertyAccessor())->getValue($object, $config->idProperty);
-        $item->text = self::getText($object, $config);
-        $item->image = $config->image !== null ? (PropertyAccess::createPropertyAccessor())->getValue($object, $config->image) : null;
+        $id = (PropertyAccess::createPropertyAccessor())->getValue($object, $config->idProperty);
+        /** @var string|null $image */
+        $image = $config->image !== null ? (PropertyAccess::createPropertyAccessor())->getValue($object, $config->image) : null;
 
-        return $item;
+        return new self(
+            $id,
+            self::getText($object, $config),
+            $image
+        );
     }
 
     private static function getText(
@@ -34,7 +39,9 @@ class Item
 
         $text = null;
         if ($toString->auto === true) {
-            $text = (string) $object;
+            if (method_exists($object , '__toString')) {
+                $text = (string) $object;
+            }
         } elseif (!empty($toString->properties)) {
             $properties = [];
             foreach ($toString->properties as $property) {
@@ -48,6 +55,9 @@ class Item
             }
         }
 
-        return $text ?? $propertyAccess->getValue($object, $config->property);
+        /** @var string $result */
+        $result =  $text ?? $propertyAccess->getValue($object, $config->property);
+
+        return $result;
     }
 }

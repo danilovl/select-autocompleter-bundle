@@ -72,12 +72,12 @@ class AutocompleterExtension extends Extension
 
     private function addingFormResources(ContainerBuilder $container): void
     {
+        /** @var array $resources */
+        $resources = $container->getParameter('twig.form.resources');
+
         $container->setParameter(
             'twig.form.resources',
-            array_merge(
-                ['@SelectAutocompleter/Form/select_autocompleter.html.twig'],
-                $container->getParameter('twig.form.resources')
-            )
+            array_merge(['@SelectAutocompleter/Form/select_autocompleter.html.twig'], $resources)
         );
     }
 

@@ -2,28 +2,30 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat;
 
-class Result
+readonly class Result
 {
     /**
-     * @var Item[]
+     * @param Item[] $results
+     * @param Pagination|null $pagination
      */
-    public array $results = [];
-    public ?Pagination $pagination = null;
+    private function __construct(
+        public array $results,
+        public ?Pagination $pagination
+    ) {}
 
     public static function fromConfig(array $parameters): self
     {
-        $item = new self;
-        $item->results = $parameters['items'] ?? [];
-        $item->pagination = $parameters['pagination'] ?? null;
-
-        return $item;
+        return new self (
+            $parameters['results'] ?? [],
+            $parameters['pagination'] ?? null
+        );
     }
 
     public function toArray(): array
     {
         return [
             'results' => $this->results,
-            'pagination' => $this->pagination->toArray()
+            'pagination' => $this->pagination?->toArray()
         ];
     }
 }

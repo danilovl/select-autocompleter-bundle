@@ -21,10 +21,7 @@ use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityLoaderInterface;
 
 abstract class BaseDoctrineAutocompleter extends BaseAutocompleter
 {
-    /**
-     * @var QueryBuilder|Builder|null
-     */
-    protected $queryBuilder;
+    protected QueryBuilder|Builder|null $queryBuilder = null;
 
     public function __construct(
         protected readonly ManagerRegistry $registry,
@@ -41,11 +38,10 @@ abstract class BaseDoctrineAutocompleter extends BaseAutocompleter
         $pagination = new Pagination;
         $pagination->more = $paginator->getTotalCount() > ($this->config->limit * $query->page);
 
-        $result = new Result;
-        $result->results = $this->transformObjectsToItem($paginator->getResult());
-        $result->pagination = $pagination;
-
-        return $result;
+        return Result::fromConfig([
+            'results' => $this->transformObjectsToItem($paginator->getResult()),
+            'pagination' => $pagination
+        ]);
     }
 
     public function reverseTransform(array $identifiers): array
@@ -63,7 +59,10 @@ abstract class BaseDoctrineAutocompleter extends BaseAutocompleter
             return $this->registry->getManager($manager);
         }
 
-        $manager = $this->registry->getManagerForClass($this->config->class);
+        /** @var string $class */
+        $class = $this->config->class;
+
+        $manager = $this->registry->getManagerForClass($class);
         if ($manager === null) {
             throw new RuntimeException(sprintf(
                 'Class "%s" seems not to be a managed Doctrine entity.',
@@ -74,10 +73,7 @@ abstract class BaseDoctrineAutocompleter extends BaseAutocompleter
         return $manager;
     }
 
-    /**
-     * @return QueryBuilder|Builder|null
-     */
-    protected function createQueryBuilderByRepository(AutocompleterQuery $query)
+    protected function createQueryBuilderByRepository(AutocompleterQuery $query): QueryBuilder|Builder|null
     {
         $repositoryMethod = $this->config->repository->method;
         if ($repositoryMethod !== null) {
@@ -87,7 +83,9 @@ abstract class BaseDoctrineAutocompleter extends BaseAutocompleter
                 throw new InvalidArgumentException(sprintf('Callback function "%s" in Repository "%s" does not exist.', $repositoryMethod, get_class($repository)));
             }
 
-            $this->queryBuilder = call_user_func_array([$repository, $repositoryMethod], [$query, $this->config]);
+            /** @var callable $callback */
+            $callback = [$repository, $repositoryMethod];
+            $this->queryBuilder = call_user_func_array($callback, [$query, $this->config]);
 
             return $this->queryBuilder;
         }

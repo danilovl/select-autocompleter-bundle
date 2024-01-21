@@ -2,66 +2,69 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Model\Config;
 
-class Config
+readonly class Config
 {
-    public string $name;
-    public ?string $class = null;
-    public string $rootAlias;
-    public bool $multiple = false;
-    public string $idProperty;
-    public string $property;
-    public string $propertySearchType;
-    public ?string $image = null;
-    public string $imageResultWidth;
-    public string $imageSelectionWidth;
-    public array $excludedEntityId = [];
-    public array $searchSimple = [];
-    public array $searchPattern = [];
-    public array $orderBy = [];
-    public array $where = [];
-    public ?string $manager = null;
-    public int $limit;
-    public ?string $widget = null;
-    public string $baseTemplate;
-    public ToString $toString;
-    public Cdn $cdn;
-    public SelectOption $selectOption;
-    public Security $security;
-    public Repository $repository;
-    public Route $route;
-    /** @var DependentSelects[]|[] */
-    public array $dependentSelects = [];
+    /**
+     * @param DependentSelects[] $dependentSelects
+     */
+    private function __construct(
+        public string $name,
+        public ?string $class,
+        public string $rootAlias,
+        public bool $multiple,
+        public string $idProperty,
+        public string $property,
+        public string $propertySearchType,
+        public ?string $image,
+        public string $imageResultWidth,
+        public string $imageSelectionWidth,
+        public array $excludedEntityId,
+        public array $searchSimple,
+        public array $searchPattern,
+        public array $orderBy,
+        public array $where,
+        public ?string $manager,
+        public int $limit,
+        public ?string $widget,
+        public string $baseTemplate,
+        public ToString $toString,
+        public Cdn $cdn,
+        public SelectOption $selectOption,
+        public Security $security,
+        public Repository $repository,
+        public Route $route,
+        public array $dependentSelects
+    ) {}
 
     public static function fromConfig(array $parameters): self
     {
-        $self = new self;
-        $self->name = $parameters['name'] ?? null;
-        $self->class = $parameters['class'] ?? null;
-        $self->rootAlias = $parameters['root_alias'] ?? null;
-        $self->multiple = $parameters['multiple'] ?? false;
-        $self->idProperty = $parameters['id_property'];
-        $self->manager = $parameters['manager'] ?? null;
-        $self->property = $parameters['property'];
-        $self->propertySearchType = $parameters['property_search_type'];
-        $self->image = $parameters['image'] ?? null;
-        $self->imageResultWidth = $parameters['image_result_width'];
-        $self->imageSelectionWidth = $parameters['image_selection_width'];
-        $self->excludedEntityId = $parameters['excluded_entity_id'] ?? [];
-        $self->searchSimple = $parameters['search_simple'] ?? [];
-        $self->searchPattern = $parameters['search_pattern'] ?? [];
-        $self->orderBy = $parameters['order_by'] ?? [];
-        $self->where = $parameters['where'] ?? [];
-        $self->limit = $parameters['limit'];
-        $self->widget = $parameters['widget'] ?? null;
-        $self->baseTemplate = $parameters['base_template'];
-        $self->toString = ToString::fromConfig($parameters['to_string'] ?? []);
-        $self->selectOption = SelectOption::fromConfig($parameters['select_option'] ?? []);
-        $self->cdn = Cdn::fromConfig($parameters['cdn'] ?? []);
-        $self->security = Security::fromConfig($parameters['security'] ?? []);
-        $self->repository = Repository::fromConfig($parameters['repository'] ?? []);
-        $self->dependentSelects = DependentSelects::fromArrayConfig($parameters['dependent_selects'] ?? []);
-        $self->route = Route::fromConfig($parameters['route'] ?? []);
-
-        return $self;
+        return new self(
+            $parameters['name'] ?? null,
+            $parameters['class'] ?? null,
+            $parameters['root_alias'] ?? null,
+            $parameters['multiple'] ?? false,
+            $parameters['id_property'],
+            $parameters['property'],
+            $parameters['property_search_type'],
+            $parameters['image'] ?? null,
+            $parameters['image_result_width'],
+            $parameters['image_selection_width'],
+            $parameters['excluded_entity_id'] ?? [],
+            $parameters['search_simple'] ?? [],
+            $parameters['search_pattern'] ?? [],
+            $parameters['order_by'] ?? [],
+            $parameters['where'] ?? [],
+            $parameters['manager'] ?? null,
+            $parameters['limit'],
+            $parameters['widget'] ?? null,
+            $parameters['base_template'],
+            ToString::fromConfig($parameters['to_string'] ?? []),
+            Cdn::fromConfig($parameters['cdn'] ?? []),
+            SelectOption::fromConfig($parameters['select_option'] ?? []),
+            Security::fromConfig($parameters['security'] ?? []),
+            Repository::fromConfig($parameters['repository'] ?? []),
+            Route::fromConfig($parameters['route'] ?? []),
+            DependentSelects::fromArrayConfig($parameters['dependent_selects'] ?? [])
+        );
     }
 }
