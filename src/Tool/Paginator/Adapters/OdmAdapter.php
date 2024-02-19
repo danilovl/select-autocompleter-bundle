@@ -8,9 +8,7 @@ use Doctrine\ODM\MongoDB\Query\Builder;
 
 readonly class OdmAdapter implements PaginatorAdapterInterface
 {
-    public function __construct(private PaginatorBuilderObject $paginatorBuilderObject)
-    {
-    }
+    public function __construct(private PaginatorBuilderObject $paginatorBuilderObject) {}
 
     public function getTotalCount(): int
     {

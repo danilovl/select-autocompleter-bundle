@@ -9,10 +9,10 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 #[AllowDynamicProperties]
 class Item
 {
-    private function __construct(
+    public function __construct(
         public mixed $id,
-        public ?string $text,
-        public ?string $image
+        public ?string $text = null,
+        public ?string $image = null
     ) {}
 
     public static function formObject(
@@ -39,7 +39,7 @@ class Item
 
         $text = null;
         if ($toString->auto === true) {
-            if (method_exists($object , '__toString')) {
+            if (method_exists($object, '__toString')) {
                 $text = (string) $object;
             }
         } elseif (!empty($toString->properties)) {
@@ -56,7 +56,7 @@ class Item
         }
 
         /** @var string $result */
-        $result =  $text ?? $propertyAccess->getValue($object, $config->property);
+        $result = $text ?? $propertyAccess->getValue($object, $config->property);
 
         return $result;
     }

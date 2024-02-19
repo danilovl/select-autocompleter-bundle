@@ -21,9 +21,7 @@ abstract class BaseAutocompleter implements AutocompleterInterface
     protected Config $config;
     protected AutocompleterQuery $autocompleterQuery;
 
-    public function __construct(protected readonly AutocompleterConfigResolver $resolver)
-    {
-    }
+    public function __construct(protected readonly AutocompleterConfigResolver $resolver) {}
 
     public function addConfig(array $options): void
     {

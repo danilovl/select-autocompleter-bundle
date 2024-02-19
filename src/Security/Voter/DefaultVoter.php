@@ -18,9 +18,7 @@ class DefaultVoter extends Voter
         VoterSupportConstant::GET_DATA
     ];
 
-    public function __construct(private readonly Security $security)
-    {
-    }
+    public function __construct(private readonly Security $security) {}
 
     protected function supports(string $attribute, mixed $subject): bool
     {

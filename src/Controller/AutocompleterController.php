@@ -10,9 +10,7 @@ use Symfony\Component\HttpFoundation\{
 
 readonly class AutocompleterController
 {
-    public function __construct(private AutocompleterService $autocompleterService)
-    {
-    }
+    public function __construct(private AutocompleterService $autocompleterService) {}
 
     public function autocomplete(Request $request, string $name): JsonResponse
     {

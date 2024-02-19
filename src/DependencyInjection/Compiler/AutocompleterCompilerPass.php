@@ -81,7 +81,7 @@ class AutocompleterCompilerPass implements CompilerPassInterface
         $attribute = AttributeHelper::getInstance($class, AsAutocompleter::class);
 
         if ($attribute === null) {
-            throw new LogicException(sprintf('The service "%s" needs to implement attribute "%s".', $serviceId,  AsAutocompleter::class));
+            throw new LogicException(sprintf('The service "%s" needs to implement attribute "%s".', $serviceId, AsAutocompleter::class));
         }
 
         return $attribute->alias;

@@ -17,9 +17,7 @@ class AutocompleterContainer implements AutocompleterContainerInterface
 {
     private array $autocompleters = [];
 
-    public function __construct(private readonly ContainerInterface $container)
-    {
-    }
+    public function __construct(private readonly ContainerInterface $container) {}
 
     public function addAutocompleter(string $name, string $serviceName): void
     {

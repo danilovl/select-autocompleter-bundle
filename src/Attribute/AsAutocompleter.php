@@ -7,7 +7,5 @@ use Attribute;
 #[Attribute(Attribute::TARGET_CLASS)]
 class AsAutocompleter
 {
-    public function __construct(public readonly string $alias)
-    {
-    }
+    public function __construct(public readonly string $alias) {}
 }
