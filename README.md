@@ -23,7 +23,7 @@ The main feature of this bundle is that the list of choices is retrieved via a r
 Install `danilovl/select-autocompleter-bundle` package by Composer:
 
 ``` bash
-$ composer require danilovl/select-autocompleter-bundle
+composer require danilovl/select-autocompleter-bundle
 ```
 
 ``` php

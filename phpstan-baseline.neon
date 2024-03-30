@@ -29,13 +29,3 @@ parameters:
 			message: "#^Cannot cast mixed to string\\.$#"
 			count: 1
 			path: src/Model/SelectDataFormat/Item.php
-
-		-
-			message: "#^Asserted type mixed for \\$subject with type mixed does not narrow down the type\\.$#"
-			count: 1
-			path: src/Security/Voter/DefaultVoter.php
-
-		-
-			message: "#^Asserted type string for \\$attribute with type string does not narrow down the type\\.$#"
-			count: 1
-			path: src/Security/Voter/DefaultVoter.php
