@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Danilovl\SelectAutocompleterBundle\Tests\Helper;
+namespace Danilovl\SelectAutocompleterBundle\Tests\Unit\Helper;
 
 use Danilovl\SelectAutocompleterBundle\Attribute\AsAutocompleter;
 use Danilovl\SelectAutocompleterBundle\Helper\AttributeHelper;

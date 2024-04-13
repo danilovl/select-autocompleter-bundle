@@ -39,9 +39,9 @@ readonly class Config
     public static function fromConfig(array $parameters): self
     {
         return new self(
-            $parameters['name'] ?? null,
+            $parameters['name'],
             $parameters['class'] ?? null,
-            $parameters['root_alias'] ?? null,
+            $parameters['root_alias'],
             $parameters['multiple'] ?? false,
             $parameters['id_property'],
             $parameters['property'],
@@ -61,9 +61,9 @@ readonly class Config
             ToString::fromConfig($parameters['to_string'] ?? []),
             Cdn::fromConfig($parameters['cdn'] ?? []),
             SelectOption::fromConfig($parameters['select_option'] ?? []),
-            Security::fromConfig($parameters['security'] ?? []),
+            Security::fromConfig($parameters['security']),
             Repository::fromConfig($parameters['repository'] ?? []),
-            Route::fromConfig($parameters['route'] ?? []),
+            Route::fromConfig($parameters['route']),
             DependentSelects::fromArrayConfig($parameters['dependent_selects'] ?? [])
         );
     }

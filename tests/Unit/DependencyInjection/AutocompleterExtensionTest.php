@@ -1,17 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace Danilovl\SelectAutocompleterBundle\Tests\DependencyInjection;
+namespace Danilovl\SelectAutocompleterBundle\Tests\Unit\DependencyInjection;
 
+use Danilovl\SelectAutocompleterBundle\DependencyInjection\{
+    AutocompleterExtension,
+    Configuration};
 use Danilovl\SelectAutocompleterBundle\Service\AutocompleterContainer;
 use Danilovl\SelectAutocompleterBundle\Tests\Mock\LoadConfigHelper;
+use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
-use Danilovl\SelectAutocompleterBundle\DependencyInjection\{
-    Configuration,
-    AutocompleterExtension
-};
-use Generator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class AutocompleterExtensionTest extends TestCase

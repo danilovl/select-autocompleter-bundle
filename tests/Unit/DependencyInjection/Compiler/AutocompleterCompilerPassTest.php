@@ -1,23 +1,21 @@
 <?php declare(strict_types=1);
 
-namespace Danilovl\SelectAutocompleterBundle\Tests\DependencyInjection\Compiler;
+namespace Danilovl\SelectAutocompleterBundle\Tests\Unit\DependencyInjection\Compiler;
 
+use Danilovl\SelectAutocompleterBundle\DependencyInjection\AutocompleterExtension;
+use Danilovl\SelectAutocompleterBundle\DependencyInjection\Compiler\AutocompleterCompilerPass;
 use Danilovl\SelectAutocompleterBundle\Service\AutocompleterContainer;
 use Danilovl\SelectAutocompleterBundle\Tests\Mock\{
     LoadConfigHelper,
-    TestAsAutocompleter
-};
+    TestAsAutocompleter};
+use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
-use Danilovl\SelectAutocompleterBundle\DependencyInjection\AutocompleterExtension;
-use Danilovl\SelectAutocompleterBundle\DependencyInjection\Compiler\AutocompleterCompilerPass;
-use Generator;
 use Symfony\Component\DependencyInjection\{
     Container,
-    Definition,
-    ContainerBuilder
-};
+    ContainerBuilder,
+    Definition};
 
 class AutocompleterCompilerPassTest extends TestCase
 {

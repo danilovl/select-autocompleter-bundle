@@ -29,3 +29,13 @@ parameters:
 			message: "#^Cannot cast mixed to string\\.$#"
 			count: 1
 			path: src/Model/SelectDataFormat/Item.php
+
+		-
+			message: "#^Cannot access property \\$id on mixed\\.$#"
+			count: 1
+			path: tests/Unit/Form/DataTransformer/AutocompleterTransformerTest.php
+
+		-
+			message: "#^Call to an undefined method Danilovl\\\\SelectAutocompleterBundle\\\\Security\\\\Voter\\\\DefaultVoter\\:\\:supportsPublic\\(\\)\\.$#"
+			count: 3
+			path: tests/Unit/Security/Voter/DefaultVoterTest.php

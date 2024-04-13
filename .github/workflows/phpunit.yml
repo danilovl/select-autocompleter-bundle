@@ -22,7 +22,7 @@ jobs:
         run: composer install
 
       - name: Run tests
-        run: vendor/bin/phpunit tests
+        run: composer tests
 
       - name: Run PHPStan
         uses: php-actions/phpstan@v3

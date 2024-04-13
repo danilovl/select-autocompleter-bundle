@@ -35,28 +35,35 @@ class Item
         Config $config
     ): string {
         $propertyAccess = PropertyAccess::createPropertyAccessor();
-        $toString = $config->toString;
-
-        $text = null;
-        if ($toString->auto === true) {
-            if (method_exists($object, '__toString')) {
-                $text = (string) $object;
-            }
-        } elseif (!empty($toString->properties)) {
-            $properties = [];
-            foreach ($toString->properties as $property) {
-                $properties[] = (string) $propertyAccess->getValue($object, $property);
-            }
-
-            $text = implode(' ', $properties);
-            $format = $toString->format;
-            if ($format !== null) {
-                $text = sprintf($format, ...$properties);
-            }
-        }
+        $text = self::getToString($object, $config);
 
         /** @var string $result */
         $result = $text ?? $propertyAccess->getValue($object, $config->property);
+
+        return $result;
+    }
+
+    private static function getToString(object $object, Config $config): ?string
+    {
+        $propertyAccess = PropertyAccess::createPropertyAccessor();
+        $result = null;
+
+        if ($config->toString->auto === true) {
+            if (method_exists($object, '__toString')) {
+                $result = (string) $object;
+            }
+        } elseif (!empty($config->toString->properties)) {
+            $properties = [];
+            foreach ($config->toString->properties as $property) {
+                $properties[] = (string) $propertyAccess->getValue($object, $property);
+            }
+
+            $result = implode(' ', $properties);
+            $format = $config->toString->format;
+            if ($format !== null) {
+                $result = sprintf($format, ...$properties);
+            }
+        }
 
         return $result;
     }
