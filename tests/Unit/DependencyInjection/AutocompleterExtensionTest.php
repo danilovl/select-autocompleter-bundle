@@ -3,8 +3,9 @@
 namespace Danilovl\SelectAutocompleterBundle\Tests\Unit\DependencyInjection;
 
 use Danilovl\SelectAutocompleterBundle\DependencyInjection\{
-    AutocompleterExtension,
-    Configuration};
+    Configuration,
+    AutocompleterExtension
+};
 use Danilovl\SelectAutocompleterBundle\Service\AutocompleterContainer;
 use Danilovl\SelectAutocompleterBundle\Tests\Mock\LoadConfigHelper;
 use Generator;
