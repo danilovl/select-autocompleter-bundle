@@ -5,7 +5,6 @@ namespace Danilovl\SelectAutocompleterBundle\Tests\Unit\Form\DataTransformer;
 use Danilovl\SelectAutocompleterBundle\Constant\SecurityConditionConstant;
 use Danilovl\SelectAutocompleterBundle\Form\DataTransformer\AutocompleterTransformer;
 use Danilovl\SelectAutocompleterBundle\Model\Config\Config;
-use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\Item;
 use Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolver;
 use Danilovl\SelectAutocompleterBundle\Service\BaseAutocompleter;
 use PHPUnit\Framework\TestCase;
