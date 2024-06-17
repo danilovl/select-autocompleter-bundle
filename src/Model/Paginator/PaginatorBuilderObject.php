@@ -10,4 +10,6 @@ class PaginatorBuilderObject
     public QueryBuilder|Builder $originQueryBuilder;
 
     public QueryBuilder|Builder $autocompleterQueryBuilder;
+
+    public array $hits = [];
 }

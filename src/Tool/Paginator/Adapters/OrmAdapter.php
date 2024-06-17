@@ -5,10 +5,6 @@ namespace Danilovl\SelectAutocompleterBundle\Tool\Paginator\Adapters;
 use Danilovl\SelectAutocompleterBundle\Model\Paginator\PaginatorBuilderObject;
 use Danilovl\SelectAutocompleterBundle\Tool\Paginator\Interfaces\PaginatorAdapterInterface;
 use Doctrine\ORM\Tools\Pagination\Paginator as DoctrineORMPaginator;
-use Doctrine\ORM\{
-    Query,
-    QueryBuilder
-};
 
 class OrmAdapter implements PaginatorAdapterInterface
 {
@@ -16,7 +12,13 @@ class OrmAdapter implements PaginatorAdapterInterface
 
     public function __construct(PaginatorBuilderObject $paginatorBuilderObject)
     {
-        $this->ormPaginator = new DoctrineORMPaginator($paginatorBuilderObject->autocompleterQueryBuilder);
+        $query = $paginatorBuilderObject->autocompleterQueryBuilder->getQuery();
+
+        foreach ($paginatorBuilderObject->hits as $name => $value) {
+            $query->setHint($name, $value);
+        }
+
+        $this->ormPaginator = new DoctrineORMPaginator($query);
     }
 
     public function getTotalCount(): int

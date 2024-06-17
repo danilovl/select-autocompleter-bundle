@@ -54,14 +54,14 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
         return $builder;
     }
 
-    private function addingWhere(QueryBuilder $builder): void
+    protected function addingWhere(QueryBuilder $builder): void
     {
         foreach ($this->config->where as $where) {
             $builder->andWhere($where);
         }
     }
 
-    private function addingSearchCondition(QueryBuilder $builder, AutocompleterQuery $query): void
+    protected function addingSearchCondition(QueryBuilder $builder, AutocompleterQuery $query): void
     {
         if (empty($query->search)) {
             return;
@@ -93,7 +93,7 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
         $builder->andWhere($or);
     }
 
-    private function addingOrderBy(QueryBuilder $builder): void
+    protected function addingOrderBy(QueryBuilder $builder): void
     {
         $alias = $this->config->rootAlias;
         if (empty($this->config->orderBy)) {
@@ -108,7 +108,7 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
         }
     }
 
-    private function excludedEntityId(QueryBuilder $builder): void
+    protected function excludedEntityId(QueryBuilder $builder): void
     {
         $excludedEntityId = $this->config->excludedEntityId;
         if (empty($excludedEntityId)) {
@@ -121,7 +121,7 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
         $builder->setParameter('autocompleter_excluded_id', [1], ArrayParameterType::INTEGER);
     }
 
-    private function addingDependentSelectCondition(
+    protected function addingDependentSelectCondition(
         QueryBuilder $builder,
         AutocompleterQuery $query
     ): void {
@@ -166,7 +166,7 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
         return new Paginator($this->getPaginatorBuilder());
     }
 
-    private function getPaginatorBuilder(): PaginatorBuilderObject
+    protected function getPaginatorBuilder(): PaginatorBuilderObject
     {
         $paginatorBuilder = new PaginatorBuilderObject;
         $paginatorBuilder->originQueryBuilder = $this->createQueryBuilder();

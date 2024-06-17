@@ -50,7 +50,7 @@ class OdmAutocompleter extends BaseDoctrineAutocompleter
         return $builder;
     }
 
-    private function addingSearchCondition(Builder $builder, AutocompleterQuery $query): void
+    protected function addingSearchCondition(Builder $builder, AutocompleterQuery $query): void
     {
         if (empty($query->search)) {
             return;
@@ -85,7 +85,7 @@ class OdmAutocompleter extends BaseDoctrineAutocompleter
         $builder->addAnd($or);
     }
 
-    private function addingSort(Builder $builder): void
+    protected function addingSort(Builder $builder): void
     {
         if (empty($this->config->orderBy)) {
             $builder->sort($this->config->property, OrderByConstant::ASC);
@@ -98,14 +98,14 @@ class OdmAutocompleter extends BaseDoctrineAutocompleter
         }
     }
 
-    private function addingWhere(Builder $builder): void
+    protected function addingWhere(Builder $builder): void
     {
         foreach ($this->config->where as $where) {
             $builder->addAnd($where);
         }
     }
 
-    private function excludedEntityId(Builder $builder): void
+    protected function excludedEntityId(Builder $builder): void
     {
         $excludedEntityId = $this->config->excludedEntityId;
         if (!empty($excludedEntityId)) {
@@ -118,7 +118,7 @@ class OdmAutocompleter extends BaseDoctrineAutocompleter
         return new Paginator($this->getPaginatorBuilder());
     }
 
-    private function getPaginatorBuilder(): PaginatorBuilderObject
+    protected function getPaginatorBuilder(): PaginatorBuilderObject
     {
         $paginatorBuilder = new PaginatorBuilderObject;
         $paginatorBuilder->originQueryBuilder = $this->createBuilder();
