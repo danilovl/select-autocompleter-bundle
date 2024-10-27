@@ -21,10 +21,11 @@ jobs:
       - name: Install dependencies
         run: composer install
 
+      - name: Run cs-fixer-check
+        run: composer cs-fixer-check
+
+      - name: Run phpstan
+        run: composer phpstan
+
       - name: Run tests
         run: composer tests
-
-      - name: Run PHPStan
-        uses: php-actions/phpstan@v3
-        with:
-          configuration: phpstan.neon
