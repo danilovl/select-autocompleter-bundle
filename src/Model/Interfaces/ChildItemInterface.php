@@ -2,6 +2,4 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Model\Interfaces;
 
-interface ChildItemInterface
-{
-}
+interface ChildItemInterface {}

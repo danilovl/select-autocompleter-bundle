@@ -8,8 +8,11 @@ use Danilovl\SelectAutocompleterBundle\Model\Interfaces\ChildItemInterface;
 class Security implements ChildItemInterface
 {
     public ?string $voter = null;
+
     public array $role = [];
+
     public string $condition = SecurityConditionConstant::AND;
+
     public bool $publicAccess = false;
 
     public static function fromConfig(array $parameters): self

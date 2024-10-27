@@ -12,11 +12,15 @@ use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterInterface;
 use Danilovl\SelectAutocompleterBundle\Service\AutocompleterContainer;
 use LogicException;
 use RuntimeException;
-use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\{
+    Processor,
+    ConfigurationInterface
+};
+use Symfony\Component\DependencyInjection\{
+    Definition,
+    ContainerBuilder
+};
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Config\Definition\Processor;
-use Symfony\Component\DependencyInjection\Definition;
 
 class AutocompleterCompilerPass implements CompilerPassInterface
 {

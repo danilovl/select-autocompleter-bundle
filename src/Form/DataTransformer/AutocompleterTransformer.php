@@ -30,7 +30,7 @@ readonly class AutocompleterTransformer implements DataTransformerInterface
         $value = !$this->isMultiple ? [$value] : $value;
 
         $items = $this->autocompleter->transformObjectsToItem($value);
-        $result = array_map(fn(Item $item): array => $this->transformItemToArray($item), $items);
+        $result = array_map(fn (Item $item): array => $this->transformItemToArray($item), $items);
 
         if ($this->isMultiple) {
             return $result;

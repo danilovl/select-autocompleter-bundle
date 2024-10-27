@@ -19,6 +19,7 @@ use Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolv
 abstract class BaseAutocompleter implements AutocompleterInterface
 {
     protected Config $config;
+
     protected AutocompleterQuery $autocompleterQuery;
 
     public function __construct(protected readonly AutocompleterConfigResolver $resolver) {}
@@ -45,7 +46,7 @@ abstract class BaseAutocompleter implements AutocompleterInterface
 
     public function transformObjectsToItem(array $objects): array
     {
-        return array_map(fn(object $object): Item => $this->transformObjectToItem($object), $objects);
+        return array_map(fn (object $object): Item => $this->transformObjectToItem($object), $objects);
     }
 
     public function transformObjectToItem(object $object): Item

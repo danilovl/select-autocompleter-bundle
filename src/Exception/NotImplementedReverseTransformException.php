@@ -2,6 +2,6 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Exception;
 
-class NotImplementedReverseTransformException extends \BadMethodCallException
-{
-}
+use BadMethodCallException;
+
+class NotImplementedReverseTransformException extends BadMethodCallException {}

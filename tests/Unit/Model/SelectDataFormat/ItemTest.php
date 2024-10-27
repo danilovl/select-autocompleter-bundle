@@ -51,7 +51,7 @@ class ItemTest extends TestCase
             ...$defaultConfig
         ]);
 
-        $object = new class {
+        $object = new class() {
             public int $id = 1;
 
             public function __toString(): string
@@ -69,7 +69,7 @@ class ItemTest extends TestCase
             ...$defaultConfig
         ]);
 
-        $object = new class {
+        $object = new class() {
             public int $id = 1;
 
             public string $image = 'image';
@@ -88,10 +88,11 @@ class ItemTest extends TestCase
             ...$defaultConfig
         ]);
 
-        $object = new class {
+        $object = new class() {
             public int $id = 1;
 
             public string $lastName = 'lastName';
+
             public string $lastname = 'lastname';
         };
 
@@ -103,10 +104,11 @@ class ItemTest extends TestCase
             ...$defaultConfig
         ]);
 
-        $object = new class {
+        $object = new class() {
             public int $id = 1;
 
             public string $lastName = 'lastName';
+
             public string $lastname = 'lastname';
         };
 

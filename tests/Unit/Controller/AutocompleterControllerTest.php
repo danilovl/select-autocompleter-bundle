@@ -37,7 +37,9 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 class AutocompleterControllerTest extends TestCase
 {
     private ContainerInterface $container;
+
     private AutocompleterContainerInterface $autocompleterContainer;
+
     private TokenStorageInterface $tokenStorage;
 
     private AutocompleterService $autocompleterService;
@@ -83,7 +85,7 @@ class AutocompleterControllerTest extends TestCase
                 $stdClass1->name = 'Product id 1';
 
                 $stdClass2 = new StdClass;
-                $stdClass2->id = 1000;
+                $stdClass2->id = 1_000;
                 $stdClass2->name = 'Product id 1000';
 
                 $results = [
@@ -146,7 +148,7 @@ class AutocompleterControllerTest extends TestCase
                     'image' => null
                 ],
                 [
-                    'id' => 1000,
+                    'id' => 1_000,
                     'text' => 'Product id 1000',
                     'image' => null
                 ]

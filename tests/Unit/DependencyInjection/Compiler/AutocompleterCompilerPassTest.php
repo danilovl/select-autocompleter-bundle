@@ -10,8 +10,7 @@ use Danilovl\SelectAutocompleterBundle\Tests\Mock\{
     TestAsAutocompleter
 };
 use Generator;
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\{DataProvider, Depends};
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\{
     Container,
@@ -37,7 +36,7 @@ class AutocompleterCompilerPassTest extends TestCase
     public function testLoad(): ContainerBuilder
     {
         $container = $this->prepareBuilder();
-        (new AutocompleterCompilerPass())->process($container);
+        (new AutocompleterCompilerPass)->process($container);
 
         $this->expectNotToPerformAssertions();
 
@@ -58,7 +57,7 @@ class AutocompleterCompilerPassTest extends TestCase
         $container->addDefinitions([
             TestAsAutocompleter::class => $testAutocompleterAttribute,
             AutocompleterContainer::class => new Definition(AutocompleterContainer::class, [
-                new Container()
+                new Container
             ])
         ]);
 

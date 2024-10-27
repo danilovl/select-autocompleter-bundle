@@ -7,8 +7,11 @@ use Danilovl\SelectAutocompleterBundle\Model\Interfaces\ChildItemInterface;
 class Cdn implements ChildItemInterface
 {
     public bool $auto = false;
+
     public ?string $link = null;
+
     public ?string $script = null;
+
     public ?string $language = null;
 
     public static function fromConfig(array $parameters): self

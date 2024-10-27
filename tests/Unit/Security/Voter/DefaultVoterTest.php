@@ -43,6 +43,7 @@ class DefaultVoterTest extends TestCase
     ];
 
     private DefaultVoter $voter;
+
     private MockObject $security;
 
     protected function setUp(): void

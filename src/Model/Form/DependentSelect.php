@@ -7,6 +7,7 @@ use Danilovl\SelectAutocompleterBundle\Model\Interfaces\ChildItemInterface;
 class DependentSelect implements ChildItemInterface
 {
     public ?string $name = null;
+
     public ?string $parentField = null;
 
     public static function fromConfig(array $parameters): self

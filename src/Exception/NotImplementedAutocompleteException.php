@@ -2,6 +2,6 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Exception;
 
-class NotImplementedAutocompleteException extends \BadMethodCallException
-{
-}
+use BadMethodCallException;
+
+class NotImplementedAutocompleteException extends BadMethodCallException {}

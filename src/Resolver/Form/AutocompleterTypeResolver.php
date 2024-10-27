@@ -5,8 +5,6 @@ namespace Danilovl\SelectAutocompleterBundle\Resolver\Form;
 use Danilovl\SelectAutocompleterBundle\Model\Config\SelectOption;
 use Danilovl\SelectAutocompleterBundle\Resolver\Config\SelectOptionResolver;
 use Danilovl\SelectAutocompleterBundle\Model\Form\DependentSelect;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 readonly class AutocompleterTypeResolver

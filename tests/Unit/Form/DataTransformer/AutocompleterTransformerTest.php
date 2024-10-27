@@ -65,7 +65,7 @@ class AutocompleterTransformerTest extends TestCase
     public function testTransform(): void
     {
         $expected = ['id' => 1, 'text' => 'Some Item', 'image' => null];
-        $item = new class {
+        $item = new class() {
             public int $id = 1;
 
             public function __toString(): string

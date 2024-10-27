@@ -12,10 +12,16 @@ use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\{
 interface AutocompleterInterface
 {
     public function autocomplete(AutocompleterQuery $query): Result;
+
     public function getConfig(): Config;
+
     public function addConfig(array $options): void;
+
     public function transformObjectsToItem(array $objects): array;
+
     public function transformObjectToItem(object $object): Item;
+
     public function reverseTransform(array $identifiers): array;
+
     public function isGranted(): int;
 }

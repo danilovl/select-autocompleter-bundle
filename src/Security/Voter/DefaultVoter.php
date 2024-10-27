@@ -68,10 +68,6 @@ class DefaultVoter extends Voter
             return true;
         }
 
-        if ($condition === SecurityConditionConstant::AND && count($positiveResult) === count($result)) {
-            return true;
-        }
-
-        return false;
+        return $condition === SecurityConditionConstant::AND && count($positiveResult) === count($result);
     }
 }

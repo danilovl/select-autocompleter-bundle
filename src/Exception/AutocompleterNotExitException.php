@@ -2,6 +2,6 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Exception;
 
-class AutocompleterNotExitException extends \LogicException
-{
-}
+use LogicException;
+
+class AutocompleterNotExitException extends LogicException {}

@@ -7,21 +7,37 @@ use Danilovl\SelectAutocompleterBundle\Model\Interfaces\ChildItemInterface;
 class SelectOption implements ChildItemInterface
 {
     public ?int $delay = null;
+
     public ?string $dir = null;
+
     public ?int $minimumInputLength = null;
+
     public ?int $maximumInputLength = null;
+
     public ?int $minimumResultsForSearch = null;
+
     public ?int $maximumSelectionLength = null;
+
     public ?int $minimumSelectionLength = null;
+
     public bool $multiple = false;
+
     public ?string $placeholder = null;
+
     public ?string $width = null;
+
     public bool $scrollAfterSelect = false;
+
     public bool $selectOnClose = false;
+
     public ?string $language = null;
+
     public ?string $theme = null;
+
     public ?string $amdBase = null;
+
     public ?string $amdLanguageBase = null;
+
     public bool $cache = false;
 
     public static function fromConfig(array $parameters): self

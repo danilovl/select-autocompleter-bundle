@@ -2,6 +2,6 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Exception;
 
-class NotImplementedGrantedException extends \BadMethodCallException
-{
-}
+use BadMethodCallException;
+
+class NotImplementedGrantedException extends BadMethodCallException {}

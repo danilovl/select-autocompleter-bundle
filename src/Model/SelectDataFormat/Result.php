@@ -15,7 +15,7 @@ readonly class Result
 
     public static function fromConfig(array $parameters): self
     {
-        return new self (
+        return new self(
             $parameters['results'] ?? [],
             $parameters['pagination'] ?? null
         );

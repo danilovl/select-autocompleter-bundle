@@ -4,7 +4,6 @@ namespace Danilovl\SelectAutocompleterBundle\Tool\Paginator\Adapters;
 
 use Danilovl\SelectAutocompleterBundle\Model\Paginator\PaginatorBuilderObject;
 use Danilovl\SelectAutocompleterBundle\Tool\Paginator\Interfaces\PaginatorAdapterInterface;
-use Doctrine\ODM\MongoDB\Query\Builder;
 
 readonly class OdmAdapter implements PaginatorAdapterInterface
 {

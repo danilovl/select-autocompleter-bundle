@@ -9,8 +9,10 @@ use Danilovl\SelectAutocompleterBundle\DependencyInjection\{
 use Danilovl\SelectAutocompleterBundle\Service\AutocompleterContainer;
 use Danilovl\SelectAutocompleterBundle\Tests\Mock\LoadConfigHelper;
 use Generator;
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\{
+    Depends,
+    DataProvider
+};
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 

@@ -7,8 +7,11 @@ use Danilovl\SelectAutocompleterBundle\Model\Interfaces\ChildItemInterface;
 class DependentSelects implements ChildItemInterface
 {
     public ?string $name = null;
+
     public ?string $parentProperty = null;
+
     public ?string $parentField = null;
+
     public array $manyToMany = [];
 
     public static function fromConfig(array $parameters): self
@@ -24,6 +27,6 @@ class DependentSelects implements ChildItemInterface
 
     public static function fromArrayConfig(array $parameters): array
     {
-        return array_map(static fn(array $parameter): self => self::fromConfig($parameter), $parameters);
+        return array_map(static fn (array $parameter): self => self::fromConfig($parameter), $parameters);
     }
 }

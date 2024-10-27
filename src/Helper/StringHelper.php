@@ -9,6 +9,6 @@ class StringHelper
         /** @var string $result */
         $result = preg_replace('~([A-Z])~', '_$1', $string);
 
-        return strtolower($result);
+        return mb_strtolower($result);
     }
 }

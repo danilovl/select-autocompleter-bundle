@@ -7,7 +7,9 @@ use Danilovl\SelectAutocompleterBundle\Model\Interfaces\ChildItemInterface;
 class Route implements ChildItemInterface
 {
     public ?string $name = null;
+
     public array $parameters = [];
+
     public array $extra = [];
 
     public static function fromConfig(array $parameters): self
