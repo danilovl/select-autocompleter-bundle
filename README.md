@@ -55,7 +55,7 @@ System default options for all autocompleters, which will be used if necessary.
 
 ...
 default:
-  id_property: 'id'[php.ini](..%2F..%2F..%2F..%2F..%2F..%2Fphp%2Fphp.ini)
+  id_property: 'id'
   property: 'name'
   property_search_type: 'any'
   image_result_width: '100px'
