@@ -28,17 +28,18 @@ class AutocompleterType extends AbstractType
     ) {}
 
     /**
-     * @param array{autocompleter: array{name: string, multiple: bool}} $options
+     * @param array{autocompleter: array{name: string, select_option: array}} $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $autocompleter = $this->autocompleterContainer->get($options['autocompleter']['name']);
 
-        $builder->addViewTransformer(new AutocompleterTransformer($autocompleter, $options['autocompleter']['multiple']));
+        $viewTransformer = new AutocompleterTransformer($autocompleter, $options['autocompleter']['select_option']['multiple']);
+        $builder->addViewTransformer($viewTransformer);
     }
 
     /**
-     * @param array{autocompleter: array{name: string, multiple: bool, base_template: string}} $options
+     * @param array{autocompleter: array{name: string, select_option: array, base_template: string}} $options
      */
     public function buildView(
         FormView $view,
@@ -49,9 +50,15 @@ class AutocompleterType extends AbstractType
         $this->addNameBlockPrefixes($view);
 
         $value = $view->vars['value'];
+        $errors = $view->vars['errors'];
+
         $values = [];
         if ($value !== null) {
-            $values = $options['autocompleter']['multiple'] ? $value : [$value];
+            $values = $options['autocompleter']['select_option']['multiple'] ? $value : [$value];
+        }
+
+        if (count($errors) > 0) {
+            $values = [];
         }
 
         $view->vars['autocompleter']['values'] = $values;
@@ -86,7 +93,10 @@ class AutocompleterType extends AbstractType
         $autocompleter = $this->autocompleterContainer->get($passedOptions['name']);
         $autocompleterConfig = ArrayHelper::modelToArray($autocompleter->getConfig());
 
-        return array_replace_recursive($autocompleterConfig, $passedOptions);
+        $newConfig = array_replace_recursive($autocompleterConfig, $passedOptions);
+        unset($newConfig['dependent_select']);
+
+        return $newConfig;
     }
 
     private function addNameBlockPrefixes(FormView $view): void

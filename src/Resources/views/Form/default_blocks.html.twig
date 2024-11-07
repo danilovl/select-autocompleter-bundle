@@ -49,11 +49,23 @@
     {% endif %}
 {% endblock %}
 
-{% block style %}{% endblock %}
+{% block style %}
+    {% if select_autocompleter_is_render_block_style() == false %}
+        <style>
+            .select2-search--inline {
+                display: contents;
+            }
+
+            .select2-search__field:placeholder-shown {
+                width: 100% !important;
+            }
+        </style>
+    {% endif %}
+{% endblock %}
 
 {% block select_tag %}
     <select {{ block('widget_attributes') }}
-            {% if autocompleter.multiple %} multiple="multiple"{% endif %}
+            {% if autocompleter.select_option.multiple %} multiple="multiple"{% endif %}
     >
         {% for item in autocompleter.values %}
             {% set dataImage = null %}
@@ -94,8 +106,8 @@
                     disabled: selectElement.prop('desable'),
                     allowClear: !selectElement.prop('required'),
                     placeholder: '{{ autocompleter.select_option.placeholder | trans }}',
-                    multiple: {{ autocompleter.multiple ? 'true' : 'false' }},
-                    closeOnSelect: {{ autocompleter.multiple ? 'false' : 'true' }},
+                    multiple: {{ autocompleter.select_option.multiple ? 'true' : 'false' }},
+                    closeOnSelect: {{ autocompleter.select_option.multiple ? 'false' : 'true' }},
                     selectOnClose: {{ autocompleter.select_option.select_on_close ? 'true' : 'false' }},
                     theme: '{{ autocompleter.select_option.theme }}',
                     amdBase: '{{ autocompleter.select_option.amd_base }}',
@@ -196,7 +208,7 @@
              {% endblock %}
 
              {% block select_event_selecting %}
-                {% if autocompleter.multiple == false %}
+                {% if autocompleter.select_option.multiple == false %}
                      selectElement.on('select2:selecting', () => {
                          selectElement.empty();
                      });

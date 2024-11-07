@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  Danilovl\SelectAutocompleterBundle\Twig\RenderBlockControlTwigExtension:
+    tags:
+      - { name: twig.extension }

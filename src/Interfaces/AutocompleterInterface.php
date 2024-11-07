@@ -8,6 +8,7 @@ use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\{
     Item,
     Result
 };
+use Symfony\Component\Form\ChoiceList\ChoiceListInterface;
 
 interface AutocompleterInterface
 {
@@ -15,13 +16,32 @@ interface AutocompleterInterface
 
     public function getConfig(): Config;
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function addConfig(array $options): void;
 
+    /**
+     * @param object[] $objects
+     * @return Item[]
+     */
     public function transformObjectsToItem(array $objects): array;
 
     public function transformObjectToItem(object $object): Item;
 
+    /**
+     * @param int[] $identifiers
+     * @return object[]
+     */
     public function reverseTransform(array $identifiers): array;
 
     public function isGranted(): int;
+
+    public function isUpdateConfigByResolvedFormType(bool $isUpdate = null): bool;
+
+    public function loadChoiceList(callable $value = null): ChoiceListInterface;
+
+    public function loadChoicesForValues(array $values, callable $value = null): array;
+
+    public function loadValuesForChoices(array $choices, callable $value = null): array;
 }

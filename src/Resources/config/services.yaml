@@ -17,3 +17,6 @@ services:
 
   form.resolved_type_factory:
     class: Danilovl\SelectAutocompleterBundle\Proxy\AutocompleterResolvedFormTypeFactory
+
+
+  Danilovl\SelectAutocompleterBundle\Form\Loader\LazyChoiceLoaderFactory: ~

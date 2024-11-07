@@ -2,7 +2,10 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Resolver\Form;
 
-use Danilovl\SelectAutocompleterBundle\Model\Config\SelectOption;
+use Danilovl\SelectAutocompleterBundle\Model\Config\{
+    Route,
+    SelectOption
+};
 use Danilovl\SelectAutocompleterBundle\Resolver\Config\SelectOptionResolver;
 use Danilovl\SelectAutocompleterBundle\Model\Form\DependentSelect;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -11,7 +14,8 @@ readonly class AutocompleterTypeResolver
 {
     public function __construct(
         private SelectOptionResolver $selectOptionResolver,
-        private DependentSelectResolver $dependentSelectResolver
+        private DependentSelectResolver $dependentSelectResolver,
+        private RouteResolver $routeResolver
     ) {}
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -22,20 +26,17 @@ readonly class AutocompleterTypeResolver
                 $resolver
                     ->setDefaults([
                         'name' => null,
-                        'multiple' => false,
                         'widget' => null,
-                        'base_template' => null,
-                        'extra' => [],
+                        'base_template' => null
                     ])
                     ->setRequired('name')
                     ->setAllowedTypes('name', 'string')
-                    ->setAllowedTypes('multiple', 'bool')
                     ->setAllowedTypes('widget', ['string', 'null'])
-                    ->setAllowedTypes('base_template', ['string', 'null'])
-                    ->setAllowedTypes('extra', 'array');
+                    ->setAllowedTypes('base_template', ['string', 'null']);
 
                 $this->selectOptionResolver->configureOptions($resolver, new SelectOption);
                 $this->dependentSelectResolver->configureOptions($resolver, new DependentSelect);
+                $this->routeResolver->configureOptions($resolver, new Route);
 
                 $resolver->setAllowedTypes('select_option', ['array', 'null']);
                 $resolver->setAllowedTypes('dependent_select', ['array', 'null']);

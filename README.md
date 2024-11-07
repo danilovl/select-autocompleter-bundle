@@ -55,7 +55,7 @@ System default options for all autocompleters, which will be used if necessary.
 
 ...
 default:
-  id_property: 'id'
+  id_property: 'id'[php.ini](..%2F..%2F..%2F..%2F..%2F..%2Fphp%2Fphp.ini)
   property: 'name'
   property_search_type: 'any'
   image_result_width: '100px'
@@ -149,10 +149,10 @@ danilovl_select_autocompleter:
     order_by:
       createdAt: 'ASC'
       uptadetAt: 'DESC'
-  route:
-    name: 'custom_select_autocomplete'
-    parameters: []
-    extra: []
+    route:
+      name: 'custom_select_autocomplete'
+      parameters: []
+      extra: []
 ```
 
 ### 3. Customization default options for all autcompleters
@@ -395,7 +395,7 @@ danilovl_select_autocompleter:
         name: 'group_$search%%'
         description: '%%$search%%'
 
-  - name: 'product'
+    - name: 'product'
       class: 'App:Product'
       property: 'name' 
       search_pattern:
@@ -736,13 +736,13 @@ For example entity - `City` dependent on `Country` and `Region`.
 ...
 danilovl_select_autocompleter:
   orm:
-    - name: 'autocompleter.country'
+    - name: 'autocompleter-country'
       class: 'App:Country' 
 
-    - name: 'autocompleter.region'
+    - name: 'autocompleter-region'
       class: 'App:Region'
 
-    - name: 'autocompleter.city'
+    - name: 'autocompleter-city'
       class: 'App:City'
       dependent_selects:
         - name: 'dependent_on_country'
@@ -912,7 +912,7 @@ danilovl_select_autocompleter:
           enable_migraiton: 'yes'
 ```
 
-### 8. Using
+### 8. Usage
 
 Simple configuration in form.
 
@@ -954,11 +954,37 @@ class CityType extends AbstractType
         $builder->add('shop', AutocompleterType::class, [
             'autocompleter' => [
                 'name' => 'orm.shop',
-                'multiple' => true,
                 'select_option' => [
                     'placeholder' => 'app.form_type_placeholder',
                     'delay' => 0,
                     'minimum_input_length' => 2
+                ]
+            ],
+            'required' => true,
+            'constraints' => [
+                new NotBlank
+            ]
+        ]);
+    }
+}
+```
+
+If you need multi select than use `MultipleAutocompleterType`
+
+```php
+<?php declare(strict_types=1);
+
+use Danilovl\SelectAutocompleterBundle\Form\Type\MultipleAutocompleterType;
+
+class CityType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder->add('shop', MultipleAutocompleterType::class, [
+            'autocompleter' => [
+                'name' => 'orm.shop',
+                'select_option' => [
+                    'multiple' => true
                 ]
             ],
             'required' => true,
@@ -1048,7 +1074,9 @@ class CustomShopAutocompleter extends OrmAutocompleter
 }
 ```
 
-If you need additional parameters in request you can defined `extra` parameter which will be available in `AutocompleterQuery`.
+If you need additional parameters in request you can define `extra` parameter which will be available in `AutocompleterQuery`.
+
+Example url: `select-autocomplete/orm.customShop/autocomplete?extra[language]=en`.
 
 ```php
 <?php declare(strict_types=1);
@@ -1061,23 +1089,25 @@ class CityType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-       $builder->add('shop', CustomAutocompleter::class, [
-           'autocompleter' => [
-               'name' => 'orm.customShop',
-               'extra' => [
-                   'language' => 'en'
-               ]
-           ],
-           'required' => true,
-           'constraints' => [
-               new NotBlank
-           ]
-       ]);
+        $builder->add('shop', CustomAutocompleter::class, [
+            'autocompleter' => [
+                'name' => 'orm.customShop',
+                'route' => [
+                    'extra' => [
+                        'language' => 'en'
+                    ]
+                ]
+            ],
+            'required' => true,
+            'constraints' => [
+                new NotBlank
+            ]
+        ]);
     }
 }
 ```
 
-Then you must defined new autocompleter service in you `services.yaml` with `danilovl_select_autocompleter.autocompleter` tag and `alias` name.
+Then you must define new autocompleter service in you `services.yaml` with `danilovl_select_autocompleter.autocompleter` tag and `alias` name.
 
 ```yaml
 app.autocompleter.custom:
@@ -1197,7 +1227,7 @@ danilovl_select_autocompleter:
   orm:
     - name: 'user'
       class: 'App:User'
-      property: 'username'
+      property: 'username'   
       base_template: 'autocompleter/custom_widget_template.html.twig'  
 ```
 

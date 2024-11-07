@@ -7,6 +7,7 @@ use Danilovl\SelectAutocompleterBundle\Service\{
     AutocompleterContainer
 };
 use Danilovl\SelectAutocompleterBundle\Controller\AutocompleterController;
+use Danilovl\SelectAutocompleterBundle\Form\Loader\LazyChoiceLoaderFactory;
 use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterContainerInterface;
 use Danilovl\SelectAutocompleterBundle\Proxy\AutocompleterResolvedFormTypeFactory;
 
@@ -27,6 +28,11 @@ return static function (ContainerConfigurator $container): void {
 
     $services
         ->set(AutocompleterController::class, AutocompleterController::class)
+        ->public()
+        ->autowire();
+
+    $services
+        ->set(LazyChoiceLoaderFactory::class, LazyChoiceLoaderFactory::class)
         ->public()
         ->autowire();
 

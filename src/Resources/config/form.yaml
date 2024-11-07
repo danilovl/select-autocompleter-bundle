@@ -7,3 +7,8 @@ services:
     class: Danilovl\SelectAutocompleterBundle\Form\Type\AutocompleterType
     tags:
       - { name: 'form.type', alias: 'autocompleter' }
+
+  Danilovl\SelectAutocompleterBundle\Form\Type\MultipleAutocompleterType:
+    class: Danilovl\SelectAutocompleterBundle\Form\Type\MultipleAutocompleterType
+    tags:
+      - { name: 'form.type', alias: 'autocompleter' }

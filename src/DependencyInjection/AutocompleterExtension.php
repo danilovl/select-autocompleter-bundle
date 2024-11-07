@@ -30,6 +30,7 @@ class AutocompleterExtension extends Extension
         $loader->load('resolvers.yaml');
         $loader->load('form.yaml');
         $loader->load('voter.yaml');
+        $loader->load('twig.yaml');
 
         $this->registerAttribute($container);
         $this->processConfigurationAutocompleters($container, $loader, $config);

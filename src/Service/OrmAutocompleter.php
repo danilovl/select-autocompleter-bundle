@@ -2,6 +2,7 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Service;
 
+use Danilovl\SelectAutocompleterBundle\Exception\RuntimeException;
 use Danilovl\SelectAutocompleterBundle\Model\Paginator\PaginatorBuilderObject;
 use Doctrine\DBAL\ArrayParameterType;
 use Danilovl\SelectAutocompleterBundle\Constant\{
@@ -16,10 +17,24 @@ use Symfony\Bridge\Doctrine\Form\ChoiceList\{
     EntityLoaderInterface,
     ORMQueryBuilderLoader
 };
-use RuntimeException;
 
 class OrmAutocompleter extends BaseDoctrineAutocompleter
 {
+    public function reverseTransform(array $identifiers): array
+    {
+        $autocompleterQuery = new AutocompleterQuery('', 1, '', [], []);
+
+        $queryBuilder = $this->createAutocompleterQueryBuilder($autocompleterQuery);
+        $alias = $queryBuilder->getRootAliases()[0];
+
+        $isProperty = $this->config->idProperty;
+
+        $queryBuilder->andWhere("$alias.$isProperty IN (:ids)")
+            ->setParameter('ids', $identifiers);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
     protected function createQueryBuilder(): QueryBuilder
     {
         if ($this->queryBuilder !== null) {

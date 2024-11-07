@@ -2,6 +2,7 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Proxy;
 
+use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterContainerInterface;
 use Symfony\Component\Form\{
     FormTypeInterface,
     ResolvedFormTypeFactory,
@@ -10,11 +11,18 @@ use Symfony\Component\Form\{
 
 class AutocompleterResolvedFormTypeFactory extends ResolvedFormTypeFactory
 {
+    public function __construct(private readonly AutocompleterContainerInterface $autocompleterContainer) {}
+
     public function createResolvedType(
         FormTypeInterface $type,
         array $typeExtensions,
         ResolvedFormTypeInterface $parent = null
     ): ResolvedFormTypeInterface {
-        return new AutocompeleterResolvedFormType($type, $typeExtensions, $parent);
+        return new AutocompeleterResolvedFormType(
+            $this->autocompleterContainer,
+            $type,
+            $typeExtensions,
+            $parent
+        );
     }
 }

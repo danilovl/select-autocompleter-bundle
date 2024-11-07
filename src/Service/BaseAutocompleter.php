@@ -15,12 +15,18 @@ use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\{
     Result
 };
 use Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolver;
+use Symfony\Component\Form\ChoiceList\{
+    ArrayChoiceList,
+    ChoiceListInterface
+};
 
 abstract class BaseAutocompleter implements AutocompleterInterface
 {
     protected Config $config;
 
     protected AutocompleterQuery $autocompleterQuery;
+
+    protected bool $isUpdateConfigByResolvedFormType = false;
 
     public function __construct(protected readonly AutocompleterConfigResolver $resolver) {}
 
@@ -57,5 +63,27 @@ abstract class BaseAutocompleter implements AutocompleterInterface
     public function isGranted(): int
     {
         throw new NotImplementedGrantedException('Default isGranted method will be call in AutocompleterService');
+    }
+
+    public function isUpdateConfigByResolvedFormType(bool $isUpdate = null): bool
+    {
+        $this->isUpdateConfigByResolvedFormType = $isUpdate ?? $this->isUpdateConfigByResolvedFormType;
+
+        return $this->isUpdateConfigByResolvedFormType;
+    }
+
+    public function loadChoiceList(callable $value = null): ChoiceListInterface
+    {
+        return new ArrayChoiceList([], $value);
+    }
+
+    public function loadValuesForChoices(array $choices, callable $value = null): array
+    {
+        return $choices;
+    }
+
+    public function loadChoicesForValues(array $values, callable $value = null): array
+    {
+        return $values;
     }
 }
