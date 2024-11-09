@@ -18,6 +18,7 @@ use Doctrine\Persistence\{
 use InvalidArgumentException;
 use RuntimeException;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityLoaderInterface;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 abstract class BaseDoctrineAutocompleter extends BaseAutocompleter
 {
@@ -44,12 +45,24 @@ abstract class BaseDoctrineAutocompleter extends BaseAutocompleter
         ]);
     }
 
+    /**
+     * @param string[] $identifiers
+     */
     public function reverseTransform(array $identifiers): array
     {
+        $identifiers = array_map('intval', $identifiers);
+
         return $this->getLoader()->getEntitiesByIds(
             $this->config->idProperty,
             $identifiers
         );
+    }
+
+    public function reverseTransformResultIds(array $objects): array
+    {
+        return array_map(function (object $object): mixed {
+            return (PropertyAccess::createPropertyAccessor())->getValue($object, $this->getConfig()->idProperty);
+        }, $objects);
     }
 
     protected function getManager(): ObjectManager

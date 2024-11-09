@@ -20,8 +20,13 @@ use Symfony\Bridge\Doctrine\Form\ChoiceList\{
 
 class OrmAutocompleter extends BaseDoctrineAutocompleter
 {
+    /**
+     * @param string[] $identifiers
+     */
     public function reverseTransform(array $identifiers): array
     {
+        $identifiers = array_map('intval', $identifiers);
+
         $autocompleterQuery = new AutocompleterQuery('', 1, '', [], []);
 
         $queryBuilder = $this->createAutocompleterQueryBuilder($autocompleterQuery);

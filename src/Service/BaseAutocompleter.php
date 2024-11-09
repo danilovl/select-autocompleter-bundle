@@ -5,7 +5,8 @@ namespace Danilovl\SelectAutocompleterBundle\Service;
 use Danilovl\SelectAutocompleterBundle\Exception\{
     NotImplementedGrantedException,
     NotImplementedAutocompleteException,
-    NotImplementedReverseTransformException
+    NotImplementedReverseTransformException,
+    NotImplementedReverseTransformResultIdsException
 };
 use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterInterface;
 use Danilovl\SelectAutocompleterBundle\Model\Autocompleter\AutocompleterQuery;
@@ -48,6 +49,11 @@ abstract class BaseAutocompleter implements AutocompleterInterface
     public function reverseTransform(array $identifiers): array
     {
         throw new NotImplementedReverseTransformException('Need implement logic');
+    }
+
+    public function reverseTransformResultIds(array $objects): array
+    {
+        throw new NotImplementedReverseTransformResultIdsException('Need implement logic');
     }
 
     public function transformObjectsToItem(array $objects): array

@@ -7,7 +7,6 @@ use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterInterface;
 use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\Item;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 
 readonly class AutocompleterTransformer implements DataTransformerInterface
 {
@@ -53,14 +52,9 @@ readonly class AutocompleterTransformer implements DataTransformerInterface
             $value = [$value];
         }
 
-        /** @var string[] $value */
-        $values = array_map('intval', $value);
-        $result = $this->autocompleter->reverseTransform($values);
-
-        $resultIds = [];
-        foreach ($result as $item) {
-            $resultIds[] = (PropertyAccess::createPropertyAccessor())->getValue($item, $this->autocompleter->getConfig()->idProperty);
-        }
+        /** @var array $value */
+        $result = $this->autocompleter->reverseTransform($value);
+        $resultIds = $this->autocompleter->reverseTransformResultIds($result);
 
         $diff = array_diff($value, $resultIds);
         if (count($diff) > 0) {

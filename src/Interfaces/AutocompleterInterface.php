@@ -29,11 +29,9 @@ interface AutocompleterInterface
 
     public function transformObjectToItem(object $object): Item;
 
-    /**
-     * @param int[] $identifiers
-     * @return object[]
-     */
     public function reverseTransform(array $identifiers): array;
+
+    public function reverseTransformResultIds(array $objects): array;
 
     public function isGranted(): int;
 

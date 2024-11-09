@@ -8,6 +8,7 @@ use Danilovl\SelectAutocompleterBundle\Model\Config\Config;
 use Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolver;
 use Danilovl\SelectAutocompleterBundle\Service\BaseAutocompleter;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class AutocompleterTransformerTest extends TestCase
 {
@@ -56,6 +57,13 @@ class AutocompleterTransformerTest extends TestCase
 
                 return $result;
             }
+
+            public function reverseTransformResultIds(array $objects): array
+            {
+                return array_map(function (object $object): mixed {
+                    return (PropertyAccess::createPropertyAccessor())->getValue($object, $this->getConfig()->idProperty);
+                }, $objects);
+            }
         };
         $autocompleter->addConfig($defaultValidConfig);
 
@@ -64,7 +72,7 @@ class AutocompleterTransformerTest extends TestCase
 
     public function testTransform(): void
     {
-        $expected = ['id' => 1, 'text' => 'Some Item', 'image' => null];
+        $expected = ['id' => 1, 'text' => 'Some Item', 'image' => null, 'children' => null];
         $item = new class() {
             public int $id = 1;
 
