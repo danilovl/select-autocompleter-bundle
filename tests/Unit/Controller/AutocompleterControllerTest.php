@@ -145,12 +145,14 @@ class AutocompleterControllerTest extends TestCase
                 [
                     'id' => 1,
                     'text' => 'Product id 1',
-                    'image' => null
+                    'image' => null,
+                    'children' => null
                 ],
                 [
                     'id' => 1_000,
                     'text' => 'Product id 1000',
-                    'image' => null
+                    'image' => null,
+                    'children' => null
                 ]
             ],
             'pagination' => ['more' => true]

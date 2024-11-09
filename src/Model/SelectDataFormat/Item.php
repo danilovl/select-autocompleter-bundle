@@ -3,22 +3,44 @@
 namespace Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat;
 
 use AllowDynamicProperties;
+use Danilovl\SelectAutocompleterBundle\Exception\RuntimeException;
 use Danilovl\SelectAutocompleterBundle\Model\Config\Config;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 #[AllowDynamicProperties]
 class Item
 {
+    /**
+     * @param ItemChildren[] $children
+     */
     public function __construct(
-        public mixed $id,
-        public ?string $text = null,
-        public ?string $image = null
-    ) {}
+        public int|string|null $id,
+        public string $text,
+        public ?string $image = null,
+        public ?array $children = null
+    ) {
+        if (empty($this->children) && $this->id === null) {
+            throw new RuntimeException('If the item has no children, it must have an id');
+        }
+
+        if (!empty($this->children) && $this->id !== null) {
+            throw new RuntimeException('If the item has children, it must not have an id');
+        }
+
+        if (!empty($this->children)) {
+            foreach ($this->children as $child) {
+                if (!$child instanceof ItemChildren) {
+                    throw new RuntimeException('All children must be instances of ItemChildren');
+                }
+            }
+        }
+    }
 
     public static function formObject(
         object $object,
         Config $config
     ): self {
+        /** @var string|int|null $id */
         $id = (PropertyAccess::createPropertyAccessor())->getValue($object, $config->idProperty);
         /** @var string|null $image */
         $image = $config->image !== null ? (PropertyAccess::createPropertyAccessor())->getValue($object, $config->image) : null;

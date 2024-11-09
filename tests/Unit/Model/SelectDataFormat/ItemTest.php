@@ -2,14 +2,87 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Tests\Unit\Model\SelectDataFormat;
 
+use Danilovl\SelectAutocompleterBundle\Exception\RuntimeException;
 use Danilovl\SelectAutocompleterBundle\Model\Config\Config;
-use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\Item;
+use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\{
+    Item,
+    ItemChildren
+};
 use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class ItemTest extends TestCase
 {
+    public function testItemWithoutChildrenAndWithId(): void
+    {
+        $item = new Item(id: 1, text: 'Test item');
+
+        $this->assertEquals(1, $item->id);
+        $this->assertEquals('Test item', $item->text);
+        $this->assertNull($item->image);
+        $this->assertNull($item->children);
+    }
+
+    public function testItemWithChildrenAndWithoutId(): void
+    {
+        $childItem = new ItemChildren(id: 1, text: 'Child item');
+        $item = new Item(id: null, text: 'Parent item', children: [$childItem]);
+
+        $this->assertNull($item->id);
+        $this->assertEquals('Parent item', $item->text);
+        $this->assertNull($item->image);
+        $this->assertIsArray($item->children);
+        $this->assertCount(1, $item->children);
+        $this->assertSame($childItem, $item->children[0]);
+    }
+
+    public function testItemThrowsExceptionIfNoChildrenAndNoId(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('If the item has no children, it must have an id');
+
+        new Item(id: null, text: 'Invalid item');
+    }
+
+    public function testItemThrowsExceptionIfHasChildrenAndId(): void
+    {
+        $childItem = new ItemChildren(id: 1, text: 'Child item');
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('If the item has children, it must not have an id');
+
+        new Item(id: 1, text: 'Invalid parent item', children: [$childItem]);
+    }
+
+    public function testItemThrowsExceptionIfChildrenAreNotInstanceOfItemChildren(): void
+    {
+        /** @var ItemChildren $invalidChild */
+        $invalidChild = new stdClass;
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('All children must be instances of ItemChildren');
+
+        new Item(id: null, text: 'Parent item', children: [$invalidChild]);
+    }
+
+    public function testItemAllowsChildrenThatAreInstanceOfItemChildren(): void
+    {
+        $childItem1 = new ItemChildren(id: 1, text: 'Child item');
+        $childItem2 = new ItemChildren(id: 2, text: 'Child item');
+
+        $item = new Item(id: null, text: 'Valid parent item', children: [$childItem1, $childItem2]);
+        /** @var array $children */
+        $children = $item->children;
+
+        $this->assertNull($item->id);
+        $this->assertEquals('Valid parent item', $item->text);
+        $this->assertCount(2, $children);
+        $this->assertSame($childItem1, $children[0]);
+        $this->assertSame($childItem2, $children[1]);
+    }
+
     #[DataProvider('dataObject')]
     public function testFormObject(
         object $object,
