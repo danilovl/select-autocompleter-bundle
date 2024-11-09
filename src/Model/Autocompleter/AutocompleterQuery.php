@@ -7,8 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 readonly class AutocompleterQuery
 {
     public function __construct(
-        public string $search,
-        public int $page,
+        public string $search = '',
+        public int $page = 1,
         public ?string $dependentName = null,
         public array $dependentId = [],
         public array $extra = []

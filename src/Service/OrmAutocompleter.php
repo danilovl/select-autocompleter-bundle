@@ -27,7 +27,7 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
     {
         $identifiers = array_map('intval', $identifiers);
 
-        $autocompleterQuery = new AutocompleterQuery('', 1, '', [], []);
+        $autocompleterQuery = new AutocompleterQuery;
 
         $queryBuilder = $this->createAutocompleterQueryBuilder($autocompleterQuery);
         $alias = $queryBuilder->getRootAliases()[0];
