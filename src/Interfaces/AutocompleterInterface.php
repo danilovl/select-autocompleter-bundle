@@ -22,7 +22,6 @@ interface AutocompleterInterface
     public function addConfig(array $options): void;
 
     /**
-     * @param object[] $objects
      * @return Item[]
      */
     public function transformObjectsToItem(array $objects): array;
