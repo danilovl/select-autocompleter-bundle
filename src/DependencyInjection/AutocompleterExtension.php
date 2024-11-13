@@ -5,15 +5,14 @@ namespace Danilovl\SelectAutocompleterBundle\DependencyInjection;
 use Symfony\Component\DependencyInjection\{
     ChildDefinition,
     ContainerBuilder,
-    Definition
-};
+    Definition,
+    Extension\Extension};
 use Danilovl\SelectAutocompleterBundle\Attribute\AsAutocompleter;
 use Danilovl\SelectAutocompleterBundle\Constant\ServiceConstant;
 use Danilovl\SelectAutocompleterBundle\DependencyInjection\Compiler\AutocompleterCompilerPass;
 use Danilovl\SelectAutocompleterBundle\Service\AutocompleterContainer;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class AutocompleterExtension extends Extension
 {
