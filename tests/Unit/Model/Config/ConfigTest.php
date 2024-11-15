@@ -13,9 +13,9 @@ class ConfigTest extends TestCase
     #[DataProvider('dataSuccess')]
     public function testDataSuccess(array $config): void
     {
-        Config::fromConfig($config);
+        $this->expectNotToPerformAssertions();
 
-        $this->assertTrue(true);
+        Config::fromConfig($config);
     }
 
     #[DataProvider('dataFailed')]

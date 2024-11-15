@@ -12,6 +12,8 @@ parameters:
      - src/Service/OdmAutocompleter.php
      - src/Service/OrmAutocompleter.php
      - src/Tool/Paginator/Adapters/
- treatPhpDocTypesAsCertain: false
- checkMissingIterableValueType: false
- checkGenericClassInNonGenericObjectType: false
+ ignoreErrors:
+    -
+        identifier: missingType.iterableValue
+    -
+        identifier: missingType.generics

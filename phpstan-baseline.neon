@@ -1,21 +1,43 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#1 \\$objectOrClass of class ReflectionClass constructor expects class\\-string\\<T of object\\>\\|T of object, string given\\.$#"
+			message: '#^PHPDoc tag @var with type array is not subtype of native type mixed\.$#'
+			identifier: varTag.nativeType
+			count: 2
+			path: src/Form/DataTransformer/AutocompleterTransformer.php
+
+		-
+			message: '#^Parameter \#1 \$objectOrClass of class ReflectionClass constructor expects class\-string\<T of object\>\|T of object, string given\.$#'
+			identifier: argument.type
 			count: 1
 			path: src/Helper/AttributeHelper.php
 
 		-
-			message: "#^Cannot cast mixed to string\\.$#"
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
 			count: 1
 			path: src/Model/SelectDataFormat/Item.php
 
 		-
-			message: "#^Cannot access property \\$id on mixed\\.$#"
+			message: '#^Instanceof between Danilovl\\SelectAutocompleterBundle\\Model\\SelectDataFormat\\ItemChildren and Danilovl\\SelectAutocompleterBundle\\Model\\SelectDataFormat\\ItemChildren will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: src/Model/SelectDataFormat/Item.php
+
+		-
+			message: '#^Cannot access property \$id on mixed\.$#'
+			identifier: property.nonObject
 			count: 1
 			path: tests/Unit/Form/DataTransformer/AutocompleterTransformerTest.php
 
 		-
-			message: "#^Call to an undefined method Danilovl\\\\SelectAutocompleterBundle\\\\Security\\\\Voter\\\\DefaultVoter\\:\\:supportsPublic\\(\\)\\.$#"
+			message: '#^PHPDoc tag @var with type Danilovl\\SelectAutocompleterBundle\\Model\\SelectDataFormat\\ItemChildren is not subtype of native type stdClass\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: tests/Unit/Model/SelectDataFormat/ItemTest.php
+
+		-
+			message: '#^Call to an undefined method Danilovl\\SelectAutocompleterBundle\\Security\\Voter\\DefaultVoter\:\:supportsPublic\(\)\.$#'
+			identifier: method.notFound
 			count: 3
 			path: tests/Unit/Security/Voter/DefaultVoterTest.php
