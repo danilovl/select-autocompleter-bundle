@@ -18,7 +18,7 @@ class AutocompeleterResolvedFormType extends ResolvedFormType
         private readonly AutocompleterContainerInterface $autocompleterContainer,
         FormTypeInterface $type,
         array $typeExtensions,
-        ResolvedFormTypeInterface $parent = null
+        ?ResolvedFormTypeInterface $parent = null
     ) {
         parent::__construct($type, $typeExtensions, $parent);
     }

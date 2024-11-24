@@ -71,24 +71,24 @@ abstract class BaseAutocompleter implements AutocompleterInterface
         throw new NotImplementedGrantedException('Default isGranted method will be call in AutocompleterService');
     }
 
-    public function isUpdateConfigByResolvedFormType(bool $isUpdate = null): bool
+    public function isUpdateConfigByResolvedFormType(?bool $isUpdate = null): bool
     {
         $this->isUpdateConfigByResolvedFormType = $isUpdate ?? $this->isUpdateConfigByResolvedFormType;
 
         return $this->isUpdateConfigByResolvedFormType;
     }
 
-    public function loadChoiceList(callable $value = null): ChoiceListInterface
+    public function loadChoiceList(?callable $value = null): ChoiceListInterface
     {
         return new ArrayChoiceList([], $value);
     }
 
-    public function loadValuesForChoices(array $choices, callable $value = null): array
+    public function loadValuesForChoices(array $choices, ?callable $value = null): array
     {
         return $choices;
     }
 
-    public function loadChoicesForValues(array $values, callable $value = null): array
+    public function loadChoicesForValues(array $values, ?callable $value = null): array
     {
         return $values;
     }

@@ -9,7 +9,7 @@ class CdnResolver
 {
     public function configureOptions(
         OptionsResolver $resolver,
-        Cdn $cdn = null
+        ?Cdn $cdn = null
     ): void {
         $resolver->setDefaults([
             'cdn' => $this->getConfigureOptions($cdn ?? new Cdn)

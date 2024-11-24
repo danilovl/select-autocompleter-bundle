@@ -84,7 +84,7 @@ readonly class AutocompleterService
 
     private function createAccessDeniedException(
         string $message = 'Access Denied.',
-        Exception $previous = null
+        ?Exception $previous = null
     ): AccessDeniedException {
         if (!class_exists(AccessDeniedException::class)) {
             throw new LogicException('You can not use the "createAccessDeniedException" method if the Security component is not available. Try running "composer require symfony/security-bundle".');

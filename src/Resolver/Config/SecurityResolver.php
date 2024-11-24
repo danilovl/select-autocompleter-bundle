@@ -9,7 +9,7 @@ class SecurityResolver
 {
     public function configureOptions(
         OptionsResolver $resolver,
-        Security $security = null
+        ?Security $security = null
     ): void {
         $resolver->setDefaults([
             'security' => $this->getConfigureOptions($security ?? new Security)

@@ -9,7 +9,7 @@ class SelectOptionResolver
 {
     public function configureOptions(
         OptionsResolver $resolver,
-        SelectOption $selectOption = null
+        ?SelectOption $selectOption = null
     ): void {
         $resolver->setDefaults([
             'select_option' => $this->getConfigureOptions($selectOption ?? new SelectOption)

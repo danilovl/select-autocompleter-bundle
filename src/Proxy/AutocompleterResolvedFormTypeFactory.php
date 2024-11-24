@@ -16,7 +16,7 @@ class AutocompleterResolvedFormTypeFactory extends ResolvedFormTypeFactory
     public function createResolvedType(
         FormTypeInterface $type,
         array $typeExtensions,
-        ResolvedFormTypeInterface $parent = null
+        ?ResolvedFormTypeInterface $parent = null
     ): ResolvedFormTypeInterface {
         return new AutocompeleterResolvedFormType(
             $this->autocompleterContainer,

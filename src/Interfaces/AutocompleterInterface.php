@@ -34,11 +34,11 @@ interface AutocompleterInterface
 
     public function isGranted(): int;
 
-    public function isUpdateConfigByResolvedFormType(bool $isUpdate = null): bool;
+    public function isUpdateConfigByResolvedFormType(?bool $isUpdate = null): bool;
 
-    public function loadChoiceList(callable $value = null): ChoiceListInterface;
+    public function loadChoiceList(?callable $value = null): ChoiceListInterface;
 
-    public function loadChoicesForValues(array $values, callable $value = null): array;
+    public function loadChoicesForValues(array $values, ?callable $value = null): array;
 
-    public function loadValuesForChoices(array $choices, callable $value = null): array;
+    public function loadValuesForChoices(array $choices, ?callable $value = null): array;
 }

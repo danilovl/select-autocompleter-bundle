@@ -9,7 +9,7 @@ class RepositoryResolver
 {
     public function configureOptions(
         OptionsResolver $resolver,
-        Repository $repository = null
+        ?Repository $repository = null
     ): void {
         $resolver->setDefaults([
             'repository' => $this->getConfigureOptions($repository ?? new Repository)

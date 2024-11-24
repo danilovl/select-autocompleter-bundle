@@ -9,7 +9,7 @@ class RouteResolver
 {
     public function configureOptions(
         OptionsResolver $resolver,
-        Route $route = null
+        ?Route $route = null
     ): void {
         $resolver->setDefaults([
             'route' => $this->getConfigureOptions($route ?? new Route)

@@ -9,7 +9,7 @@ class ToStringResolver
 {
     public function configureOptions(
         OptionsResolver $resolver,
-        ToString $toStringOption = null
+        ?ToString $toStringOption = null
     ): void {
         $resolver->setDefaults([
             'to_string' => $this->getConfigureOptions($toStringOption ?? new ToString)

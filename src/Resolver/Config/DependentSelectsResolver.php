@@ -9,7 +9,7 @@ class DependentSelectsResolver
 {
     public function configureOptions(
         OptionsResolver $resolver,
-        DependentSelects $dependentSelects = null
+        ?DependentSelects $dependentSelects = null
     ): void {
         $resolver->setDefaults([
             'dependent_selects' => [
