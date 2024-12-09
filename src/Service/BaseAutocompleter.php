@@ -3,10 +3,9 @@
 namespace Danilovl\SelectAutocompleterBundle\Service;
 
 use Danilovl\SelectAutocompleterBundle\Exception\{
-    NotImplementedGrantedException,
-    NotImplementedAutocompleteException,
-    NotImplementedReverseTransformException,
-    NotImplementedReverseTransformResultIdsException
+    NotImplementedMethodException,
+    RuntimeException,
+    NotImplementedGrantedException
 };
 use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterInterface;
 use Danilovl\SelectAutocompleterBundle\Model\Autocompleter\AutocompleterQuery;
@@ -31,9 +30,19 @@ abstract class BaseAutocompleter implements AutocompleterInterface
 
     public function __construct(protected readonly AutocompleterConfigResolver $resolver) {}
 
+    public function getConfigOptions(): array
+    {
+        return [];
+    }
+
     public function addConfig(array $options): void
     {
-        $this->config = $this->resolver->resolveConfig($options);
+        $autocompleterConfig = array_replace_recursive($options, $this->getConfigOptions());
+        $this->config = $this->resolver->resolveConfig($autocompleterConfig);
+
+        if ($this instanceof BaseDoctrineAutocompleter && $this->config->class === null) {
+            throw new RuntimeException('You must specify the class for the Doctrine autocompleter.');
+        }
     }
 
     public function getConfig(): Config
@@ -43,17 +52,17 @@ abstract class BaseAutocompleter implements AutocompleterInterface
 
     public function autocomplete(AutocompleterQuery $query): Result
     {
-        throw new NotImplementedAutocompleteException('Need implement logic');
+        throw new NotImplementedMethodException(__METHOD__);
     }
 
     public function reverseTransform(array $identifiers): array
     {
-        throw new NotImplementedReverseTransformException('Need implement logic');
+        throw new NotImplementedMethodException(__METHOD__);
     }
 
     public function reverseTransformResultIds(array $objects): array
     {
-        throw new NotImplementedReverseTransformResultIdsException('Need implement logic');
+        throw new NotImplementedMethodException(__METHOD__);
     }
 
     public function transformObjectsToItem(array $objects): array

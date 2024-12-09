@@ -8,13 +8,25 @@ use Danilovl\SelectAutocompleterBundle\DependencyInjection\{
 };
 use Danilovl\SelectAutocompleterBundle\Service\AutocompleterContainer;
 use Danilovl\SelectAutocompleterBundle\Tests\Mock\LoadConfigHelper;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Persistence\ManagerRegistry;
 use Generator;
 use PHPUnit\Framework\Attributes\{
     Depends,
     DataProvider
 };
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\DependencyInjection\{
+    Container,
+    Definition,
+    ContainerBuilder
+};
+use Symfony\Component\Security\Core\Authentication\Token\Storage\{
+    TokenStorage,
+    TokenStorageInterface
+};
+use Twig\Environment;
 
 class AutocompleterExtensionTest extends TestCase
 {
@@ -31,13 +43,11 @@ class AutocompleterExtensionTest extends TestCase
     public function testLoad(): ContainerBuilder
     {
         $container = $this->prepareBuilder();
-
-        (new AutocompleterExtension)->load(
-            $this->getYamlConfigData(),
-            $container
-        );
+        (new AutocompleterExtension)->load($this->getYamlConfigData(), $container);
 
         $this->expectNotToPerformAssertions();
+
+        $container->compile();
 
         return $container;
     }
@@ -56,12 +66,35 @@ class AutocompleterExtensionTest extends TestCase
         $autocompleterContainer = $container->get(AutocompleterContainer::class);
 
         $this->assertEquals($expected, $autocompleterContainer->has($service));
+
+        if ($autocompleterContainer->has($service)) {
+            $autocompleterContainer->get($service);
+        }
     }
 
     private function prepareBuilder(): ContainerBuilder
     {
         $container = new ContainerBuilder;
         $container->setParameter('twig.form.resources', []);
+
+        $security = new Definition(Security::class, [new Container]);
+        $security->setPublic(true);
+
+        $tokenStorage = new Definition(TokenStorage::class);
+        $tokenStorage->setPublic(true);
+
+        $environment = new Definition(Environment::class);
+        $environment->setPublic(true);
+
+        $managerRegistry = new Definition(Registry::class, [new Container, [], [], 'default', 'default']);
+        $managerRegistry->setPublic(true);
+
+        $container->addDefinitions([
+            'security.helper' => $security,
+            TokenStorageInterface::class => $tokenStorage,
+            Environment::class => $environment,
+            ManagerRegistry::class => $managerRegistry
+        ]);
 
         return $container;
     }

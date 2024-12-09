@@ -14,6 +14,11 @@ interface AutocompleterInterface
 {
     public function autocomplete(AutocompleterQuery $query): Result;
 
+    /**
+     * @return array<string, mixed>
+     */
+    public function getConfigOptions(): array;
+
     public function getConfig(): Config;
 
     /**

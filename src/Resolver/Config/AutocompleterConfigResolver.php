@@ -2,6 +2,7 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Resolver\Config;
 
+use Danilovl\SelectAutocompleterBundle\Exception\RuntimeException;
 use Danilovl\SelectAutocompleterBundle\Model\Config\Config;
 use Symfony\Component\OptionsResolver\{
     Options,
@@ -81,6 +82,13 @@ class AutocompleterConfigResolver
                     $value = [
                         $options['property'] => $options['property_search_type']
                     ];
+                }
+
+                return $value;
+            })
+            ->setNormalizer('class', static function (Options $options, ?string $value): ?string {
+                if ($value !== null && !class_exists($value)) {
+                    throw new RuntimeException("Class $value not found");
                 }
 
                 return $value;

@@ -4,7 +4,7 @@ namespace Danilovl\SelectAutocompleterBundle\Tests\Unit\Helper;
 
 use Danilovl\SelectAutocompleterBundle\Attribute\AsAutocompleter;
 use Danilovl\SelectAutocompleterBundle\Helper\AttributeHelper;
-use Danilovl\SelectAutocompleterBundle\Tests\Mock\TestAsAutocompleter;
+use Danilovl\SelectAutocompleterBundle\Tests\Mock\Autocompleter\TestAsAutocompleter;
 use PHPUnit\Framework\TestCase;
 
 class AttributeHelperTest extends TestCase

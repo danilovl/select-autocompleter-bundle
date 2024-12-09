@@ -6,10 +6,7 @@ use Danilovl\SelectAutocompleterBundle\Interfaces\{
     AutocompleterInterface,
     AutocompleterContainerInterface
 };
-use Danilovl\SelectAutocompleterBundle\Exception\{
-    NotAutocompleterException,
-    AutocompleterNotExitException
-};
+use Danilovl\SelectAutocompleterBundle\Exception\NotAutocompleterException;
 use InvalidArgumentException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -45,11 +42,8 @@ class AutocompleterContainer implements AutocompleterContainerInterface
     {
         $serviceId = $this->autocompleters[$name] ?? null;
         if ($serviceId !== null) {
-            /** @var object|AutocompleterInterface|null $service */
+            /** @var object|AutocompleterInterface $service */
             $service = $this->container->get($serviceId);
-            if ($service === null) {
-                throw new AutocompleterNotExitException(sprintf('Service with name "%s" does not exist.', $serviceId));
-            }
 
             if (!$service instanceof AutocompleterInterface) {
                 $message = sprintf('Service name "%s" does not implement "%s" interface. It should not be in the autocmpleter container.',

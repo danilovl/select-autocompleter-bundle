@@ -26,17 +26,17 @@ class AutocompleterCompilerPass implements CompilerPassInterface
 {
     final public const string TAGGED_SERVICE_ID_AUTOCOMPLETER = 'danilovl.select_autocompleter.autocompleter';
 
-    public function process(ContainerBuilder $containerBuilder): void
+    public function process(ContainerBuilder $container): void
     {
-        $configs = $containerBuilder->getExtensionConfig(AutocompleterExtension::ALIAS);
+        $configs = $container->getExtensionConfig(AutocompleterExtension::ALIAS);
         $configuration = new Configuration;
         $config = $this->processConfiguration($configuration, $configs);
 
-        $autocompleterContainer = $containerBuilder->getDefinition(AutocompleterContainer::class);
-        $taggedServices = $containerBuilder->findTaggedServiceIds(self::TAGGED_SERVICE_ID_AUTOCOMPLETER, true);
+        $autocompleterContainer = $container->getDefinition(AutocompleterContainer::class);
+        $taggedServices = $container->findTaggedServiceIds(self::TAGGED_SERVICE_ID_AUTOCOMPLETER, true);
 
         foreach ($taggedServices as $id => $tags) {
-            $customAutocompleter = $containerBuilder->getDefinition($id);
+            $customAutocompleter = $container->getDefinition($id);
 
             $alias = $this->getAlias($id, $customAutocompleter, $tags);
             if (empty($alias)) {

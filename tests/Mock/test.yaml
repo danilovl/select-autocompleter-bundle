@@ -21,7 +21,7 @@ danilovl_select_autocompleter:
       maximum_selection_length: 0
       minimum_selection_length: 0
       multiple: true
-      width: false
+      width: '100%'
       scroll_after_select: false
       security:
         public_access: true
@@ -45,7 +45,7 @@ danilovl_select_autocompleter:
       extra: []
   orm:
     - name: 'shop'
-      class: 'App:Shop'
+      class: 'Danilovl\SelectAutocompleterBundle\Tests\Mock\Entity\Shop'
       search_simple:
         name: 'any'
       to_string:
@@ -63,7 +63,7 @@ danilovl_select_autocompleter:
         role: ['ROLE_USER']
 
     - name: 'product'
-      class: 'App:Product'
+      class: 'Danilovl\SelectAutocompleterBundle\Tests\Mock\Entity\Product'
       id_property: 'id'
       property: 'name'
       widget: 'custom_widget'

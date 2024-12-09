@@ -6,17 +6,17 @@ use Danilovl\SelectAutocompleterBundle\DependencyInjection\AutocompleterExtensio
 use Danilovl\SelectAutocompleterBundle\DependencyInjection\Compiler\AutocompleterCompilerPass;
 use Danilovl\SelectAutocompleterBundle\Service\AutocompleterContainer;
 use Danilovl\SelectAutocompleterBundle\Tests\Mock\{
-    LoadConfigHelper,
-    TestAsAutocompleter
-};
+    Autocompleter\TestAsAutocompleter,
+    LoadConfigHelper};
 use Generator;
-use PHPUnit\Framework\Attributes\{DataProvider, Depends};
+use PHPUnit\Framework\Attributes\{
+    DataProvider,
+    Depends};
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\{
     Container,
-    Definition,
-    ContainerBuilder
-};
+    ContainerBuilder,
+    Definition};
 
 class AutocompleterCompilerPassTest extends TestCase
 {

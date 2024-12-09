@@ -3,10 +3,11 @@
 namespace Danilovl\SelectAutocompleterBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\{
-    ChildDefinition,
-    ContainerBuilder,
     Definition,
-    Extension\Extension};
+    ChildDefinition,
+    ContainerBuilder
+};
+use Symfony\Component\DependencyInjection\Extension\Extension;
 use Danilovl\SelectAutocompleterBundle\Attribute\AsAutocompleter;
 use Danilovl\SelectAutocompleterBundle\Constant\ServiceConstant;
 use Danilovl\SelectAutocompleterBundle\DependencyInjection\Compiler\AutocompleterCompilerPass;

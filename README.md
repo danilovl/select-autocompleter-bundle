@@ -998,6 +998,8 @@ class CityType extends AbstractType
 
 ### 9.  Custom Autocompleter
 
+#### 9.1  Config method
+
 You can create your own custom autocompleter.
 
 ```yaml
@@ -1005,7 +1007,7 @@ You can create your own custom autocompleter.
 
 ...
 danilovl_select_autocompleter:
-  orm:
+  own:
     - name: 'customShop'
       class: 'App:Shop'
 ``` 
@@ -1113,21 +1115,30 @@ Then you must define new autocompleter service in you `services.yaml` with `dani
 app.autocompleter.custom:
   class: App\Autocompleter\CustomShopAutocompleter
   tags:
-    - {name: 'danilovl.select_autocompleter.autocompleter', alias: 'own.customAutocompleter'}
+    - {name: 'danilovl.select_autocompleter.autocompleter', alias: 'own.customShop'}
 ```
 
-Or you can use autocompleter attribute `AsAutocompleter` with require `alias` field.
+#### 9.2  Attribute tag method(more preferable, less code in config)
+
+You can use autocompleter attribute `AsAutocompleter` with require `alias` field.
 
 ```php
 <?php declare(strict_types=1);
 
 namespace App\Autocompleter;
 
+use App\Entity\Shop;
 use Danilovl\SelectAutocompleterBundle\Attribute\AsAutocompleter;
 
 #[AsAutocompleter(alias: 'own.customShop')]
 class CustomShopAutocompleter extends OrmAutocompleter
 {
+    public function getConfigOptions(): array
+    {
+        return [
+            'class' => Shop::class
+        ];
+    }
 }
 ```
 
@@ -1138,11 +1149,18 @@ Or you can use symfony service attribute `AutoconfigureTag` with require `name` 
 
 namespace App\Autocompleter;
 
+use App\Entity\Shop;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
 #[AutoconfigureTag(name: 'danilovl.select_autocompleter.autocompleter', attributes: ['alias' => 'own.customAutocompleter'])]
 class CustomShopAutocompleter extends OrmAutocompleter
 {
+    public function getConfigOptions(): array
+    {
+        return [
+            'class' => Shop::class
+        ];
+    }
 }
 ```
 
