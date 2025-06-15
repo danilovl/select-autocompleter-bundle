@@ -7,9 +7,9 @@
 
 ## About ##
 
-This is a Symfony bundle which enables the popular [Select2](https://select2.github.io/) component to be used as a drop-in replacement for a standard fields on a Symfony form.
+This Symfony bundle enables the popular [Select2](https://select2.github.io/) component to be used as a drop-in replacement for standard fields in a Symfony form.
 
-The main feature of this bundle is that the list of choices is retrieved via a remote ajax call.
+The main feature of this bundle is that the list of choices is retrieved via a remote AJAX call.
 
 ![Alt text](/screenshot/autocompleter.gif?raw=true "Autocompleter example")
 
@@ -38,7 +38,7 @@ return [
 
 ### 2. Configuration
 
-After installing the bundle, add this route to your routing:
+After installing the bundle, add this route to your routing configuration.
 
 ``` yaml
 # config/routing.yaml
@@ -48,7 +48,7 @@ _danilovl_select_autocomopleter:
   prefix:   /select-autocomplete
 ```
 
-System default options for all autocompleters, which will be used if necessary.
+System default options for all autocompleters, which will be used when necessary.
 
 ```yaml
 # danilovl/select-autocompleter-bundle/src/Resources/config/default.yaml
@@ -89,9 +89,9 @@ default:
     extra: []
 ```
 
-List of available options which you can change in you project.
+List of available options that you can modify in your project.
 
-This options will be applied for all autocompleters. For example:
+These options will be applied to all autocompleters. For example:
 
 ```yaml
 # config/config.yaml
@@ -155,11 +155,11 @@ danilovl_select_autocompleter:
       extra: []
 ```
 
-### 3. Customization default options for all autcompleters
+### 3. Customization default options for all autocompleters
 
 #### 3.1 Widget
 
-By default only one widget `select2_v4` is available.
+By default, only one widget, `select2_v4`, is available.
 
 ```yaml
 # config/config.yaml
@@ -185,7 +185,7 @@ danilovl_select_autocompleter:
       auto: true
 ```
 
-Or you can choose a specific script if, for example, you already have some scripts available on the page.
+You can also choose a specific script if, for example, you already have some scripts available on the page.
 
 ```yaml
 # config/config.yaml
@@ -199,7 +199,7 @@ danilovl_select_autocompleter:
       language: auto
 ```
 
-Or you can define you own path for script and css files.
+You can also define your own paths for script and CSS files.
 
 ```yaml
 # config/config.yaml
@@ -215,9 +215,9 @@ danilovl_select_autocompleter:
 
 #### 3.3 Select options
 
-For customization select is available following settings.
+For customization, the following settings are available for the select option.
 
-Text defined in `placeholder` will be translated by twig function `truns`.
+Text defined in `placeholder` will be translated by twig function `trans`.
 
 ```yaml
 # config/config.yaml
@@ -333,7 +333,7 @@ The configuration is practically no different for `orm` or `odm`.
 
 Simple configuration.
 
-Identifier `name` will be duplicated with prefix type `orm.` or `odm.`, which can be used for identification autocompleters in forms.
+The `name` identifier will be duplicated with the prefix `orm` or `odm`, which can be used to identify autocompleters in forms.
 
 ```yaml
 # config/config.yaml
@@ -378,7 +378,7 @@ danilovl_select_autocompleter:
 
 ##### 4.1.3 Custom search pattern
 
-You can defined custom search pattern. Symbol `%` in yaml must be duplicate - `%%`.
+You can define a custom search pattern. Symbol `%` in yaml must be duplicate - `%%`.
 
 You must use key word `$search` to insert search text into a pattern.
 
@@ -461,7 +461,7 @@ danilovl_select_autocompleter:
 
 ##### 4.1.6 Call repository method
 
-If you want to use a existing repository method from you project. Other parameters will be ignored.
+If you want to use an existing repository method from your project, other parameters will be ignored.
 
 Repository method should have `public` access and return `QueryBuilder` or `Builder`.
 
@@ -479,7 +479,7 @@ danilovl_select_autocompleter:
 
 For entity `App:Product` will be found `Repository`, then method `createSearchQueryBuilder` will be called with `AutocompleterQuery` and `Config` as a parameters.
 
-This means that all the search logic will be processing by the method which you defined.
+This means that all the search logic will be processed by the method you defined.
 
 ##### 4.1.7 Overriding `default_option`
 
@@ -521,7 +521,7 @@ danilovl_select_autocompleter:
 
 #### 5.1 By roles
 
-You could restrict access to autcompleter by user roles.
+You could restrict access to autocompleter by user roles.
 
 Restrict access for all autocompleters.
 
@@ -585,7 +585,7 @@ danilovl_select_autocompleter:
 
 #### 5.2 By URL patterns
 
-You could restrict access to autocompleters by securing URL patterns
+You can restrict access to autocompleters by securing URL patterns.
 
 ```yaml
 # config/security.yaml
@@ -597,7 +597,7 @@ security:
 
 #### 5.3 By voter
 
-You could create you own voter for autcompleters.
+You can create your own voter for autocompleters.
 
 ```php
 <?php declare(strict_types=1);
@@ -724,7 +724,7 @@ class CustomShopAutocompleter extends OrmAutocompleter
 
 ### 6. Dependent select
 
-Sometimes you need options of a select will be loaded/refreshed by ajax based on selection of another select.
+Sometimes you need the options of a select element to be loaded or refreshed via AJAX based on the selection of another select element.
 
 #### 6.1 OnyToMany
 
@@ -879,7 +879,7 @@ danilovl_select_autocompleter:
 
 #### 7.1 Redefine global route
 
-You can redefine global autocomleter route and add some extra route parameters.
+You can redefine the global autocompleter route and add some extra route parameters.
 
 ```yaml
 # config/config.yaml
@@ -895,7 +895,7 @@ danilovl_select_autocompleter:
 
 #### 7.2 Redefine autocompleter route
 
-You can redefine specific autocomleter route and add some extra route parameters.
+You can redefine a specific autocompleter route and add extra route parameters.
 
 ```yaml
 # config/config.yaml
@@ -1024,7 +1024,7 @@ class CustomShopAutocompleter extends OrmAutocompleter
 }
 ```
 
-If the standard functionality is not enough, or you want to reuse you existing code.
+If the standard functionality is not enough, or if you want to reuse your existing code.
 
 ```php
 <?php declare(strict_types=1);
@@ -1076,7 +1076,7 @@ class CustomShopAutocompleter extends OrmAutocompleter
 }
 ```
 
-If you need additional parameters in request you can define `extra` parameter which will be available in `AutocompleterQuery`.
+If you need additional parameters in the request, you can define an `extra` parameter that will be available in `AutocompleterQuery`.
 
 Example url: `select-autocomplete/orm.customShop/autocomplete?extra[language]=en`.
 
@@ -1166,7 +1166,7 @@ class CustomShopAutocompleter extends OrmAutocompleter
 
 ### 10. Custom autocompleter widget template
 
-Create you own custom autocompleter template which extends `versions.html.twig` and redefine the blocks you need.
+Create your own custom autocompleter template that extends `versions.html.twig` and redefine the blocks you need.
 
 ```twig
 {# templates/autocompleter/custom_widget_template.html.twig #}
@@ -1222,7 +1222,7 @@ Create you own custom autocompleter template which extends `versions.html.twig` 
 {% endblock %}
 ```
 
-Then you need to add path for new custom template to config.
+Then you need to add the path for the new custom template to the configuration.
 
 For all autocompleters.
 
