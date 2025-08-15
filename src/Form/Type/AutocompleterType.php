@@ -101,11 +101,12 @@ class AutocompleterType extends AbstractType
 
     private function addNameBlockPrefixes(FormView $view): void
     {
-        array_splice(
-            $view->vars['block_prefixes'],
-            array_search($this->getBlockPrefix(), $view->vars['block_prefixes']) + 1, 0,
-            $view->vars['autocompleter']['name'] . '_autocompleter'
-        );
+        $blockPrefixes = $view->vars['block_prefixes'];
+        /** @var int $search */
+        $search = array_search($this->getBlockPrefix(), $blockPrefixes);
+        $replacement = $view->vars['autocompleter']['name'] . '_autocompleter';
+
+        array_splice($blockPrefixes, $search + 1, 0, $replacement);
     }
 
     public function getBlockPrefix(): string
