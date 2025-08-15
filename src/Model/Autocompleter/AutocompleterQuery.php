@@ -17,7 +17,7 @@ readonly class AutocompleterQuery
     public static function fromRequest(Request $request): self
     {
         return new self(
-            trim($request->query->getString('search')),
+            mb_trim($request->query->getString('search')),
             $request->query->getInt('page', 1),
             $request->query->getString('dependentName'),
             $request->query->all('dependentId'),

@@ -3,7 +3,7 @@
 namespace Danilovl\SelectAutocompleterBundle\Tests\Unit\Controller;
 
 use Danilovl\SelectAutocompleterBundle\Controller\AutocompleterController;
-use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterContainerInterface;
+use Danilovl\SelectAutocompleterBundle\Exception\NotImplementedMethodException;
 use Danilovl\SelectAutocompleterBundle\Model\Autocompleter\AutocompleterQuery;
 use Danilovl\SelectAutocompleterBundle\Model\Config\Config;
 use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\{
@@ -12,6 +12,7 @@ use Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat\{
 };
 use Danilovl\SelectAutocompleterBundle\Resolver\Config\AutocompleterConfigResolver;
 use Danilovl\SelectAutocompleterBundle\Service\{
+    BaseAutocompleter,
     OrmAutocompleter,
     AutocompleterService,
     AutocompleterContainer
@@ -19,29 +20,17 @@ use Danilovl\SelectAutocompleterBundle\Service\{
 use Doctrine\Persistence\ManagerRegistry;
 use PHPUnit\Framework\TestCase;
 use StdClass;
-use Symfony\Component\DependencyInjection\{
-    Container,
-    ContainerInterface
-};
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\{
     Request,
     JsonResponse
 };
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\{
-    TokenStorage,
-    TokenStorageInterface
-};
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 class AutocompleterControllerTest extends TestCase
 {
-    private ContainerInterface $container;
-
-    private AutocompleterContainerInterface $autocompleterContainer;
-
-    private TokenStorageInterface $tokenStorage;
-
     private AutocompleterService $autocompleterService;
 
     protected function setUp(): void
@@ -49,7 +38,7 @@ class AutocompleterControllerTest extends TestCase
         $managerRegistry = $this->createMock(ManagerRegistry::class);
         $autocompleterConfigResolver = $this->createMock(AutocompleterConfigResolver::class);
 
-        $autocompleter = new class($managerRegistry, $autocompleterConfigResolver) extends OrmAutocompleter {
+        $ormAutocompleter = new class($managerRegistry, $autocompleterConfigResolver) extends OrmAutocompleter {
             public function __construct(ManagerRegistry $registry, AutocompleterConfigResolver $resolver)
             {
                 parent::__construct($registry, $resolver);
@@ -109,18 +98,50 @@ class AutocompleterControllerTest extends TestCase
             }
         };
 
-        $this->container = new Container;
-        $this->container->set('autocompleterService', $autocompleter);
+        $withoutImplementationAutocompleter = new class($autocompleterConfigResolver) extends BaseAutocompleter {
+            public function __construct(AutocompleterConfigResolver $resolver)
+            {
+                parent::__construct($resolver);
 
-        $this->autocompleterContainer = new AutocompleterContainer($this->container);
-        $this->autocompleterContainer->addAutocompleter('autocompleter', 'autocompleterService');
+                $this->config = Config::fromConfig([
+                    'name' => 'test',
+                    'root_alias' => 'a',
+                    'id_property' => 'id',
+                    'property' => 'name',
+                    'property_search_type' => 'any',
+                    'image_result_width' => '100px',
+                    'image_selection_width' => '100px',
+                    'limit' => 10,
+                    'base_template' => 'base_template',
+                    'security' => [
+                        'public_access' => true,
+                        'voter' => 'voter',
+                        'condition' => 'condition',
+                        'role' => []
+                    ],
+                    'route' => [
+                        'name' => null,
+                        'parameters' => [],
+                        'extra' => []
+                    ]
+                ]);
+            }
+        };
 
-        $this->tokenStorage = new TokenStorage;
+        $container = new Container;
+        $container->set('ormAutocompleterService', $ormAutocompleter);
+        $container->set('withoutImplementationAutocompleterService', $withoutImplementationAutocompleter);
+
+        $autocompleterContainer = new AutocompleterContainer($container);
+        $autocompleterContainer->addAutocompleter('ormAutocompleter', 'ormAutocompleterService');
+        $autocompleterContainer->addAutocompleter('withoutImplementationAutocompleter', 'withoutImplementationAutocompleterService');
+
+        $tokenStorage = new TokenStorage;
 
         $this->autocompleterService = new AutocompleterService(
-            $this->container,
-            $this->autocompleterContainer,
-            $this->tokenStorage
+            $container,
+            $autocompleterContainer,
+            $tokenStorage
         );
     }
 
@@ -133,12 +154,22 @@ class AutocompleterControllerTest extends TestCase
         $autocompleterController->autocomplete(new Request, 'not-existing');
     }
 
+    public function testNotImplementedMethodException(): void
+    {
+        $this->expectException(NotImplementedMethodException::class);
+        $this->expectExceptionMessage('Need implement logic for method "Danilovl\SelectAutocompleterBundle\Service\BaseAutocompleter::autocomplete');
+
+        $autocompleterController = new AutocompleterController($this->autocompleterService);
+
+        $autocompleterController->autocomplete(new Request, 'withoutImplementationAutocompleter');
+    }
+
     public function testAutocomplete(): void
     {
         $autocompleterController = new AutocompleterController($this->autocompleterService);
 
         $request = new Request(query: ['search' => 'text', 'page' => 1]);
-        $result = $autocompleterController->autocomplete($request, 'autocompleter');
+        $result = $autocompleterController->autocomplete($request, 'ormAutocompleter');
 
         $expected = new JsonResponse([
             'results' => [
@@ -166,7 +197,7 @@ class AutocompleterControllerTest extends TestCase
         $autocompleterController = new AutocompleterController($this->autocompleterService);
 
         $request = new Request(query: ['search' => 'text', 'page' => 2]);
-        $result = $autocompleterController->autocomplete($request, 'autocompleter');
+        $result = $autocompleterController->autocomplete($request, 'ormAutocompleter');
 
         $expected = new JsonResponse([
             'results' => [],

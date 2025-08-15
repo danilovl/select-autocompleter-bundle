@@ -10,7 +10,7 @@ use TypeError;
 
 class ConfigTest extends TestCase
 {
-    #[DataProvider('dataSuccess')]
+    #[DataProvider('provideDataSuccessCases')]
     public function testDataSuccess(array $config): void
     {
         $this->expectNotToPerformAssertions();
@@ -18,7 +18,7 @@ class ConfigTest extends TestCase
         Config::fromConfig($config);
     }
 
-    #[DataProvider('dataFailed')]
+    #[DataProvider('provideDataFailedCases')]
     public function testDataFailed(array $config): void
     {
         $this->expectException(TypeError::class);
@@ -26,7 +26,7 @@ class ConfigTest extends TestCase
         Config::fromConfig($config);
     }
 
-    public static function dataSuccess(): Generator
+    public static function provideDataSuccessCases(): Generator
     {
         $config = [
             'id_property' => 'id',
@@ -85,7 +85,7 @@ class ConfigTest extends TestCase
         yield [$config];
     }
 
-    public static function dataFailed(): Generator
+    public static function provideDataFailedCases(): Generator
     {
         $defaultSuccessConfig = [
             'id_property' => 'id',

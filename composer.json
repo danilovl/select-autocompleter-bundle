@@ -34,7 +34,7 @@
         "phpstan/extension-installer": "^1.4.3",
         "phpstan/phpstan": "^2.1.17",
         "phpstan/phpstan-symfony": "^2.0.0",
-        "friendsofphp/php-cs-fixer": "^3.64",
+        "friendsofphp/php-cs-fixer": "^3.86",
         "doctrine/orm": "^2.9 | ^3.0",
         "doctrine/mongodb-odm": "^2.9",
         "doctrine/mongodb-odm-bundle": "^5.1"

@@ -83,7 +83,7 @@ class ItemTest extends TestCase
         $this->assertSame($childItem2, $children[1]);
     }
 
-    #[DataProvider('dataObject')]
+    #[DataProvider('provideFormObjectCases')]
     public function testFormObject(
         object $object,
         Config $config,
@@ -94,7 +94,7 @@ class ItemTest extends TestCase
         $this->assertEquals($expected, $item);
     }
 
-    public static function dataObject(): Generator
+    public static function provideFormObjectCases(): Generator
     {
         $defaultConfig = [
             'name' => 'null',
