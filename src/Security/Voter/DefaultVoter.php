@@ -2,6 +2,7 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Security\Voter;
 
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Danilovl\SelectAutocompleterBundle\Constant\{
     VoterSupportConstant,
     SecurityConditionConstant
@@ -36,7 +37,7 @@ class DefaultVoter extends Voter
     /**
      * @param AutocompleterInterface $subject
      */
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
     {
         if ($attribute !== VoterSupportConstant::GET_DATA) {
             throw new LogicException('This code should not be reached!');
