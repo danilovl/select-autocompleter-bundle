@@ -2,7 +2,7 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Tests\Unit\Security\Voter;
 
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Danilovl\SelectAutocompleterBundle\Constant\{
     VoterSupportConstant,
     SecurityConditionConstant
@@ -44,11 +44,11 @@ class DefaultVoterTest extends TestCase
 
     private DefaultVoter $voter;
 
-    private MockObject $security;
+    private Stub $security;
 
     protected function setUp(): void
     {
-        $this->security = $this->createMock(Security::class);
+        $this->security = $this->createStub(Security::class);
 
         $this->voter = new class($this->security) extends DefaultVoter {
             public function supportsPublic(string $attribute, mixed $subject): bool
@@ -76,7 +76,7 @@ class DefaultVoterTest extends TestCase
     {
         $config = Config::fromConfig($this->defaultValidConfig);
 
-        $subjectMock = $this->createMock(AutocompleterInterface::class);
+        $subjectMock = $this->createStub(AutocompleterInterface::class);
         $subjectMock->method('getConfig')->willReturn($config);
 
         $isSupport = $this->voter->supportsPublic(VoterSupportConstant::GET_DATA, $subjectMock);
@@ -87,10 +87,10 @@ class DefaultVoterTest extends TestCase
     public function testVoteEmptyRole(): void
     {
         $config = Config::fromConfig($this->defaultValidConfig);
-        $subjectMock = $this->createMock(AutocompleterInterface::class);
+        $subjectMock = $this->createStub(AutocompleterInterface::class);
         $subjectMock->method('getConfig')->willReturn($config);
 
-        $token = $this->createMock(TokenInterface::class);
+        $token = $this->createStub(TokenInterface::class);
 
         $accessCode = $this->voter->vote($token, $subjectMock, [VoterSupportConstant::GET_DATA]);
 
@@ -107,10 +107,10 @@ class DefaultVoterTest extends TestCase
         ]]];
 
         $config = Config::fromConfig($defaultValidConfig);
-        $subjectMock = $this->createMock(AutocompleterInterface::class);
+        $subjectMock = $this->createStub(AutocompleterInterface::class);
         $subjectMock->method('getConfig')->willReturn($config);
 
-        $token = $this->createMock(TokenInterface::class);
+        $token = $this->createStub(TokenInterface::class);
         $this->security->method('isGranted')->willReturn(true);
 
         $accessCode = $this->voter->vote($token, $subjectMock, [VoterSupportConstant::GET_DATA]);
@@ -128,10 +128,10 @@ class DefaultVoterTest extends TestCase
         ]]];
 
         $config = Config::fromConfig($defaultValidConfig);
-        $subjectMock = $this->createMock(AutocompleterInterface::class);
+        $subjectMock = $this->createStub(AutocompleterInterface::class);
         $subjectMock->method('getConfig')->willReturn($config);
 
-        $token = $this->createMock(TokenInterface::class);
+        $token = $this->createStub(TokenInterface::class);
         $this->security->method('isGranted')->willReturn(false);
 
         $accessCode = $this->voter->vote($token, $subjectMock, [VoterSupportConstant::GET_DATA]);

@@ -40,7 +40,7 @@ class AutocompleterTransformerTest extends TestCase
             ]
         ];
 
-        $autocompleterConfigResolver = $this->createMock(AutocompleterConfigResolver::class);
+        $autocompleterConfigResolver = $this->createStub(AutocompleterConfigResolver::class);
         $config = Config::fromConfig($defaultValidConfig);
         $autocompleterConfigResolver->method('resolveConfig')->willReturn($config);
 

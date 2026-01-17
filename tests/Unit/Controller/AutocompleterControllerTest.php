@@ -35,8 +35,8 @@ class AutocompleterControllerTest extends TestCase
 
     protected function setUp(): void
     {
-        $managerRegistry = $this->createMock(ManagerRegistry::class);
-        $autocompleterConfigResolver = $this->createMock(AutocompleterConfigResolver::class);
+        $managerRegistry = $this->createStub(ManagerRegistry::class);
+        $autocompleterConfigResolver = $this->createStub(AutocompleterConfigResolver::class);
 
         $ormAutocompleter = new class($managerRegistry, $autocompleterConfigResolver) extends OrmAutocompleter {
             public function __construct(ManagerRegistry $registry, AutocompleterConfigResolver $resolver)
