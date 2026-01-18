@@ -21,27 +21,29 @@ readonly class AutocompleterTypeResolver
     public function configureOptions(OptionsResolver $resolver): void
     {
         $defaults = [
-            'compound' => false,
-            'autocompleter' => function (OptionsResolver $resolver): void {
-                $resolver
-                    ->setDefaults([
-                        'name' => null,
-                        'widget' => null,
-                        'base_template' => null
-                    ])
-                    ->setRequired('name')
-                    ->setAllowedTypes('name', 'string')
-                    ->setAllowedTypes('widget', ['string', 'null'])
-                    ->setAllowedTypes('base_template', ['string', 'null']);
-
-                $this->selectOptionResolver->configureOptions($resolver, new SelectOption);
-                $this->dependentSelectResolver->configureOptions($resolver, new DependentSelect);
-                $this->routeResolver->configureOptions($resolver, new Route);
-
-                $resolver->setAllowedTypes('select_option', ['array', 'null']);
-                $resolver->setAllowedTypes('dependent_select', ['array', 'null']);
-            }
+            'compound' => false
         ];
+
+        $resolver->setOptions('autocompleter', function (OptionsResolver $resolver): void {
+            $resolver
+                ->setDefaults([
+                    'name' => null,
+                    'widget' => null,
+                    'base_template' => null
+                ])
+                ->setRequired('name')
+                ->setAllowedTypes('name', 'string')
+                ->setAllowedTypes('widget', ['string', 'null'])
+                ->setAllowedTypes('base_template', ['string', 'null']);
+
+            $this->selectOptionResolver->configureOptions($resolver, new SelectOption);
+            $this->dependentSelectResolver->configureOptions($resolver, new DependentSelect);
+            $this->routeResolver->configureOptions($resolver, new Route);
+
+            $resolver->setAllowedTypes('select_option', ['array', 'null']);
+            $resolver->setAllowedTypes('dependent_select', ['array', 'null']);
+        });
+
 
         $resolver->setDefaults($defaults)
             ->setRequired('autocompleter')

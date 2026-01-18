@@ -2,6 +2,7 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Resolver\Config;
 
+use Closure;
 use Danilovl\SelectAutocompleterBundle\Model\Config\SelectOption;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -11,12 +12,13 @@ class SelectOptionResolver
         OptionsResolver $resolver,
         ?SelectOption $selectOption = null
     ): void {
-        $resolver->setDefaults([
-            'select_option' => $this->getConfigureOptions($selectOption ?? new SelectOption)
-        ]);
+        $resolver->setOptions(
+            option: 'select_option',
+            nested: $this->getConfigureOptions($selectOption ?? new SelectOption)
+        );
     }
 
-    public function getConfigureOptions(SelectOption $selectOptions): callable
+    public function getConfigureOptions(SelectOption $selectOptions): Closure
     {
         return static function (OptionsResolver $resolver) use ($selectOptions): void {
             $resolver

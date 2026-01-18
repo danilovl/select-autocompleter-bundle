@@ -67,13 +67,10 @@ class AutocompleterConfigResolver
         $this->toStringResolver->configureOptions($resolver);
         $this->securityResolver->configureOptions($resolver);
         $this->routeResolver->configureOptions($resolver);
+        $this->dependentSelectResolver->configureOptions($resolver);
 
         if (isset($options['repository'])) {
             $this->repositoryResolver->configureOptions($resolver);
-        }
-
-        if (isset($options['dependent_selects'])) {
-            $this->dependentSelectResolver->configureOptions($resolver);
         }
 
         $resolver

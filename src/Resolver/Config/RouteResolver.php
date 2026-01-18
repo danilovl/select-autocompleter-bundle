@@ -2,6 +2,7 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Resolver\Config;
 
+use Closure;
 use Danilovl\SelectAutocompleterBundle\Model\Config\Route;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -11,12 +12,13 @@ class RouteResolver
         OptionsResolver $resolver,
         ?Route $route = null
     ): void {
-        $resolver->setDefaults([
-            'route' => $this->getConfigureOptions($route ?? new Route)
-        ]);
+        $resolver->setOptions(
+            option: 'route',
+            nested: $this->getConfigureOptions($route ?? new Route)
+        );
     }
 
-    public function getConfigureOptions(Route $route): callable
+    public function getConfigureOptions(Route $route): Closure
     {
         return static function (OptionsResolver $resolver) use ($route): void {
             $resolver

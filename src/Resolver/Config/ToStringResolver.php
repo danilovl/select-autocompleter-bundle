@@ -2,6 +2,7 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Resolver\Config;
 
+use Closure;
 use Danilovl\SelectAutocompleterBundle\Model\Config\ToString;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -11,12 +12,13 @@ class ToStringResolver
         OptionsResolver $resolver,
         ?ToString $toStringOption = null
     ): void {
-        $resolver->setDefaults([
-            'to_string' => $this->getConfigureOptions($toStringOption ?? new ToString)
-        ]);
+        $resolver->setOptions(
+            option: 'to_string',
+            nested: $this->getConfigureOptions($toStringOption ?? new ToString)
+        );
     }
 
-    public function getConfigureOptions(ToString $toStringOption): callable
+    public function getConfigureOptions(ToString $toStringOption): Closure
     {
         return static function (OptionsResolver $resolver) use ($toStringOption): void {
             $resolver

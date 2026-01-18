@@ -2,34 +2,43 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Resolver\Config;
 
-use Danilovl\SelectAutocompleterBundle\Model\Config\DependentSelects;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\{
+    Options,
+    OptionsResolver
+};
 
 class DependentSelectsResolver
 {
-    public function configureOptions(
-        OptionsResolver $resolver,
-        ?DependentSelects $dependentSelects = null
-    ): void {
-        $resolver->setDefaults([
-            'dependent_selects' => [
-                $this->getConfigureOptions($dependentSelects ?? new DependentSelects)
-            ]
-        ]);
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver
+            ->setDefault('dependent_selects', [])
+            ->setAllowedTypes('dependent_selects', 'array')
+            ->setNormalizer('dependent_selects', function (Options $options, array $value): array {
+                $resolved = [];
+
+                foreach ($value as $item) {
+                    $resolver = new OptionsResolver;
+                    $this->configureDependentOptions($resolver);
+                    $resolved[] = $resolver->resolve($item);
+                }
+
+                return $resolved;
+            });
     }
 
-    public function getConfigureOptions(DependentSelects $dependentSelects): callable
+    private function configureDependentOptions(OptionsResolver $resolver): void
     {
-        return static function (OptionsResolver $resolver) use ($dependentSelects): void {
-            $resolver
-                ->setDefaults([
-                    'parent_property' => $dependentSelects->parentProperty,
-                    'parent_field' => $dependentSelects->parentField,
-                    'many_to_many' => $dependentSelects->manyToMany
-                ])
-                ->setAllowedTypes('parent_property', ['string', 'null'])
-                ->setAllowedTypes('parent_field', ['string', 'null'])
-                ->setAllowedTypes('many_to_many', ['array', 'null']);
-        };
+        $resolver
+            ->setDefaults([
+                'name' => null,
+                'parent_property' => null,
+                'parent_field' => null,
+                'many_to_many' => []
+            ])
+            ->setAllowedTypes('name', ['string', 'null'])
+            ->setAllowedTypes('parent_property', ['string', 'null'])
+            ->setAllowedTypes('parent_field', ['string', 'null'])
+            ->setAllowedTypes('many_to_many', ['array', 'null']);
     }
 }

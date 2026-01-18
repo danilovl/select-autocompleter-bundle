@@ -2,6 +2,7 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Resolver\Config;
 
+use Closure;
 use Danilovl\SelectAutocompleterBundle\Model\Config\Repository;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -11,12 +12,13 @@ class RepositoryResolver
         OptionsResolver $resolver,
         ?Repository $repository = null
     ): void {
-        $resolver->setDefaults([
-            'repository' => $this->getConfigureOptions($repository ?? new Repository)
-        ]);
+        $resolver->setOptions(
+            option: 'repository',
+            nested: $this->getConfigureOptions($repository ?? new Repository)
+        );
     }
 
-    public function getConfigureOptions(Repository $repository): callable
+    public function getConfigureOptions(Repository $repository): Closure
     {
         return static function (OptionsResolver $resolver) use ($repository): void {
             $resolver

@@ -2,6 +2,7 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Resolver\Config;
 
+use Closure;
 use Danilovl\SelectAutocompleterBundle\Model\Config\Security;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -11,12 +12,13 @@ class SecurityResolver
         OptionsResolver $resolver,
         ?Security $security = null
     ): void {
-        $resolver->setDefaults([
-            'security' => $this->getConfigureOptions($security ?? new Security)
-        ]);
+        $resolver->setOptions(
+            option: 'security',
+            nested: $this->getConfigureOptions($security ?? new Security)
+        );
     }
 
-    public function getConfigureOptions(Security $security): callable
+    public function getConfigureOptions(Security $security): Closure
     {
         return static function (OptionsResolver $resolver) use ($security): void {
             $resolver
