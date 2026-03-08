@@ -42,12 +42,42 @@ class OdmAutocompleter extends BaseDoctrineAutocompleter
 
         $builder = $this->createBuilder();
         $this->addingSearchCondition($builder, $query);
+        $this->addingDependentSelectCondition($builder, $query);
         $this->addingSort($builder);
 
         $builder->skip($this->getOffset($query));
         $builder->limit($this->config->limit);
 
         return $builder;
+    }
+
+    protected function addingDependentSelectCondition(
+        Builder $builder,
+        AutocompleterQuery $query
+    ): void {
+        $dependentIds = $query->dependentId;
+        $dependentSelectItems = $this->config->dependentSelects;
+
+        if (empty($dependentIds) || empty($dependentSelectItems)) {
+            return;
+        }
+
+        foreach ($dependentIds as $name => $ids) {
+            $dependentSelect = null;
+            foreach ($dependentSelectItems as $dependentSelectItem) {
+                if ($name === $dependentSelectItem->name) {
+                    $dependentSelect = $dependentSelectItem;
+
+                    break;
+                }
+            }
+
+            if ($dependentSelect === null) {
+                continue;
+            }
+
+            $builder->field($dependentSelect->parentProperty)->in((array) $ids);
+        }
     }
 
     protected function addingSearchCondition(Builder $builder, AutocompleterQuery $query): void

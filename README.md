@@ -805,7 +805,7 @@ class CityType extends AbstractType
             ->add('cityByCountry', AutocompleterType::class, [
                 'autocompleter' => [
                     'name' => 'orm.city',
-                    'dependent_select' => [
+                    'dependent_selects' => [
                         'name' => 'dependent_on_country',
                         'parent_field' => 'cityByCountry'
                     ]
@@ -819,7 +819,7 @@ class CityType extends AbstractType
             ->add('cityByRegion', AutocompleterType::class, [
                 'autocompleter' => [
                     'name' => 'orm.city',
-                    'dependent_select' => [
+                    'dependent_selects' => [
                         'name' => 'dependent_on_region',
                         'parent_field' => 'cityByRegion'
                     ]

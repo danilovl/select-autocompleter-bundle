@@ -2,7 +2,6 @@
 
 namespace Danilovl\SelectAutocompleterBundle\Service;
 
-use Danilovl\SelectAutocompleterBundle\Exception\RuntimeException;
 use Danilovl\SelectAutocompleterBundle\Model\Paginator\PaginatorBuilderObject;
 use Doctrine\DBAL\ArrayParameterType;
 use Danilovl\SelectAutocompleterBundle\Constant\{
@@ -145,14 +144,17 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
         QueryBuilder $builder,
         AutocompleterQuery $query
     ): void {
-        $dependentName = $query->dependentName;
         $dependentIds = $query->dependentId;
         $dependentSelectItems = $this->config->dependentSelects;
 
-        if (!empty($dependentName) && !empty($dependentIds) && !empty($dependentSelectItems)) {
+        if (empty($dependentIds) || empty($dependentSelectItems)) {
+            return;
+        }
+
+        foreach ($dependentIds as $name => $ids) {
             $dependentSelect = null;
             foreach ($dependentSelectItems as $dependentSelectItem) {
-                if ($dependentName === $dependentSelectItem->name) {
+                if ($name === $dependentSelectItem->name) {
                     $dependentSelect = $dependentSelectItem;
 
                     break;
@@ -160,24 +162,26 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
             }
 
             if ($dependentSelect === null) {
-                throw new RuntimeException('Dependent select not found');
+                continue;
             }
 
             $property = sprintf('%s.%s', $this->config->rootAlias, $dependentSelect->parentProperty);
 
             if (!empty($dependentSelect->manyToMany)) {
-                $lastAlies = null;
+                $lastAlias = null;
 
                 foreach ($dependentSelect->manyToMany as $alias => $join) {
                     $builder->join($join, $alias);
-                    $lastAlies = $alias;
+                    $lastAlias = $alias;
                 }
 
-                $property = sprintf('%s.%s', $lastAlies, $dependentSelect->parentProperty);
+                $property = sprintf('%s.%s', $lastAlias, $dependentSelect->parentProperty);
             }
 
-            $builder->andWhere($builder->expr()->in($property, ':autocompleter_parent_id'));
-            $builder->setParameter('autocompleter_parent_id', $dependentIds, ArrayParameterType::INTEGER);
+            $parameterName = sprintf('autocompleter_dependent_%s', $name);
+
+            $builder->andWhere($builder->expr()->in($property, ":$parameterName"));
+            $builder->setParameter($parameterName, $ids, ArrayParameterType::INTEGER);
         }
     }
 

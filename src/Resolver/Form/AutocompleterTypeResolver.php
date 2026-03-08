@@ -41,7 +41,7 @@ readonly class AutocompleterTypeResolver
             $this->routeResolver->configureOptions($resolver, new Route);
 
             $resolver->setAllowedTypes('select_option', ['array', 'null']);
-            $resolver->setAllowedTypes('dependent_select', ['array', 'null']);
+            $resolver->setAllowedTypes('dependent_selects', ['array', 'null']);
         });
 
 

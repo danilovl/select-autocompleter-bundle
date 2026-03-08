@@ -13,7 +13,7 @@ class DependentSelectResolver
         DependentSelect $repository
     ): void {
         $resolver->setOptions(
-            option: 'dependent_select',
+            option: 'dependent_selects',
             nested: $this->getConfigureOptions($repository)
         );
     }
@@ -21,6 +21,7 @@ class DependentSelectResolver
     public function getConfigureOptions(DependentSelect $dependentSelect): Closure
     {
         return static function (OptionsResolver $resolver) use ($dependentSelect): void {
+            $resolver->setPrototype(true);
             $resolver
                 ->setDefaults([
                     'name' => $dependentSelect->name,

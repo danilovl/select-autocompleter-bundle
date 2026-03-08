@@ -93,10 +93,7 @@ class AutocompleterType extends AbstractType
         $autocompleter = $this->autocompleterContainer->get($passedOptions['name']);
         $autocompleterConfig = ArrayHelper::modelToArray($autocompleter->getConfig());
 
-        $newConfig = array_replace_recursive($autocompleterConfig, $passedOptions);
-        unset($newConfig['dependent_select']);
-
-        return $newConfig;
+        return array_replace_recursive($autocompleterConfig, $passedOptions);
     }
 
     private function addNameBlockPrefixes(FormView $view): void

@@ -38,7 +38,7 @@ class AutocompeleterResolvedFormType extends ResolvedFormType
     }
 
     /**
-     * @param array{autocompleter: array{name: string, dependent_select: array}} $options
+     * @param array{autocompleter: array{name: string, dependent_selects: array}} $options
      */
     private function updateConfig(array $options): void
     {
@@ -46,7 +46,6 @@ class AutocompeleterResolvedFormType extends ResolvedFormType
         $autocompleter = $this->autocompleterContainer->get($passedOptions['name']);
 
         unset($passedOptions['name']);
-        unset($passedOptions['dependent_select']);
 
         $autocompleterConfig = ArrayHelper::modelToArray($autocompleter->getConfig());
         $newConfig = array_replace_recursive($autocompleterConfig, $passedOptions);

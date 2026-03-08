@@ -9,7 +9,6 @@ readonly class AutocompleterQuery
     public function __construct(
         public string $search = '',
         public int $page = 1,
-        public ?string $dependentName = null,
         public array $dependentId = [],
         public array $extra = []
     ) {}
@@ -19,7 +18,6 @@ readonly class AutocompleterQuery
         return new self(
             mb_trim($request->query->getString('search')),
             $request->query->getInt('page', 1),
-            $request->query->getString('dependentName'),
             $request->query->all('dependentId'),
             $request->query->all('extra')
         );

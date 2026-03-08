@@ -131,26 +131,26 @@
              {% endblock %}
 
              {% block options_ajax_data %}
-                let dependentName = undefined;
-                let dependentId = undefined;
+                let dependentId = {};
 
-                {% if autocompleter.dependent_select.name is defined %}
-                    dependentName = '{{ autocompleter.dependent_select.name }}';
-                {% endif %}
+                {% if autocompleter.dependent_selects is defined %}
+                    {% for dependent in autocompleter.dependent_selects %}
+                        {% if dependent.name is not empty and dependent.parent_field is not empty %}
+                            {% set parentFieldId = form.parent.offsetGet(dependent.parent_field).vars.id %}
+                            dependentId['{{ dependent.name }}'] = jQuery('select#{{ parentFieldId }}').val();
 
-                {% if autocompleter.dependent_select.parent_field is defined %}
-                    let selectId = '{{ form.parent.offsetGet(autocompleter.dependent_select.parent_field).vars.id }}';
-
-                    jQuery(`select#${selectId}`).change( function() {
-                        dependentId = jQuery(this).val();
-                    });
+                            jQuery('select#{{ parentFieldId }}').change(function () {
+                                dependentId['{{ dependent.name }}'] = jQuery(this).val();
+                                selectElement.val(null).trigger('change');
+                            });
+                        {% endif %}
+                    {% endfor %}
                 {% endif %}
 
                 options.ajax.data = function (params) {
                     return {
                         search: params.term,
                         page: params.page,
-                        dependentName: dependentName,
                         dependentId: dependentId,
                         extra: {{ autocompleter.route.extra | default({}) | json_encode | raw }}
                     }
