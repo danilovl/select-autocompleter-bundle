@@ -165,6 +165,14 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
                 continue;
             }
 
+            $ids = (array) $ids
+                    |> (static fn ($x): array => array_filter($x, static fn (mixed $id): bool => $id !== '' && $id !== null))
+                    |> array_values(...);
+
+            if (empty($ids)) {
+                continue;
+            }
+
             $property = sprintf('%s.%s', $this->config->rootAlias, $dependentSelect->parentProperty);
 
             if (!empty($dependentSelect->manyToMany)) {

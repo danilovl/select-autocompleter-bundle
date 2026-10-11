@@ -76,7 +76,15 @@ class OdmAutocompleter extends BaseDoctrineAutocompleter
                 continue;
             }
 
-            $builder->field($dependentSelect->parentProperty)->in((array) $ids);
+            $ids = (array) $ids
+                    |> (static fn ($x): array => array_filter($x, static fn (mixed $id): bool => $id !== '' && $id !== null))
+                    |> array_values(...);
+
+            if (empty($ids)) {
+                continue;
+            }
+
+            $builder->field($dependentSelect->parentProperty)->in($ids);
         }
     }
 
