@@ -77,7 +77,8 @@ readonly class AutocompleterService
             $grantedStatus = $this->isGranted($autocompleter);
         }
 
-        if ($grantedStatus === VoterInterface::ACCESS_DENIED) {
+        $isPublic = $autocompleter->getConfig()->security->publicAccess;
+        if (!$isPublic && $grantedStatus !== VoterInterface::ACCESS_GRANTED) {
             throw $this->createAccessDeniedException();
         }
     }

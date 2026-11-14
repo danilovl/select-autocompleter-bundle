@@ -17,7 +17,7 @@ readonly class AutocompleterQuery
     {
         return new self(
             mb_trim($request->query->getString('search')),
-            $request->query->getInt('page', 1),
+            max(1, $request->query->getInt('page', 1)),
             $request->query->all('dependentId'),
             $request->query->all('extra')
         );

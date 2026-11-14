@@ -20,10 +20,18 @@ class ArrayHelperTest extends TestCase
 
         $result = ArrayHelper::modelToArray($object);
 
-        $this->assertIsArray($result['dependent_selects']);
-        $this->assertIsArray($result['dependent_selects'][0]);
-        $this->assertEquals('child_field', $result['dependent_selects'][0]['name']);
-        $this->assertEquals('parent_field', $result['dependent_selects'][0]['parent_field']);
+        $expected = [
+            'dependent_selects' => [
+                [
+                    'name' => 'child_field',
+                    'parent_property' => null,
+                    'parent_field' => 'parent_field',
+                    'many_to_many' => []
+                ]
+            ]
+        ];
+
+        $this->assertSame($expected, $result);
     }
 
     public function testNested(): void
@@ -37,7 +45,19 @@ class ArrayHelperTest extends TestCase
 
         $result = ArrayHelper::modelToArray($object);
 
-        $this->assertIsArray($result['nested'][0][0]);
-        $this->assertEquals('nested', $result['nested'][0][0]['name']);
+        $expected = [
+            'nested' => [
+                [
+                    [
+                        'name' => 'nested',
+                        'parent_property' => null,
+                        'parent_field' => null,
+                        'many_to_many' => []
+                    ]
+                ]
+            ]
+        ];
+
+        $this->assertSame($expected, $result);
     }
 }

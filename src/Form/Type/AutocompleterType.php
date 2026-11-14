@@ -70,7 +70,6 @@ class AutocompleterType extends AbstractType
         } catch (LogicException) {
             $reflection = new ReflectionClass($this->environment);
             $property = $reflection->getProperty('resolvedGlobals');
-            $property->setAccessible(true);
 
             /** @var array $resolvedGlobals */
             $resolvedGlobals = $property->getValue($this->environment);
@@ -98,12 +97,20 @@ class AutocompleterType extends AbstractType
 
     private function addNameBlockPrefixes(FormView $view): void
     {
+        /** @var list<string> $blockPrefixes */
         $blockPrefixes = $view->vars['block_prefixes'];
-        /** @var int $search */
-        $search = array_search($this->getBlockPrefix(), $blockPrefixes);
+        $search = array_search($this->getBlockPrefix(), $blockPrefixes, true);
+        if ($search === false) {
+            return;
+        }
+
         $replacement = $view->vars['autocompleter']['name'] . '_autocompleter';
+        if (in_array($replacement, $blockPrefixes, true)) {
+            return;
+        }
 
         array_splice($blockPrefixes, $search + 1, 0, $replacement);
+        $view->vars['block_prefixes'] = $blockPrefixes;
     }
 
     public function getBlockPrefix(): string

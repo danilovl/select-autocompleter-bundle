@@ -33,9 +33,7 @@ class ItemTest extends TestCase
         $this->assertNull($item->id);
         $this->assertEquals('Parent item', $item->text);
         $this->assertNull($item->image);
-        $this->assertIsArray($item->children);
-        $this->assertCount(1, $item->children);
-        $this->assertSame($childItem, $item->children[0]);
+        $this->assertSame([$childItem], $item->children);
     }
 
     public function testItemThrowsExceptionIfNoChildrenAndNoId(): void
@@ -58,13 +56,10 @@ class ItemTest extends TestCase
 
     public function testItemThrowsExceptionIfChildrenAreNotInstanceOfItemChildren(): void
     {
-        /** @var ItemChildren $invalidChild */
-        $invalidChild = new stdClass;
-
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('All children must be instances of ItemChildren');
 
-        new Item(id: null, text: 'Parent item', children: [$invalidChild]);
+        new Item(id: null, text: 'Parent item', children: [new stdClass]); // @phpstan-ignore argument.type
     }
 
     public function testItemAllowsChildrenThatAreInstanceOfItemChildren(): void

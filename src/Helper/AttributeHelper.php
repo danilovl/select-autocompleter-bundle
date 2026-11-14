@@ -6,6 +6,10 @@ use ReflectionClass;
 
 class AttributeHelper
 {
+    /**
+     * @param class-string $class
+     * @param class-string $attribute
+     */
     public static function getInstance(string $class, string $attribute): ?object
     {
         $reflectionClass = new ReflectionClass($class);

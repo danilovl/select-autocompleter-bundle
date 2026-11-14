@@ -26,25 +26,29 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
     {
         $identifiers = array_map('intval', $identifiers);
 
-        $autocompleterQuery = new AutocompleterQuery;
+        return $this->createReverseTransformQueryBuilder($identifiers)
+            ->getQuery()
+            ->getResult();
+    }
 
-        $queryBuilder = $this->createAutocompleterQueryBuilder($autocompleterQuery);
+    /**
+     * @param int[] $identifiers
+     */
+    protected function createReverseTransformQueryBuilder(array $identifiers): QueryBuilder
+    {
+        $queryBuilder = $this->createAutocompleterQueryBuilder(new AutocompleterQuery);
         $alias = $queryBuilder->getRootAliases()[0];
+        $idProperty = $this->config->idProperty;
 
-        $isProperty = $this->config->idProperty;
-
-        $queryBuilder->andWhere("$alias.$isProperty IN (:ids)")
-            ->setParameter('ids', $identifiers);
-
-        return $queryBuilder->getQuery()->getResult();
+        return $queryBuilder
+            ->andWhere("$alias.$idProperty IN (:autocompleter_ids)")
+            ->setParameter('autocompleter_ids', $identifiers)
+            ->setFirstResult(0)
+            ->setMaxResults(null);
     }
 
     protected function createQueryBuilder(): QueryBuilder
     {
-        if ($this->queryBuilder !== null) {
-            return $this->queryBuilder;
-        }
-
         $builder = $this->getManager()
             ->getRepository($this->config->class)
             ->createQueryBuilder($this->config->rootAlias);
@@ -137,7 +141,7 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
         $field = sprintf('%s.%s', $this->config->rootAlias, $this->config->idProperty);
 
         $builder->andWhere($builder->expr()->notIn($field, ':autocompleter_excluded_id'));
-        $builder->setParameter('autocompleter_excluded_id', [1], ArrayParameterType::INTEGER);
+        $builder->setParameter('autocompleter_excluded_id', $excludedEntityId, ArrayParameterType::INTEGER);
     }
 
     protected function addingDependentSelectCondition(
@@ -165,9 +169,7 @@ class OrmAutocompleter extends BaseDoctrineAutocompleter
                 continue;
             }
 
-            $ids = (array) $ids
-                    |> (static fn ($x): array => array_filter($x, static fn (mixed $id): bool => $id !== '' && $id !== null))
-                    |> array_values(...);
+            $ids = $this->normalizeDependentIds($ids);
 
             if (empty($ids)) {
                 continue;

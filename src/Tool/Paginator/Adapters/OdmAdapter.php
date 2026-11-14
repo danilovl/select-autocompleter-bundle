@@ -11,11 +11,15 @@ readonly class OdmAdapter implements PaginatorAdapterInterface
 
     public function getTotalCount(): int
     {
-        return $this->paginatorBuilderObject
-            ->originQueryBuilder
+        /** @var int $count */
+        $count = (clone $this->paginatorBuilderObject->autocompleterQueryBuilder)
+            ->count()
+            ->skip(0)
+            ->limit(0)
             ->getQuery()
-            ->execute()
-            ->count();
+            ->execute();
+
+        return $count;
     }
 
     public function getResult(): array
@@ -23,6 +27,6 @@ readonly class OdmAdapter implements PaginatorAdapterInterface
         return $this->paginatorBuilderObject
             ->autocompleterQueryBuilder
             ->getQuery()
-            ->execute();
+            ->toArray();
     }
 }

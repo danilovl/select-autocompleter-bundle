@@ -5,6 +5,7 @@ namespace Danilovl\SelectAutocompleterBundle\Model\SelectDataFormat;
 use AllowDynamicProperties;
 use Danilovl\SelectAutocompleterBundle\Exception\RuntimeException;
 use Danilovl\SelectAutocompleterBundle\Model\Config\Config;
+use Stringable;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 #[AllowDynamicProperties]
@@ -27,12 +28,14 @@ class Item
             throw new RuntimeException('If the item has children, it must not have an id');
         }
 
-        if (!empty($this->children)) {
-            foreach ($this->children as $child) {
-                if (!$child instanceof ItemChildren) {
-                    throw new RuntimeException('All children must be instances of ItemChildren');
-                }
-            }
+        $isValidChildren = array_all(
+            $this->children ?? [],
+            // runtime guard: PHPDoc type is not enforced by the engine
+            static fn (mixed $child): bool => $child instanceof ItemChildren // @phpstan-ignore instanceof.alwaysTrue
+        );
+
+        if (!$isValidChildren) {
+            throw new RuntimeException('All children must be instances of ItemChildren');
         }
     }
 
@@ -77,7 +80,9 @@ class Item
         } elseif (!empty($config->toString->properties)) {
             $properties = [];
             foreach ($config->toString->properties as $property) {
-                $properties[] = (string) $propertyAccess->getValue($object, $property);
+                /** @var string|int|float|bool|Stringable|null $value */
+                $value = $propertyAccess->getValue($object, $property);
+                $properties[] = (string) $value;
             }
 
             $result = implode(' ', $properties);

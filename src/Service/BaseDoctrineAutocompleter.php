@@ -22,8 +22,6 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 abstract class BaseDoctrineAutocompleter extends BaseAutocompleter
 {
-    protected QueryBuilder|Builder|null $queryBuilder = null;
-
     public function __construct(
         protected readonly ManagerRegistry $registry,
         AutocompleterConfigResolver $resolver
@@ -98,12 +96,25 @@ abstract class BaseDoctrineAutocompleter extends BaseAutocompleter
 
             /** @var callable $callback */
             $callback = [$repository, $repositoryMethod];
-            $this->queryBuilder = call_user_func_array($callback, [$query, $this->config]);
 
-            return $this->queryBuilder;
+            /** @var QueryBuilder|Builder */
+            return call_user_func_array($callback, [$query, $this->config]);
         }
 
         return null;
+    }
+
+    /**
+     * @return array<int, int|string>
+     */
+    protected function normalizeDependentIds(mixed $ids): array
+    {
+        $ids = array_filter(
+            (array) $ids,
+            static fn (mixed $id): bool => (is_int($id) || is_string($id)) && $id !== ''
+        );
+
+        return array_values($ids);
     }
 
     protected function getOffset(AutocompleterQuery $query): int

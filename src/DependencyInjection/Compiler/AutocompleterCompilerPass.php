@@ -79,7 +79,7 @@ class AutocompleterCompilerPass implements CompilerPassInterface
             return $alias;
         }
 
-        /** @var string $class */
+        /** @var class-string $class */
         $class = $serviceDefinition->getClass();
         /** @var AsAutocompleter|null $attribute */
         $attribute = AttributeHelper::getInstance($class, AsAutocompleter::class);

@@ -93,6 +93,7 @@ class AutocompleterTransformerTest extends TestCase
             public function __construct(public int $id) {}
         };
 
+        /** @var object{id: int} $result */
         $result = $this->transformer->reverseTransform(1);
 
         $this->assertEquals($expected->id, $result->id);

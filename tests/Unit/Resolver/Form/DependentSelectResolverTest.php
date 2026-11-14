@@ -54,8 +54,7 @@ class DependentSelectResolverTest extends TestCase
 
         $resolved = $optionsResolver->resolve($input);
 
-        $this->assertIsArray($resolved['dependent_selects']);
-        $this->assertEmpty($resolved['dependent_selects']);
+        $this->assertSame([], $resolved['dependent_selects']);
     }
 
     public function testConfigureOptionsDefaults(): void

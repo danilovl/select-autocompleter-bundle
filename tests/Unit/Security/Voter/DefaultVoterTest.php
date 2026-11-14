@@ -9,7 +9,7 @@ use Danilovl\SelectAutocompleterBundle\Constant\{
 };
 use Danilovl\SelectAutocompleterBundle\Interfaces\AutocompleterInterface;
 use Danilovl\SelectAutocompleterBundle\Model\Config\Config;
-use Danilovl\SelectAutocompleterBundle\Security\Voter\DefaultVoter;
+use Danilovl\SelectAutocompleterBundle\Tests\Mock\Security\Voter\TestDefaultVoter;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -42,7 +42,7 @@ class DefaultVoterTest extends TestCase
         ]
     ];
 
-    private DefaultVoter $voter;
+    private TestDefaultVoter $voter;
 
     private Stub $security;
 
@@ -50,12 +50,7 @@ class DefaultVoterTest extends TestCase
     {
         $this->security = $this->createStub(Security::class);
 
-        $this->voter = new class($this->security) extends DefaultVoter {
-            public function supportsPublic(string $attribute, mixed $subject): bool
-            {
-                return $this->supports($attribute, $subject);
-            }
-        };
+        $this->voter = new TestDefaultVoter($this->security);
     }
 
     public function testNotSupportsAttribute(): void

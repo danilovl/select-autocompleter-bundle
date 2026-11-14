@@ -3,6 +3,8 @@
 namespace Danilovl\SelectAutocompleterBundle\Tests\Unit\Model\Autocompleter;
 
 use Danilovl\SelectAutocompleterBundle\Model\Autocompleter\AutocompleterQuery;
+use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -69,5 +71,19 @@ class AutocompleterQueryTest extends TestCase
         $autocompleterQuery = AutocompleterQuery::fromRequest($request);
 
         $this->assertSame('spaced search', $autocompleterQuery->search);
+    }
+
+    #[DataProvider('provideFromRequestNormalizesInvalidPageCases')]
+    public function testFromRequestNormalizesInvalidPage(string $page): void
+    {
+        $autocompleterQuery = AutocompleterQuery::fromRequest(new Request(['page' => $page]));
+
+        $this->assertSame(1, $autocompleterQuery->page);
+    }
+
+    public static function provideFromRequestNormalizesInvalidPageCases(): Generator
+    {
+        yield ['0'];
+        yield ['-5'];
     }
 }

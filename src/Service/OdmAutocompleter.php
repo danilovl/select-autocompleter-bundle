@@ -19,10 +19,6 @@ class OdmAutocompleter extends BaseDoctrineAutocompleter
 {
     protected function createBuilder(): Builder
     {
-        if ($this->queryBuilder !== null) {
-            return $this->queryBuilder;
-        }
-
         $builder = $this->getManager()
             ->getRepository($this->config->class)
             ->createQueryBuilder();
@@ -76,9 +72,7 @@ class OdmAutocompleter extends BaseDoctrineAutocompleter
                 continue;
             }
 
-            $ids = (array) $ids
-                    |> (static fn ($x): array => array_filter($x, static fn (mixed $id): bool => $id !== '' && $id !== null))
-                    |> array_values(...);
+            $ids = $this->normalizeDependentIds($ids);
 
             if (empty($ids)) {
                 continue;
@@ -94,33 +88,34 @@ class OdmAutocompleter extends BaseDoctrineAutocompleter
             return;
         }
 
-        $or = $builder->expr()->orX();
+        $or = $builder->expr();
 
         if (empty($this->config->searchPattern)) {
             foreach ($this->config->searchSimple as $field => $searchType) {
-                $end = in_array($searchType, [SearchConstant::START, SearchConstant::ANY]) ? '^' : '';
-                $start = in_array($searchType, [SearchConstant::END, SearchConstant::ANY]) ? '&' : '';
-
-                $pattern = sprintf('%s%s%s', $start, preg_quote($query->search), $end);
-                $regex = new Regex($pattern, 'i');
-
-                $or->addOr($builder)
-                    ->expr()
-                    ->field($field)
-                    ->equals($regex);
+                $pattern = $this->createSearchSimplePattern($query->search, $searchType);
+                $or->addOr($builder->expr()->field($field)->equals(new Regex($pattern, 'i')));
             }
         }
 
         foreach ($this->config->searchPattern as $field => $pattern) {
-            $searchTerm = str_replace('$search', $query->search, $pattern);
-            $regex = new Regex($searchTerm, 'i');
-            $or->addOr($builder)
-                ->expr()
-                ->field($field)
-                ->equals($regex);
+            $searchTerm = $this->createSearchPattern($query->search, $pattern);
+            $or->addOr($builder->expr()->field($field)->equals(new Regex($searchTerm, 'i')));
         }
 
         $builder->addAnd($or);
+    }
+
+    protected function createSearchSimplePattern(string $search, string $searchType): string
+    {
+        $start = in_array($searchType, [SearchConstant::START, SearchConstant::EQUAL], true) ? '^' : '';
+        $end = in_array($searchType, [SearchConstant::END, SearchConstant::EQUAL], true) ? '$' : '';
+
+        return sprintf('%s%s%s', $start, preg_quote($search), $end);
+    }
+
+    protected function createSearchPattern(string $search, string $pattern): string
+    {
+        return str_replace('$search', preg_quote($search), $pattern);
     }
 
     protected function addingSort(Builder $builder): void
